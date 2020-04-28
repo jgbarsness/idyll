@@ -39,6 +39,16 @@ class Collection:
         else:
             print('\nnone found. check location of journal.txt\n')
 
+    def display_journal(self):
+        'prints out entire journal'
+        if len(self.collection) > 0:
+            # print out entire journal
+            print('\nentries\n-------')
+            for entry in self.collection:
+                print(entry + '-------')
+        else:
+            print('\nnone found. check location of journal.txt\n')
+
     def show_keyword(self, key):
         'shows entry if keyword matches'
         # search for instances of keyword
@@ -60,13 +70,16 @@ class Collection:
 
     def select(self):
         'call user selected function'
-        selection = input('\nview random (o) or use keyword (k)?\n')
+        selection = input('\nview full journal (j), ' +
+                          'view random (o) or use keyword (k)?\n')
 
         if selection == 'o' or selection == 'random':
             self.random_entry()
         elif selection == 'k' or selection == 'key' or selection == 'keyword':
             user_key = input('\nenter a word to search for:\n')
             self.show_keyword(user_key)
+        elif selection == 'j' or selection == 'journal':
+            self.display_journal()
         else:
             print('\nno selection - returning. run again if desired\n')
             return
