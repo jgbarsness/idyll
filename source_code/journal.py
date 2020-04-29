@@ -43,7 +43,7 @@ def welcome():
         elif action == 'refresh':
             stored_entries.wipe_journal()
         elif action == 'k' or action == 'quit' or action == 'K':
-            print('\nty for visiting.')
+            print('\nclosing')
             return
 
 
