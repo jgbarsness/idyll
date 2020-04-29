@@ -7,3 +7,7 @@ documentation:<br /> 'journal' runs main program. can be followed by a sys arg
 optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new entry with both a notes and a why section<br /> '-ng': new entry with a notes section<br /> '-nw': new entry with a why section<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
+
+know bugs:<br />
+one-lining with '-e' has not been configured with entry points. characters like ''', '(', ';', etc. will be interpreted as console-specific commands and will misdirect input<br />
+uses a string marker to determine entry stop / starts. if you include this marker in an entry, that specific entry will behave abnormally. marker is unique enough to avoid all but intentional use.
