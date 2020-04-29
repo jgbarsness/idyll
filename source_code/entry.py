@@ -28,12 +28,13 @@ class Entry():
 
         entries = open('journal.txt', 'a+')
         entries.writelines([str(self.recorded_datetime), '\n',
-                            '-', '\n',
+                            '------------------------', '\n',
                             self.thing_experienced, '\n',
                             '-', '\n',
                             self.notes, '\n',
                             '-', '\n',
-                            self.why, '\nENTRY_END\n\n'])
+                            self.why, '\n------------\nend_of_entry\n'+
+                            '------------\n\n'])
         entries.close()
 
         # file back to readonly

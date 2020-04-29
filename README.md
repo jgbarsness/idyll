@@ -1,6 +1,6 @@
 journal manager is a cli tool used to create and manage journal entries.
 
-install instructions for running from shell:<br /> run `sudo ln -s /Users/YOUR_NAME/Downloads/journal_manager-master/dist/journal/journal /usr/local/bin`<br /> if necessary, sub the first path for your own personal location of the journal executable in the 'dist' folder<br /> entries are stored as 'journal.txt' in /Users/yourname
+install instructions for running from shell:<br /> run `sudo ln -s /Users/YOUR_NAME/Downloads/journal_manager-master/dist/journal/journal /usr/local/bin`<br /> if necessary, sub the first path for your own personal location of the journal executable in the 'dist' folder<br /> entries are stored as 'journal.txt'
 
 documentation:<br /> 'journal' runs main program. can be followed by a sys argument
 

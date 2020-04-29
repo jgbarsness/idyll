@@ -11,11 +11,15 @@ joseph barsness.
 
 
 def main(sys_arguement=None):
-    print(c.WELCOME_DISPLAY)
     stored_entries.file_check()
+    stored_entries.scan_journal()
+
+    if sys_arguement is None:
+        print(c.WELCOME_DISPLAY)
+        welcome()
 
     # skip to command if launched using sys arguement
-    if sys_arguement == '-n':
+    elif sys_arguement == '-n':
         new_entry()
     elif sys_arguement == '-ng':
         new_entry('-ng')
@@ -24,24 +28,21 @@ def main(sys_arguement=None):
     elif sys_arguement == ('-e'):
         new_entry('-e')
 
-    stored_entries.scan_journal()
-    welcome()
-
 
 def welcome():
     'always-on loop. controls function calls'
     while True:
         action = input(c.ACTION)
 
-        if action == 'o' or action == 'new':
+        if action == 'o' or action == 'new' or action == 'O':
             new_entry()
-        elif action == 'p' or action == 'previous':
+        elif action == 'p' or action == 'previous' or action == 'P':
             view_previous()
-        elif action == 'h' or action == 'help':
+        elif action == 'h' or action == 'help' or action == 'H':
             print(f'\n{c.HELP}\n')
         elif action == 'refresh':
             stored_entries.wipe_journal()
-        elif action == 'k' or action == 'quit':
+        elif action == 'k' or action == 'quit' or action == 'K':
             print('\nty for visiting.')
             return
 
@@ -86,6 +87,4 @@ except IndexError:
     main()
 
 # TODO: remove entry function (both search and last)
-# hotkeys (sys or loop input) like -nnw for starting a new
-# notes and a why section, -n for just a new title entry,
-# -np for just notes and why. make entry process faster
+# maybe auto quit after entry if using a sys arguement?s

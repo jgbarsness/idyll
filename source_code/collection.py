@@ -23,7 +23,7 @@ class Collection:
         bulk = re.sub('\n\n([A-Z])(?=[a-z]{2}\s[A-Z][a-z]{2}'
                       '\s[0-9]{2}\s[0-9]{2}[:][0-9]{2}[:][0-9]'
                       '{2}\s[0-9]{4})', '\g<1>''', bulk)
-        bulk = bulk.split('ENTRY_END')
+        bulk = bulk.split('------------\nend_of_entry\n------------')
         del bulk[-1]  # remove newline element
 
         self.collection = bulk
@@ -32,10 +32,9 @@ class Collection:
         'prints random journal entry'
         # verify entry present
         if len(self.collection) > 0:
-            print('\nrandom entry' +
-                  '\n--------------------------')
+            print('\nrandom entry\n')
             random_entry = random.choice(self.collection)
-            print(random_entry + '--------------------------\n')
+            print(random_entry)
         else:
             print('\nnone found. check location of journal.txt\n')
 
@@ -43,9 +42,9 @@ class Collection:
         'prints out entire journal'
         if len(self.collection) > 0:
             # print out entire journal
-            print('\nentries\n-------')
+            print('\nentries\n')
             for entry in self.collection:
-                print(entry + '-------')
+                print(entry)
         else:
             print('\nnone found. check location of journal.txt\n')
 
@@ -63,10 +62,8 @@ class Collection:
         # pad '-' characters as appropriate
         padding = ''.join(['-' for _ in range(len(str(key)) + 3)])
         print('\nrandom entry containing',
-              '\'' + key + '\'',
-              '\n-----------------------' + padding)
-        print(random.choice(entry) + '-----------------------' + padding,
-              '\n')
+              '\'' + key + '\'\n')
+        print(random.choice(entry))
 
     def select(self):
         'call user selected function'
