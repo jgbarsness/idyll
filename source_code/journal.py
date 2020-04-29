@@ -97,4 +97,4 @@ except IndexError:
     main()
 
 # TODO: remove entry function (both search and last)
-# maybe auto quit after entry if using a sys arguement?
+# keyword print out all matches instead of random

@@ -49,7 +49,7 @@ class Collection:
             print('\nnone found. check location of journal.txt\n')
 
     def show_keyword(self, key):
-        'shows entry if keyword matches'
+        'shows entries if keyword matches'
         # search for instances of keyword
         entry = [elmnt for elmnt in self.collection if key in elmnt]
 
@@ -59,11 +59,10 @@ class Collection:
             return
 
         # if function can continue, print out entry
-        # pad '-' characters as appropriate
-        padding = ''.join(['-' for _ in range(len(str(key)) + 3)])
-        print('\nrandom entry containing',
+        print('\nentries containing',
               '\'' + key + '\'\n')
-        print(random.choice(entry))
+        for thing in entry:
+            print(thing)
 
     def select(self):
         'call user selected function'
