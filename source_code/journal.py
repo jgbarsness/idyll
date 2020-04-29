@@ -10,7 +10,7 @@ joseph barsness.
 '''
 
 
-def main(sys_arguement=None):
+def main(sys_arguement=None, title=None):
     stored_entries.file_check()
     stored_entries.scan_journal()
 
@@ -25,8 +25,11 @@ def main(sys_arguement=None):
         new_entry('-ng')
     elif sys_arguement == '-nw':
         new_entry('-nw')
-    elif sys_arguement == ('-e'):
-        new_entry('-e')
+    elif sys_arguement == '-e':
+        if len(title) != 0:
+            new_entry('-e', ' '.join(title))
+        else:
+            new_entry('-e')
 
 
 def welcome():
@@ -47,18 +50,25 @@ def welcome():
             return
 
 
-def new_entry(is_shortcut=None):
+def new_entry(is_shortcut=None, entry_title=None):
     'initiates a new entry. calls methods to open and record text box input'
-    experience = str(input('\ntitle:\n'))
 
     if is_shortcut is None:
+        experience = str(input('\ntitle:\n'))
         new = Entry(experience)
     elif is_shortcut == '-ng':
+        experience = str(input('\ntitle:\n'))
         new = Entry(experience, '-ng')
     elif is_shortcut == '-nw':
+        experience = str(input('\ntitle:\n'))
         new = Entry(experience, '-nw')
     elif is_shortcut == '-e':
-        new = Entry(experience, '-e')
+        if entry_title is not None:
+            new = Entry(entry_title, '-e')
+            new.thing_experienced == sys.argv[2:]
+        else:
+            experience = str(input('\ntitle:\n'))
+            new = Entry(experience, '-e')
 
     # refresh searchable list after every entry
     stored_entries.scan_journal()
@@ -82,9 +92,9 @@ def view_previous():
 stored_entries = Collection()
 # check if a sys arguement is present
 try:
-    main(sys.argv[1])
+    main(sys.argv[1], sys.argv[2:])
 except IndexError:
     main()
 
 # TODO: remove entry function (both search and last)
-# maybe auto quit after entry if using a sys arguement?s
+# maybe auto quit after entry if using a sys arguement?
