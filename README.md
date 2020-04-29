@@ -8,6 +8,6 @@ optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new e
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
-know bugs:<br />
-one-lining with '-e' has not been configured with entry points. characters like ''', '(', ';', etc. will be interpreted as console-specific commands and will misdirect input<br />
+know bugs/considerations:<br />
+if one-lining with '-e', you must escape characters the shell interprets as a command (e.g. journal -e what\'s up)<br />
 uses a string marker to determine entry stop / starts. if you include this marker in an entry, that specific entry will behave abnormally. marker is unique enough to avoid all but intentional use.
