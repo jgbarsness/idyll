@@ -1,6 +1,6 @@
 journal manager is a command line tool used to create and manage journal entries.
 
-install instructions for running from shell:<br /> run `sudo ln -s /Users/YOUR_NAME/Downloads/journal_manager-master/dist/journal/journal /usr/local/bin`<br /> if necessary, sub the first path for your own personal location of the journal executable in the 'dist' folder<br /> entries are stored as 'journal.txt'
+install instructions for running from shell:<br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br /> entries are stored as 'journal.txt'
 
 documentation:<br /> 'journal' runs main program. can be followed by a sys argument
 
@@ -9,5 +9,5 @@ optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new e
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
 know bugs/considerations:<br />
-if one-lining with '-e', you must escape characters the shell interprets as a command (e.g. journal -e what\\'s up)<br />
+if one-lining with '-e', you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)<br />
 uses a string marker to determine entry stop / starts. if you include this marker in an entry, that specific entry will behave abnormally. marker is unique enough to avoid all but intentional use.
