@@ -66,7 +66,7 @@ class Collection:
 
     def select(self):
         'call user selected function'
-        selection = input('\nview full journal (j), ' +
+        selection = input('\nview full journal (j), del entry (del), ' +
                           'view random (o) or use keyword (k)?\n')
 
         if selection == 'o' or selection == 'random':
@@ -76,6 +76,9 @@ class Collection:
             self.show_keyword(user_key)
         elif selection == 'j' or selection == 'journal':
             self.display_journal()
+        elif selection == 'del' or selection == 'delete':
+            criteria = input('\nenter a phrase to search for:\n')
+            self.delete_entry(criteria)
         else:
             print('\nno selection - returning. run again if desired\n')
             return
@@ -109,3 +112,54 @@ class Collection:
         else:
             print('\nfile preserved. returning\n')
             return
+
+    def delete_entry(self, entry):
+        'bulk or single delete entries'
+        # list of all occurances of key
+        delete = [elmnt for elmnt in self.collection if entry in elmnt]
+
+        # if none were found, return
+        if len(delete) == 0:
+            print('\nno entry with that term. returning\n')
+            return
+
+        # if function can continue, print out entry
+        print('\nentries containing',
+              '\'' + entry + '\'\n')
+        for thing in delete:
+            print(thing)
+
+        choice = input('delete these entries? cannot be undone. '
+                       'if unwanted entries are listed, further '
+                       'specify search criteria. enter '
+                       '\'i am sure\' to proceed.\n')
+        
+        if choice == 'i am sure':
+            print('\ndeleting entries...')
+
+            # find all occurances
+            for things in delete:
+                # remove them
+                self.collection.remove(things)
+
+            print('entries deleted\n')
+            # refresh entries
+            self.file_check()
+            self.refresh_journal()
+
+        else:
+            print('\nentries preserved. returning\n')
+            return
+
+    def refresh_journal(self):
+        'after deletion of entry, re-write journal to reflect changes'
+        # make journal writeable
+        os.chmod('journal.txt', stat.S_IRWXU)
+        refresh = open('journal.txt', 'w')
+
+        for entry in self.collection:
+            refresh.write(entry)
+            refresh.write('------------\nend_of_entry\n------------\n\n')
+
+        os.chmod('journal.txt', stat.S_IREAD)
+        refresh.close()

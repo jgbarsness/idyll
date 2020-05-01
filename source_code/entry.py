@@ -27,15 +27,41 @@ class Entry():
             pass
 
         entries = open('journal.txt', 'a+')
-        entries.writelines([str(self.recorded_datetime), '\n',
-                            '------------------------', '\n',
-                            self.thing_experienced, '\n',
-                            '-', '\n',
-                            self.notes, '\n',
-                            '-', '\n',
-                            self.why, '\n------------\nend_of_entry\n'+
-                            '------------\n\n'])
-        entries.close()
+        if self.notes != 'N/A' and self.why != 'N/A':
+            entries.writelines([str(self.recorded_datetime), '\n',
+                                '------------------------', '\n',
+                                self.thing_experienced, '\n',
+                                '-n:', '\n',
+                                self.notes, '\n',
+                                '-w:', '\n',
+                                self.why, '\n------------\nend_of_entry\n'+
+                                '------------\n\n'])
+            entries.close()
+
+        elif self.notes == 'N/A' and self.why != 'N/A':
+            entries.writelines([str(self.recorded_datetime), '\n',
+                                '------------------------', '\n',
+                                self.thing_experienced, '\n',
+                                '-w:\n',
+                                self.why, '\n------------\nend_of_entry\n'+
+                                '------------\n\n'])
+            entries.close()
+        
+        elif self.why == 'N/A' and self.notes != 'N/A':
+            entries.writelines([str(self.recorded_datetime), '\n',
+                                '------------------------', '\n',
+                                self.thing_experienced, '\n',
+                                '-n:', '\n',
+                                self.notes,'\n------------\nend_of_entry\n'+
+                                '------------\n\n'])
+            entries.close()
+        
+        else:
+            entries.writelines([str(self.recorded_datetime), '\n',
+                                '------------------------', '\n',
+                                self.thing_experienced, '\n------------\nend_of_entry\n'+
+                                '------------\n\n'])
+            entries.close()
 
         # file back to readonly
         os.chmod('journal.txt', stat.S_IREAD)
