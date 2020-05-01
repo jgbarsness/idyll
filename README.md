@@ -6,6 +6,12 @@ documentation:<br /> 'journal' runs main program. can be followed by a sys arg
 
 optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new entry with both a notes and a why section<br /> '-ng': new entry with a notes section<br /> '-nw': new entry with a why section<br />
 '-v': view journal<br />
+'-wipe': delete entire journal
+
+'hidden' commands:<br />
+'wipe': permanently delete all entries<br />
+'backup': create a backup copy of entire journal<br />
+'load': load entries from backup<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 

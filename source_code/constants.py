@@ -9,7 +9,7 @@ HELP = '----\nHELP\n----\nthis is a command line tool for recording \
 \'-ng\': new entry with notes section\n\
 \'-nw\': new entry with why section\n\
 \'-e\': new title entry\n\
-\'-v\': view journal\
+\'-v\': view journal\n\
 \'-wipe\': delete entire journal\
 \n\nall sys arguement entry titles can be one-lined like \'journal -n my title\'\
 \n\nhidden commands:\n\
