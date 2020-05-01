@@ -2,6 +2,7 @@ import random
 import re
 import os
 import stat
+from shutil import copy
 
 
 class Collection:
@@ -108,7 +109,7 @@ class Collection:
                 os.remove('journal.txt')
                 print('journal deleted\n')
             except FileNotFoundError:
-                print('no file present. try running a command\n')
+                print('no journal present\n')
         else:
             print('\nfile preserved. returning\n')
             return
@@ -131,8 +132,8 @@ class Collection:
 
         choice = input('delete these entries? cannot be undone. '
                        'if unwanted entries are listed, further '
-                       'specify search criteria. enter '
-                       '\'i am sure\' to proceed.\n')
+                       'specify search criteria.\nenter '
+                       '\'i am sure\' to proceed\n')
         
         if choice == 'i am sure':
             print('\ndeleting entries...')
@@ -163,3 +164,46 @@ class Collection:
 
         os.chmod('journal.txt', stat.S_IREAD)
         refresh.close()
+
+    def backup_journal(self):
+        'creates a backup journal file'
+        # uses 'copy' to preserve permissions
+        # in case future update relies on permission at close
+        self.file_check()
+        print('\ncreating backup...')
+        try:
+            copy('journal.txt', 'backup_journal.txt')
+            print('backup created as \'backup_journal.txt\'\n')
+        except PermissionError:
+            os.remove('backup_journal.txt')
+            copy('journal.txt', 'backup_journal.txt')
+            print('backup updated\n')
+
+    def load_from_backup(self):
+        'makes backup the running document'
+        try:
+            open('backup_journal.txt', 'r')
+            pass
+        except FileNotFoundError:
+            print('\nno backup found\n')
+            return
+        selection = input('\nrestore journal from backup?\nif backup is outdated, '
+                          'recent journal entries will be lost.\n'
+                          'enter \'i am sure\' to proceed\n')
+        if selection == 'i am sure':
+            # make sure correct journal is retained
+            try:
+                os.remove('journal.txt')
+            except FileNotFoundError:
+                pass
+
+            print('\nrestoring')
+            # backup -> running file
+            os.rename('backup_journal.txt', 'journal.txt')
+            # retain a copy
+            copy('journal.txt', 'backup_journal.txt')
+            print('journal restored from backup\n')
+
+        else:
+            print('\nload from backup cancelled. returning\n')
+            return

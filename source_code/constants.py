@@ -10,9 +10,12 @@ HELP = '----\nHELP\n----\nthis is a command line tool for recording \
 \'-nw\': new entry with why section\n\
 \'-e\': new title entry\n\
 \'-v\': view journal\
+\'-wipe\': delete entire journal\
 \n\nall sys arguement entry titles can be one-lined like \'journal -n my title\'\
 \n\nhidden commands:\n\
-\'refresh\': permanently delete all entries'
+\'wipe\': permanently delete all entries\n\
+\'backup\': create a backup copy of entire journal\n\
+\'load\': load entries from backup'
 
 WHY = '\'enter\' key to open text box. prompt: why record this entry?'
 

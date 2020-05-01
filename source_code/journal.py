@@ -48,6 +48,9 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-v':
         stored_entries.display_journal()
 
+    elif sys_arguement == '-wipe':
+        stored_entries.wipe_journal()
+
 
 def welcome():
     'always-on loop. controls function calls'
@@ -60,8 +63,12 @@ def welcome():
             view_previous()
         elif action == 'h' or action == 'help' or action == 'H':
             print(f'\n{c.HELP}\n')
-        elif action == 'refresh':
+        elif action == 'wipe':
             stored_entries.wipe_journal()
+        elif action == 'backup':
+            stored_entries.backup_journal()
+        elif action == 'load':
+            stored_entries.load_from_backup()
         elif action == 'k' or action == 'quit' or action == 'K':
             print('\nclosing')
             return
