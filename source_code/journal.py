@@ -50,6 +50,9 @@ def main(sys_arguement=None, title=None):
 
     elif sys_arguement == '-wipe':
         stored_entries.wipe_journal()
+    
+    elif sys_arguement == '-b':
+        stored_entries.backup_journal()
 
 
 def welcome():
