@@ -20,9 +20,9 @@ class Collection:
 
         bulk = ''.join(bulk)
         # cleans string - subs out excess newline characters
-        bulk = re.sub('\n\n([A-Z])(?=[a-z]{2}\s[A-Z][a-z]{2}'
-                      '\s[0-9]{2}\s[0-9]{2}[:][0-9]{2}[:][0-9]'
-                      '{2}\s[0-9]{4})', '\g<1>''', bulk)
+        # so that entries print cleanly
+        bulk = re.sub('\n\n([A-Z])(?=[a-z]{2}\s[A-Z][a-z]{2}\s.[0-9]'
+                      '\s[0-9]{2}[:][0-9]{2}[:][0-9]{2}\s[0-9]{4})', '\g<1>''', bulk)
         bulk = bulk.split('------------\nend_of_entry\n------------')
         del bulk[-1]  # remove newline element
 
