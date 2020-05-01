@@ -45,6 +45,9 @@ def main(sys_arguement=None, title=None):
         else:
             new_entry('-e')
 
+    elif sys_arguement == '-v':
+        stored_entries.display_journal()
+
 
 def welcome():
     'always-on loop. controls function calls'

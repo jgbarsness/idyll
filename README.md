@@ -5,6 +5,7 @@ install instructions for running from shell:<br /> run `sudo ln -s /path_to_jo
 documentation:<br /> 'journal' runs main program. can be followed by a sys argument
 
 optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new entry with both a notes and a why section<br /> '-ng': new entry with a notes section<br /> '-nw': new entry with a why section<br />
+'-v': view journal<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
