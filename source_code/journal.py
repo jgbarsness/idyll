@@ -12,6 +12,7 @@ joseph barsness.
 
 
 def main(sys_arguement=None, title=None):
+    # check files
     stored_entries.file_check()
     stored_entries.scan_journal()
 
@@ -21,11 +22,23 @@ def main(sys_arguement=None, title=None):
 
     # skip to command if launched using sys arguement
     elif sys_arguement == '-n':
-        new_entry()
+        if len(title) != 0:
+            new_entry(None, ' '.join(title))
+        else:
+            new_entry()
+
     elif sys_arguement == '-ng':
-        new_entry('-ng')
+        if len(title) != 0:
+            new_entry('-ng', ' '.join(title))
+        else:
+            new_entry('-ng')
+
     elif sys_arguement == '-nw':
-        new_entry('-nw')
+        if len(title) != 0:
+            new_entry('-nw', ' '.join(title))
+        else:
+            new_entry('-nw')
+
     elif sys_arguement == '-e':
         if len(title) != 0:
             new_entry('-e', ' '.join(title))
@@ -55,14 +68,28 @@ def new_entry(is_shortcut=None, entry_title=None):
     'initiates a new entry. calls methods to open and record text box input'
 
     if is_shortcut is None:
-        experience = str(input('\ntitle:\n'))
-        new = Entry(experience)
+        if entry_title is not None:
+            new = Entry(entry_title)
+        else:
+            experience = str(input('\ntitle:\n'))
+            new = Entry(experience)
+
     elif is_shortcut == '-ng':
-        experience = str(input('\ntitle:\n'))
-        new = Entry(experience, '-ng')
+        if entry_title is not None:
+            new = Entry(entry_title, '-ng')
+            new.thing_experienced == sys.argv[2:]
+        else:
+            experience = str(input('\ntitle:\n'))
+            new = Entry(experience, '-ng')
+
     elif is_shortcut == '-nw':
-        experience = str(input('\ntitle:\n'))
-        new = Entry(experience, '-nw')
+        if entry_title is not None:
+            new = Entry(entry_title, '-nw')
+            new.thing_experienced == sys.argv[2:]
+        else:
+            experience = str(input('\ntitle:\n'))
+            new = Entry(experience, '-nw')
+
     elif is_shortcut == '-e':
         if entry_title is not None:
             new = Entry(entry_title, '-e')
@@ -98,4 +125,3 @@ except IndexError:
     main()
 
 # TODO: remove entry function (both search and last)
-# keyword print out all matches instead of random
