@@ -8,7 +8,8 @@ HELP = '----\nHELP\n----\nthis is a command line tool for recording \
 \'-n\': new entry with both notes and why sections\n\
 \'-ng\': new entry with notes section\n\
 \'-nw\': new entry with why section\n\
-\'-e\': new title entry. can be one-lined like \'journal -e my title\'\
+\'-e\': new title entry\
+\n\nall sys arguement entry titles can be one-lined like \'journal -n my title\'\
 \n\nhidden commands:\n\
 \'refresh\': permanently delete all entries'
 
