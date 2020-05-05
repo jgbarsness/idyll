@@ -7,8 +7,7 @@ is a command line tool used to create and manage journal entries.
 #### documentation:
  'journal' runs main program. can be followed by a sys argument
 
-#### optional sys arguements:
- **'-e'**: new entry, title only <br /> **'-n'**: new entry with both a notes and a why section <br /> **'-ng'**: new entry with a notes section <br /> **'-nw'**: new entry with a why section <br />
+#### optional sys arguements: **'-e'**: new entry, title only <br /> **'-n'**: new entry with both a notes and a why section <br /> **'-ng'**: new entry with a notes section <br /> **'-nw'**: new entry with a why section <br />
 **'-v'**: view journal <br />
 **'-wipe'**: delete entire journal <br />
 **'-b'**: create backup of journal
@@ -22,7 +21,7 @@ is a command line tool used to create and manage journal entries.
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
-### know bugs/considerations:
+##### know bugs/considerations:
 
 if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)
 <br />
