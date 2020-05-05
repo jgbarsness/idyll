@@ -8,7 +8,7 @@ is a command line tool used to create and manage journal entries.
  'journal' runs main program. can be followed by a sys argument
 
 #### optional sys arguements:
-<br /> **'-e'**: new entry, title only <br /> **'-n'**: new entry with both a notes and a why section <br /> **'-ng'**: new entry with a notes section <br /> **'-nw'**: new entry with a why section <br />
+ '-e'**: new entry, title only <br /> **'-n'**: new entry with both a notes and a why section <br /> **'-ng'**: new entry with a notes section <br /> **'-nw'**: new entry with a why section <br />
 **'-v'**: view journal <br />
 **'-wipe'**: delete entire journal <br />
 **'-b'**: create backup of journal
