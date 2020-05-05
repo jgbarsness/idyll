@@ -1,6 +1,6 @@
 ## journal manager is a command line tool used to create and manage journal entries.
 
-## install instructions for running from shell:<br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
+## install instructions for running from shell:## <br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
 
 ## documentation:<br /> 'journal' runs main program. can be followed by a sys argument<br />
 
