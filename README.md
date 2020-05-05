@@ -2,7 +2,7 @@
 is a command line tool used to create and manage journal entries.
 
 #### install instructions for running from shell:
-<br />
+
 save journal folder within `dist` to /usr/local/var (or wherever) run `sudo ln -s /path_to_journal_unix_executable/ /usr/local/bin`
 <br />
 <br /> sub the first path for your own personal location of the journal executable<br />
