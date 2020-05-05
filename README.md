@@ -4,7 +4,7 @@ is a command line tool used to create and manage journal entries.
 #### install instructions for running from shell:
  run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`
 <br />
-<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder (like /usr/local)<br />
+<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
 
 #### documentation:
  'journal' runs main program. can be followed by a sys argument
