@@ -5,8 +5,6 @@ is a command line tool used to create and manage journal entries.
 
 save journal folder within `dist` to /usr/local/var (or wherever)
 <br /> run `sudo ln -s /path_to_journal_unix_executable/ /usr/local/bin`
-<br />
-<br /> sub the first path for your own personal location of the journal executable<br />
 
 #### documentation:
  'journal' runs main program. can be followed by a sys argument
