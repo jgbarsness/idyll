@@ -20,7 +20,7 @@ save journal folder within `dist` to /usr/local (or wherever)
 **'wipe'**: permanently delete all entries<br />
 **'backup'**: create a backup copy of entire journal<br />
 **'load'**: load entries from backup<br />
-**'config'**: creates config .ini in pwd. 'journal_title' and 'backup_title' 	values can be changed to create multiple journals in the same pwd, with the 		current title(s) reflecting the running journal and/or the preferred backup file. 	if a change to the entry marker is made, journal in pwd may become outdated. can 	delete .ini or re-run 'config' to restore defaults<br />
+**'config'**: creates config .ini in pwd. 'journal_title' and 'backup_title' 	values can be changed to create multiple journals in the same pwd, with the 		current title reflecting the running journal and/or the preferred backup file. 	if a change to the entry marker is made, journal in pwd may become outdated. can 	delete .ini or re-run 'config' to restore defaults<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
