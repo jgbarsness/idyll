@@ -3,7 +3,7 @@ is a command line tool used to create and manage journal entries.
 
 #### install instructions for running from shell:
 
-save journal folder within `dist` to /usr/local/var (or wherever)
+save journal folder within `dist` to /usr/local (or wherever)
 <br /> run `sudo ln -s /path_to_journal_unix_executable/ /usr/local/bin`
 
 #### documentation:
