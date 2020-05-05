@@ -13,7 +13,7 @@ optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new e
 'wipe': permanently delete all entries<br />
 'backup': create a backup copy of entire journal<br />
 'load': load entries from backup<br />
-'config': creates updatable config .ini in pwd. if changes are made, journal in pwd may become outdated. can delete .ini or re-run 'config' to restore defaults<br />
+'config': creates updatable config .ini in pwd. 'journal_title' and 'backup_title' can be changed to create multiple journals in the same pwd, with the current title(s) reflecting which files the program points to. if changes to the entry marker is made, journal in pwd may become outdated. can delete .ini or re-run 'config' to restore defaults<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
