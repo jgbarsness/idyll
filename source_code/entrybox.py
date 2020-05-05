@@ -28,8 +28,7 @@ class TextBox():
             elif attribute == 'why':
                 object_passed.why = text_box.get('1.0', 'end-1c')
 
-            # delay needed to allow information passing / prevent freezes
-            # delay 1ms
+            # destroy root
             self.root.after(1, self.root.destroy())
 
         tk.mainloop()

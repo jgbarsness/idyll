@@ -1,8 +1,10 @@
+import constants as c
 import random
 import re
 import os
 import stat
 from shutil import copy
+import configparser
 
 
 class Collection:
@@ -12,7 +14,7 @@ class Collection:
 
     def scan_journal(self):
         'refreshes collection of journal entries'
-        journal = open('journal.txt', 'r')
+        journal = open(c.JOURNAL_TITLE, 'r')
 
         bulk = []
         for lines in journal:
@@ -21,10 +23,9 @@ class Collection:
 
         bulk = ''.join(bulk)
         # cleans string - subs out excess newline characters
-        # so that entries print cleanly
-        bulk = re.sub('\n\n([A-Z])(?=[a-z]{2}\s[A-Z][a-z]{2}\s.[0-9]'
-                      '\s[0-9]{2}[:][0-9]{2}[:][0-9]{2}\s[0-9]{4})', '\g<1>''', bulk)
-        bulk = bulk.split('------------\nend_of_entry\n------------')
+        # so that entries print cleanly. replaces w/ first letter occurance
+        bulk = re.sub(c.SCAN_REGEX,r'\g<1>''', bulk)
+        bulk = bulk.split(c.END_MARKER)
         del bulk[-1]  # remove newline element
 
         self.collection = bulk
@@ -37,7 +38,7 @@ class Collection:
             random_entry = random.choice(self.collection)
             print(random_entry)
         else:
-            print('\nnone found. check location of journal.txt\n')
+            print('\nnone found. check location of journal\n')
 
     def display_journal(self):
         'prints out entire journal'
@@ -47,7 +48,7 @@ class Collection:
             for entry in self.collection:
                 print(entry)
         else:
-            print('\nnone found. check location of journal.txt\n')
+            print('\nnone found. check location of journal\n')
 
     def show_keyword(self, key):
         'shows entries if keyword matches'
@@ -88,15 +89,15 @@ class Collection:
         '''check if file is present. if so, close. if not, create.
         make file writable if file exists'''
         try:
-            os.chmod('journal.txt', stat.S_IRWXU)
+            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
         except FileNotFoundError:
             pass
 
-        file_check = open('journal.txt', 'a+')
+        file_check = open(c.JOURNAL_TITLE, 'a+')
         file_check.close()
 
         # make file read only
-        os.chmod('journal.txt', stat.S_IREAD)
+        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
 
     def wipe_journal(self):
         'completely delete journal'
@@ -106,7 +107,7 @@ class Collection:
         if selection == 'i am sure':
             try:
                 print('\ndeleting journal...')
-                os.remove('journal.txt')
+                os.remove(c.JOURNAL_TITLE)
                 print('journal deleted\n')
             except FileNotFoundError:
                 print('no journal present\n')
@@ -155,14 +156,14 @@ class Collection:
     def refresh_journal(self):
         'after deletion of entry, re-write journal to reflect changes'
         # make journal writeable
-        os.chmod('journal.txt', stat.S_IRWXU)
-        refresh = open('journal.txt', 'w')
+        os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
+        refresh = open(c.JOURNAL_TITLE, 'w')
 
         for entry in self.collection:
             refresh.write(entry)
-            refresh.write('------------\nend_of_entry\n------------\n\n')
+            refresh.write(c.END_MARKER + '\n\n')
 
-        os.chmod('journal.txt', stat.S_IREAD)
+        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
         refresh.close()
 
     def backup_journal(self):
@@ -172,17 +173,17 @@ class Collection:
         self.file_check()
         print('\ncreating backup...')
         try:
-            copy('journal.txt', 'backup_journal.txt')
-            print('backup created as \'backup_journal.txt\'\n')
+            copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
+            print('backup created as \'' + c.BACKUP_TITLE + '\'\n')
         except PermissionError:
-            os.remove('backup_journal.txt')
-            copy('journal.txt', 'backup_journal.txt')
+            os.remove(c.BACKUP_TITLE)
+            copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
             print('backup updated\n')
 
     def load_from_backup(self):
         'makes backup the running document'
         try:
-            open('backup_journal.txt', 'r')
+            open(c.BACKUP_TITLE, 'r')
             pass
         except FileNotFoundError:
             print('\nno backup found\n')
@@ -193,17 +194,34 @@ class Collection:
         if selection == 'i am sure':
             # make sure correct journal is retained
             try:
-                os.remove('journal.txt')
+                os.remove(c.JOURNAL_TITLE)
             except FileNotFoundError:
                 pass
 
             print('\nrestoring')
             # backup -> running file
-            os.rename('backup_journal.txt', 'journal.txt')
+            os.rename(c.BACKUP_TITLE, c.JOURNAL_TITLE)
             # retain a copy
-            copy('journal.txt', 'backup_journal.txt')
-            print('journal restored from backup\n')
+            copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
+            print('journal restored from \'' + c.BACKUP_TITLE + '\'\n')
 
         else:
             print('\nload from backup cancelled. returning\n')
             return
+
+    def gen_config(self):
+        'generate config file in pwd'
+        config = configparser.ConfigParser()
+        config['DEFAULT'] = {'END_MARKER' : '------------\nend_of_entry\n------------',
+                            'DATESTAMP_UNDERLINE' : '-----------------------',
+                            'JOURNAL_TITLE' : 'journal',
+                            'BACKUP_TITLE' : 'backup_journal',
+                            'NOTES_MARKER' : '-n:',
+                            'WHY_MARKER' : '-w:'}
+
+        configfile = open('journal_mngr.ini', 'w')
+        config.write(configfile)
+        configfile.write('\n' + '# WARNING: updating values may outdate journal in pwd')
+        configfile.close()
+
+        print('\nconfig updated in pwd as \'journal_mngr.ini\'\n')

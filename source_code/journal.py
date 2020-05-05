@@ -6,7 +6,7 @@ import constants as c
 
 '''
 journal manager is a command line tool used to record and view
-journal entires. it manages a file named 'journal.txt'. it is made by
+journal entires. it manages a file named c.JOURNAL_TITLE. it is made by
 joseph barsness.
 '''
 
@@ -72,6 +72,8 @@ def welcome():
             stored_entries.backup_journal()
         elif action == 'load':
             stored_entries.load_from_backup()
+        elif action =='config':
+            stored_entries.gen_config()
         elif action == 'k' or action == 'quit' or action == 'K':
             print('\nclosing')
             return
@@ -124,7 +126,7 @@ def view_previous():
     stored_entries.scan_journal()
 
     if len(stored_entries.collection) == 0:
-        print('\nnone found. check location of journal.txt\n')
+        print('\nnone found. check location of journal\n')
         return
 
     stored_entries.select()
@@ -136,5 +138,3 @@ try:
     main(sys.argv[1], sys.argv[2:])
 except IndexError:
     main()
-
-# TODO: remove entry function (both search and last)

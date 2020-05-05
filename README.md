@@ -1,8 +1,8 @@
 journal manager is a command line tool used to create and manage journal entries.
 
-install instructions for running from shell:<br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br /> entries are stored as 'journal.txt'
+install instructions for running from shell:<br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
 
-documentation:<br /> 'journal' runs main program. can be followed by a sys argument
+documentation:<br /> 'journal' runs main program. can be followed by a sys argument<br />
 
 optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new entry with both a notes and a why section<br /> '-ng': new entry with a notes section<br /> '-nw': new entry with a why section<br />
 '-v': view journal<br />
@@ -13,6 +13,7 @@ optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new e
 'wipe': permanently delete all entries<br />
 'backup': create a backup copy of entire journal<br />
 'load': load entries from backup<br />
+'config': creates updatable config .ini in pwd. if changes are made, journal in pwd may become outdated. can delete .ini or re-run 'config' to restore defaults<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
