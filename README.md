@@ -1,22 +1,22 @@
-journal manager is a command line tool used to create and manage journal entries.
+## journal manager is a command line tool used to create and manage journal entries.
 
-install instructions for running from shell:<br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
+## install instructions for running from shell:<br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
 
-documentation:<br /> 'journal' runs main program. can be followed by a sys argument<br />
+## documentation:<br /> 'journal' runs main program. can be followed by a sys argument<br />
 
-optional sys arguements:<br /> '-e': new entry, title only<br /> '-n': new entry with both a notes and a why section<br /> '-ng': new entry with a notes section<br /> '-nw': new entry with a why section<br />
-'-v': view journal<br />
-'-wipe': delete entire journal<br />
-'-b': create backup of journal
+## optional sys arguements:<br /> **'-e'**: new entry, title only<br /> **'-n'**: new entry with both a notes and a why section<br /> **'-ng'**: new entry with a notes section<br /> **'-nw'**: new entry with a why section<br />
+**'-v'**: view journal<br />
+**'-wipe'**: delete entire journal<br />
+**'-b'**: create backup of journal
 
-'hidden' commands:<br />
-'wipe': permanently delete all entries<br />
-'backup': create a backup copy of entire journal<br />
-'load': load entries from backup<br />
-'config': creates updatable config .ini in pwd. 'journal_title' and 'backup_title' values can be changed to create multiple journals in the same pwd, with the current title(s) reflecting the running journal and/or the preferred backup file. if a change to the entry marker is made, journal in pwd may become outdated. can delete .ini or re-run 'config' to restore defaults<br />
+## 'hidden' commands:<br />
+**'wipe'**: permanently delete all entries<br />
+**'backup'**: create a backup copy of entire journal<br />
+**'load'**: load entries from backup<br />
+**'config'**: creates updatable config .ini in pwd. 'journal_title' and 'backup_title' values can be changed to create multiple journals in the same pwd, with the current title(s) reflecting the running journal and/or the preferred backup file. if a change to the entry marker is made, journal in pwd may become outdated. can delete .ini or re-run 'config' to restore defaults<br />
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
-know bugs/considerations:<br />
+**know bugs/considerations:**<br />
 if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)<br />
 uses a string marker to determine entry stop / starts. if you include this marker in an entry, that specific entry will behave abnormally. marker is unique enough to avoid all but intentional use.
