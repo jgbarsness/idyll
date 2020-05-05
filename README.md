@@ -3,12 +3,9 @@
 ## install instructions for running from shell:
 <br /> run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
 
-## documentation:
-<br /> 'journal' runs main program. can be followed by a sys argument<br />
+## documentation: 'journal' runs main program. can be followed by a sys argument<br />
 
-## optional sys arguements:
-<br />
- **'-e'**: new entry, title only<br /> **'-n'**: new entry with both a notes and a why section<br /> **'-ng'**: new entry with a notes section<br /> **'-nw'**: new entry with a why section<br />
+## optional sys arguements: **'-e'**: new entry, title only<br /> **'-n'**: new entry with both a notes and a why section<br /> **'-ng'**: new entry with a notes section<br /> **'-nw'**: new entry with a why section<br />
 **'-v'**: view journal<br />
 **'-wipe'**: delete entire journal<br />
 **'-b'**: create backup of journal
