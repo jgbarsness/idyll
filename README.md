@@ -1,10 +1,11 @@
-## journal manager is a command line tool used to create and manage journal entries.
+## journal manager <br />
+is a command line tool used to create and manage journal entries.
 
 ## install instructions for running from shell:
  run `sudo ln -s /path_to_journal_unix_executable /usr/local/bin`<br /> sub the first path for your own personal location of the journal executable in the 'dist' folder<br />
 
 ## documentation:
- 'journal' runs main program. can be followed by a sys argument<br />
+ 'journal' runs main program. can be followed by a sys argument
 
 ## optional sys arguements:
  **'-e'**: new entry, title only <br /> **'-n'**: new entry with both a notes and a why section <br /> **'-ng'**: new entry with a notes section <br /> **'-nw'**: new entry with a why section <br />
@@ -23,5 +24,7 @@ alternatively, journal.py can be run, and journal entries will be maintained in 
 
 ## know bugs/considerations:
 
-if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)<br />
+if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)
+<br />
+<br />
 uses a string marker to determine entry stop / starts. if you include this marker in an entry, that specific entry will behave abnormally. marker is unique enough to avoid all but intentional use.
