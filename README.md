@@ -1,5 +1,5 @@
 ## journal manager <br />
-is a command line tool used to create and manage journal entries.
+is a command line tool used to create and manage journal entries
 
 #### install instructions for running from shell:
 
