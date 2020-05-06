@@ -1,7 +1,7 @@
 import configparser
 
 
-WELCOME_DISPLAY = '---------------\nJOURNAL MANAGER\n---------------\n\
+WELCOME_DISPLAY = '------------\nJOURNAL MNGR\n------------\n\
 journal on the command line. \'h\' for help.'
 
 HELP = '----\nHELP\n----\nthis is a command line tool for recording\
@@ -15,12 +15,12 @@ HELP = '----\nHELP\n----\nthis is a command line tool for recording\
 \'-v\': view journal\n\
 \'-wipe\': delete entire journal\n\
 \'-b\': create backup of journal\
-\n\nall sys arguement entry titles can be one-lined like \'journal -n my title\'\
+\n\nall sys arguement titles can be one-lined like \'journal -n my title\'\
 \n\nhidden commands:\n\
 \'wipe\': permanently delete all entries\n\
 \'backup\': create a backup copy of entire journal\n\
 \'load\': load entries from backup\n\
-\'config\': generate config file in pwd. if config exists, defaults are reset.\n\
+\'config\': generate config file in pwd. if config exists, defaults reset.\n\
           updating config may outdate journal'\
 
 WHY = '\'enter\' key to open text box. prompt: why record this entry?'
@@ -45,7 +45,7 @@ try:
     WHY_MARKER = config['DEFAULT']['WHY_MARKER']
 
 except KeyError:
-    END_MARKER = '------------\nend_of_entry\n------------'
+    END_MARKER = '#*#*#*#*#*#*#*#*#*#*#*#'
     DATESTAMP_UNDERLINE = '-----------------------'
     JOURNAL_TITLE = 'journal.txt'
     BACKUP_TITLE = 'backup_journal.txt'

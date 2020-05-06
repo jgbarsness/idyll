@@ -24,7 +24,7 @@ class Collection:
         bulk = ''.join(bulk)
         # cleans string - subs out excess newline characters
         # so that entries print cleanly. replaces w/ first letter occurance
-        bulk = re.sub(c.SCAN_REGEX,r'\g<1>''', bulk)
+        bulk = re.sub(c.SCAN_REGEX, r'\g<1>''', bulk)
         bulk = bulk.split(c.END_MARKER)
         del bulk[-1]  # remove newline element
 
@@ -135,7 +135,7 @@ class Collection:
                        'if unwanted entries are listed, further '
                        'specify search criteria.\nenter '
                        '\'i am sure\' to proceed\n')
-        
+
         if choice == 'i am sure':
             print('\ndeleting entries...')
 
@@ -188,9 +188,9 @@ class Collection:
         except FileNotFoundError:
             print('\nno backup found\n')
             return
-        selection = input('\nrestore journal from backup?\nif backup is outdated, '
-                          'recent journal entries will be lost.\n'
-                          'enter \'i am sure\' to proceed\n')
+        selection = input('\nrestore journal from backup?\nif backup'
+                          ' is outdated, recent journal entries will '
+                          'be lost.\nenter \'i am sure\' to proceed\n')
         if selection == 'i am sure':
             # make sure correct journal is retained
             try:
@@ -212,16 +212,16 @@ class Collection:
     def gen_config(self):
         'generate config file in pwd'
         config = configparser.ConfigParser()
-        config['DEFAULT'] = {'END_MARKER' : '------------\nend_of_entry\n------------',
-                            'DATESTAMP_UNDERLINE' : '-----------------------',
-                            'JOURNAL_TITLE' : 'journal',
-                            'BACKUP_TITLE' : 'backup_journal',
-                            'NOTES_MARKER' : '-n:',
-                            'WHY_MARKER' : '-w:'}
+        config['DEFAULT'] = {'END_MARKER': '#*#*#*#*#*#*#*#*#*#*#*#',
+                             'DATESTAMP_UNDERLINE': '-----------------------',
+                             'JOURNAL_TITLE': 'journal',
+                             'BACKUP_TITLE': 'backup_journal',
+                             'NOTES_MARKER': '-n:',
+                             'WHY_MARKER': '-w:'}
 
         configfile = open('journal_mngr.ini', 'w')
         config.write(configfile)
-        configfile.write('\n' + '# WARNING: updating values may outdate journal in pwd')
+        configfile.write('\n' + '# WRNG: updating may outdate journal in pwd')
         configfile.close()
 
         print('\nconfig updated in pwd as \'journal_mngr.ini\'\n')

@@ -5,11 +5,10 @@ from collection import Collection
 import constants as c
 
 '''
-journal mngr is a command line tool used to record and view
-journal entires. it manages a file named c.JOURNAL_TITLE. it is made by
-joseph barsness.
+journal mngr is a command line tool used to manage text entries
+it is made by joseph barsness
 
-Copyright 2020, Joseph Barsness, All rights reserved.
+copyright 2020, joseph barsness. all rights reserved.
 '''
 
 
@@ -52,7 +51,7 @@ def main(sys_arguement=None, title=None):
 
     elif sys_arguement == '-wipe':
         stored_entries.wipe_journal()
-    
+
     elif sys_arguement == '-b':
         stored_entries.backup_journal()
 
@@ -74,7 +73,7 @@ def welcome():
             stored_entries.backup_journal()
         elif action == 'load':
             stored_entries.load_from_backup()
-        elif action =='config':
+        elif action == 'config':
             stored_entries.gen_config()
         elif action == 'k' or action == 'quit' or action == 'K':
             print('\nclosing')

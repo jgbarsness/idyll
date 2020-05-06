@@ -34,7 +34,7 @@ class Entry():
                                 c.NOTES_MARKER, '\n',
                                 self.notes, '\n',
                                 c.WHY_MARKER, '\n',
-                                self.why, '\n'+ c.END_MARKER + '\n\n'])
+                                self.why, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
 
         elif self.notes == 'N/A' and self.why != 'N/A':
@@ -42,21 +42,22 @@ class Entry():
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 self.thing_experienced, '\n',
                                 c.WHY_MARKER + '\n',
-                                self.why, '\n'+ c.END_MARKER + '\n\n'])
+                                self.why, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
-        
+
         elif self.why == 'N/A' and self.notes != 'N/A':
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 self.thing_experienced, '\n',
                                 c.NOTES_MARKER, '\n',
-                                self.notes,'\n'+ c.END_MARKER + '\n\n'])
+                                self.notes, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
-        
+
         else:
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n'+ c.END_MARKER + '\n\n'])
+                                self.thing_experienced, '\n',
+                                c.END_MARKER + '\n\n'])
             entries.close()
 
         # file back to readonly

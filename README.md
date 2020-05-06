@@ -29,4 +29,4 @@ alternatively, journal.py can be run, and journal entries will be maintained in 
 if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)
 <br />
 <br />
-uses a string marker to determine entry stop / starts. if you include this marker in an entry, that specific entry will behave abnormally. marker is unique enough to avoid all but intentional use
+uses a string marker to determine entry stop / starts. this marker is configurable, and should be written to avoid unintentional use within entries
