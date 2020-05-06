@@ -1,4 +1,4 @@
-## journal manager <br />
+## journal mngr <br />
 is a command line tool used to create and manage journal entries
 
 #### install instructions for running from shell:
