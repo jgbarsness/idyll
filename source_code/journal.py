@@ -5,9 +5,11 @@ from collection import Collection
 import constants as c
 
 '''
-journal manager is a command line tool used to record and view
+journal mngr is a command line tool used to record and view
 journal entires. it manages a file named c.JOURNAL_TITLE. it is made by
 joseph barsness.
+
+Copyright 2020, Joseph Barsness, All rights reserved.
 '''
 
 
