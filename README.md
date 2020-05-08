@@ -24,7 +24,7 @@ save journal folder within `dist` to /usr/local (or desired location)
 
 alternatively, journal.py can be run, and journal entries will be maintained in the folder
 
-#### know bugs/considerations:
+#### known bugs/considerations:
 
 if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)
 <br />

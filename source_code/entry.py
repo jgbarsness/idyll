@@ -9,7 +9,7 @@ class Entry():
     'an entry to be stored in the collection'
     def __init__(self, thing_that_was_done, shortcut=None):
         self.logged_time = dt.datetime.now()
-        self.recorded_datetime = self.logged_time.strftime('%a %I:%M%p %b %m% %Y')
+        self.recorded_datetime = self.logged_time.strftime('%a %I:%M%p %b %d %Y')
         self.time = self.logged_time.strftime('%-I:%M %p')
         self.date = self.logged_time.strftime('%A, %B %-d %Y')
         self.notes = None
