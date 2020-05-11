@@ -26,31 +26,25 @@ def main(sys_arguement=None, title=None):
             new_entry(None, ' '.join(title))
         else:
             new_entry()
-
     elif sys_arguement == '-ng':
         if len(title) != 0:
             new_entry('-ng', ' '.join(title))
         else:
             new_entry('-ng')
-
     elif sys_arguement == '-nw':
         if len(title) != 0:
             new_entry('-nw', ' '.join(title))
         else:
             new_entry('-nw')
-
     elif sys_arguement == '-e':
         if len(title) != 0:
             new_entry('-e', ' '.join(title))
         else:
             new_entry('-e')
-
     elif sys_arguement == '-v':
         stored_entries.display_journal()
-
     elif sys_arguement == '-wipe':
         stored_entries.wipe_journal()
-
     elif sys_arguement == '-b':
         stored_entries.backup_journal()
 
@@ -88,7 +82,6 @@ def new_entry(is_shortcut=None, entry_title=None):
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience)
-
     elif is_shortcut == '-ng':
         if entry_title is not None:
             new = Entry(entry_title, '-ng')
@@ -96,7 +89,6 @@ def new_entry(is_shortcut=None, entry_title=None):
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience, '-ng')
-
     elif is_shortcut == '-nw':
         if entry_title is not None:
             new = Entry(entry_title, '-nw')
@@ -104,7 +96,6 @@ def new_entry(is_shortcut=None, entry_title=None):
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience, '-nw')
-
     elif is_shortcut == '-e':
         if entry_title is not None:
             new = Entry(entry_title, '-e')
