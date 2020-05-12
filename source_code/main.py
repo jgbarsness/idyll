@@ -4,7 +4,8 @@ from collection import Collection
 import constants as c
 
 '''
-journal mngr is a command line tool used to manage text entries
+journal mngr is a command line tool used to manage text entries.
+joseph barsness 2020
 '''
 
 
