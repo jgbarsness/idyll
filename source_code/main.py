@@ -5,9 +5,6 @@ import constants as c
 
 '''
 journal mngr is a command line tool used to manage text entries
-it is made by joseph barsness
-
-copyright 2020, joseph barsness. all rights reserved.
 '''
 
 
