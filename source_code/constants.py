@@ -32,6 +32,20 @@ ACTION = '\'o\' for new entry, \'p\' to view previous,\
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
 
+CONFIG_MESSAGE = '\n# WRNG: updating may outdate journal in pwd\n\n\
+# \'end_marker\' determines entry marker recorded in journal file. \
+updating will outdate journal file in pwd.\n\
+# \'datestamp_underline\' determines the series of underscores under the entry\
+ date time stamp. may be changed without outdating anything.\n\
+# \'journal_title\' determines the name of the journal file. set this to \
+the desired default journal file, or change to create a new one.\n\
+# \'backup_title\' determines the name of the backup file. set this to \
+the desired default backup file, or change to create a new one.\n\
+# \'notes_marker\' determines what should proceed an entry\'s \'notes\' \
+section. may be changed without outdating anything.\n\
+# \'why_marker\' determines what should proceed an entry\'s \'why\' \
+section. may be changed without outdating anything.'
+
 # use config values if present, else use default
 try:
     config = configparser.ConfigParser()

@@ -221,7 +221,7 @@ class Collection:
 
         configfile = open('journal_mngr.ini', 'w')
         config.write(configfile)
-        configfile.write('\n' + '# WRNG: updating may outdate journal in pwd')
+        configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
 
         print('\nconfig updated in pwd as \'journal_mngr.ini\'\n')
