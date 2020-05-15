@@ -1,11 +1,6 @@
 ## journal mngr <br />
 is a command line tool used to create and manage journal entries
 
-#### install instructions for running from shell:
-
-save journal folder within `dist` to /usr/local (or desired location)
-<br /> run `sudo ln -s /path_to_journal_unix_executable/ /usr/local/bin`
-
 #### documentation:
  'journal' runs main program. can be followed by a sys argument
 
@@ -21,12 +16,3 @@ save journal folder within `dist` to /usr/local (or desired location)
 **'backup'**: create a backup copy of entire journal<br />
 **'load'**: load entries from backup<br />
 **'config'**: creates config .ini in pwd. 'journal_title' and 'backup_title' 	values can be changed to create multiple journals in the same pwd, with the 		current title reflecting the running journal and/or the preferred backup file. 	if a change to the entry marker is made, journal in pwd may become outdated. can 	delete .ini or re-run 'config' to restore defaults<br />
-
-alternatively, main.py can be run, and journal entries will be maintained in the source code folder
-
-#### known bugs/considerations:
-
-if one-lining with a sys arguement, you must escape non-alphanumerical characters (e.g. journal -e what\\'s up)
-<br />
-<br />
-uses a string marker to determine entry stop / starts. this marker is configurable, and should be written to avoid unintentional use within entries
