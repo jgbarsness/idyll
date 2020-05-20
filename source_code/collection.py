@@ -171,14 +171,22 @@ class Collection:
         # uses 'copy' to preserve permissions
         # in case future update relies on permission at close
         self.file_check()
-        print('\ncreating backup...')
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('backup created as \'' + c.BACKUP_TITLE + '\'\n')
+            print('\nbackup created as \'' + c.BACKUP_TITLE + '\'\n')
         except PermissionError:
+            # verify desired behavior
+            choice = input('\nbackup copy detected. are you sure you'
+                           ' want to override? \'i am sure\' if so.\n')
+            if choice == 'i am sure':
+                pass
+            else:
+                print('\nno update made. returning\n')
+                return
+
             os.remove(c.BACKUP_TITLE)
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('backup updated\n')
+            print('\nbackup updated as \'' + c.BACKUP_TITLE + '\'\n')
 
     def load_from_backup(self):
         'makes backup the running document'
