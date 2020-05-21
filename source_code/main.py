@@ -45,6 +45,8 @@ def main(sys_arguement=None, title=None):
         stored_entries.wipe_journal()
     elif sys_arguement == '-b':
         stored_entries.backup_journal()
+    elif sys_arguement == '-q':
+        stored_entries.quick_delete()
 
 
 def welcome():
