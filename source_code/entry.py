@@ -19,6 +19,7 @@ class Entry():
 
     def write_to(self):
         'writes entry to file, formatted with date/time first'
+
         # make file writeable
         # checks if file was maliciously removed mid-session
         try:
@@ -28,6 +29,7 @@ class Entry():
 
         entries = open(c.JOURNAL_TITLE, 'a+')
         if self.notes != 'N/A' and self.why != 'N/A':
+            # write all
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 self.thing_experienced, '\n',
@@ -38,6 +40,7 @@ class Entry():
             entries.close()
 
         elif self.notes == 'N/A' and self.why != 'N/A':
+            # write without notes marker
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 self.thing_experienced, '\n',
@@ -46,6 +49,7 @@ class Entry():
             entries.close()
 
         elif self.why == 'N/A' and self.notes != 'N/A':
+            # write without why marker
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 self.thing_experienced, '\n',
@@ -54,6 +58,7 @@ class Entry():
             entries.close()
 
         else:
+            # write with only title
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 self.thing_experienced, '\n',
@@ -65,6 +70,7 @@ class Entry():
 
     def begin_entry(self, which=None):
         'initializes textboxes, records input, manages call to write_to()'
+
         if which is None:
             input(c.NOTE)
             TextBox(self, 'note')

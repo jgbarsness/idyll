@@ -14,7 +14,8 @@ HELP = '----\nHELP\n----\nthis is a command line tool for recording\
 \'-e\': new title entry\n\
 \'-v\': view journal\n\
 \'-wipe\': delete entire journal\n\
-\'-b\': create backup of journal\
+\'-b\': create backup of journal\n\
+\'-q\': quick delete the last entry made\
 \n\nall sys arguement titles can be one-lined like \'journal -n my title\'\
 \n\nhidden commands:\n\
 \'wipe\': permanently delete all entries\n\

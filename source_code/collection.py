@@ -12,62 +12,9 @@ class Collection:
     def __init__(self):
         self.collection = []
 
-    def scan_journal(self):
-        'refreshes collection of journal entries'
-        journal = open(c.JOURNAL_TITLE, 'r')
-
-        bulk = []
-        for lines in journal:
-            bulk.append(lines)
-        journal.close()
-
-        bulk = ''.join(bulk)
-        # cleans string - subs out excess newline characters
-        # so that entries print cleanly. replaces w/ first letter occurance
-        bulk = re.sub(c.SCAN_REGEX, r'\g<1>''', bulk)
-        bulk = bulk.split(c.END_MARKER)
-        del bulk[-1]  # remove newline element
-
-        self.collection = bulk
-
-    def random_entry(self):
-        'prints random journal entry'
-        # verify entry present
-        if len(self.collection) > 0:
-            print('\nrandom entry\n')
-            random_entry = random.choice(self.collection)
-            print(random_entry)
-        else:
-            print('\nnone found. check location of journal\n')
-
-    def display_journal(self):
-        'prints out entire journal'
-        if len(self.collection) > 0:
-            # print out entire journal
-            print('\nentries\n')
-            for entry in self.collection:
-                print(entry)
-        else:
-            print('\nnone found. check location of journal\n')
-
-    def show_keyword(self, key):
-        'shows entries if keyword matches'
-        # search for instances of keyword
-        entry = [elmnt for elmnt in self.collection if key in elmnt]
-
-        # if none were found, return
-        if len(entry) == 0:
-            print('\nno entry with that term. returning\n')
-            return
-
-        # if function can continue, print out entry
-        print('\nentries containing',
-              '\'' + key + '\'\n')
-        for thing in entry:
-            print(thing)
-
     def select(self):
         'call user selected function'
+
         selection = input('\nview full journal (j), del entry (del), ' +
                           'view random (o) or use keyword (k)?\n')
 
@@ -85,38 +32,55 @@ class Collection:
             print('\nno selection - returning. run again if desired\n')
             return
 
-    def file_check(self):
-        '''check if file is present. if so, close. if not, create.
-        make file writable if file exists'''
-        try:
-            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
-        except FileNotFoundError:
-            pass
-
-        file_check = open(c.JOURNAL_TITLE, 'a+')
-        file_check.close()
-
-        # make file read only
-        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
-
-    def wipe_journal(self):
-        'completely delete journal'
-        selection = input('\nthis will delete your entire journal.' +
-                          '\nare you sure? enter \'i am sure\' to proceed\n')
-
-        if selection == 'i am sure':
-            try:
-                print('\ndeleting journal...')
-                os.remove(c.JOURNAL_TITLE)
-                print('journal deleted\n')
-            except FileNotFoundError:
-                print('no journal present\n')
+    def check_for_entries(self):
+        'checks if any entries are present'
+        if len(self.collection) == 0:
+            return False
         else:
-            print('\nfile preserved. returning\n')
+            return True
+
+    def random_entry(self):
+        'prints random journal entry'
+
+        # verify entry present
+        if self.check_for_entries():
+            print('\nrandom entry\n')
+            random_entry = random.choice(self.collection)
+            print(random_entry)
+        else:
+            print('\nnone found. check location of journal\n')
+
+    def show_keyword(self, key):
+        'shows entries if keyword matches'
+
+        # search for instances of keyword
+        entry = [elmnt for elmnt in self.collection if key in elmnt]
+
+        # if none were found, return
+        if len(entry) == 0:
+            print('\nno entry with that term. returning\n')
             return
+
+        # if function can continue, print out entry
+        print('\nentries containing',
+              '\'' + key + '\'\n')
+        for thing in entry:
+            print(thing)
+
+    def display_journal(self):
+        'prints out entire journal'
+
+        if self.check_for_entries():
+            # print out entire journal
+            print('\nentries\n')
+            for entry in self.collection:
+                print(entry)
+        else:
+            print('\nnone found. check location of journal\n')
 
     def delete_entry(self, entry):
         'bulk or single delete entries'
+
         # list of all occurances of key
         delete = [elmnt for elmnt in self.collection if entry in elmnt]
 
@@ -134,9 +98,9 @@ class Collection:
         choice = input('delete these entries? cannot be undone. '
                        'if unwanted entries are listed, further '
                        'specify search criteria.\nenter '
-                       '\'i am sure\' to proceed\n')
+                       '\'p\' to proceed\n')
 
-        if choice == 'i am sure':
+        if choice == 'p':
             print('\ndeleting entries...')
 
             # find all occurances
@@ -153,8 +117,28 @@ class Collection:
             print('\nentries preserved. returning\n')
             return
 
+    def scan_journal(self):
+        'refreshes collection of journal entries'
+
+        journal = open(c.JOURNAL_TITLE, 'r')
+
+        bulk = []
+        for lines in journal:
+            bulk.append(lines)
+        journal.close()
+
+        bulk = ''.join(bulk)
+        # cleans string - subs out excess newline characters
+        # so that entries print cleanly. replaces w/ first letter occurance
+        bulk = re.sub(c.SCAN_REGEX, r'\g<1>''', bulk)
+        bulk = bulk.split(c.END_MARKER)
+        del bulk[-1]  # remove newline element
+
+        self.collection = bulk
+
     def refresh_journal(self):
         'after deletion of entry, re-write journal to reflect changes'
+
         # make journal writeable
         os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
         refresh = open(c.JOURNAL_TITLE, 'w')
@@ -166,8 +150,41 @@ class Collection:
         os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
         refresh.close()
 
+    def wipe_journal(self):
+        'completely delete journal'
+
+        selection = input('\nthis will delete your entire journal.' +
+                          '\nare you sure? enter \'p\' to proceed\n')
+
+        if selection == 'p':
+            try:
+                print('\ndeleting journal...')
+                os.remove(c.JOURNAL_TITLE)
+                print('journal deleted\n')
+            except FileNotFoundError:
+                print('no journal present\n')
+        else:
+            print('\nfile preserved. returning\n')
+            return
+
+    def file_check(self):
+        '''check if file is present. if so, close. if not, create.
+        make file writable if file exists'''
+
+        try:
+            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
+        except FileNotFoundError:
+            pass
+
+        file_check = open(c.JOURNAL_TITLE, 'a+')
+        file_check.close()
+
+        # make file read only
+        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
+
     def backup_journal(self):
         'creates a backup journal file'
+
         # uses 'copy' to preserve permissions
         # in case future update relies on permission at close
         self.file_check()
@@ -177,8 +194,8 @@ class Collection:
         except PermissionError:
             # verify desired behavior
             choice = input('\nbackup copy detected. are you sure you'
-                           ' want to override? \'i am sure\' if so.\n')
-            if choice == 'i am sure':
+                           ' want to override? enter \'p\' if so.\n')
+            if choice == 'p':
                 pass
             else:
                 print('\nno update made. returning\n')
@@ -190,6 +207,7 @@ class Collection:
 
     def load_from_backup(self):
         'makes backup the running document'
+
         try:
             open(c.BACKUP_TITLE, 'r')
             pass
@@ -198,8 +216,8 @@ class Collection:
             return
         selection = input('\nrestore journal from backup?\nif backup'
                           ' is outdated, recent journal entries will '
-                          'be lost.\nenter \'i am sure\' to proceed\n')
-        if selection == 'i am sure':
+                          'be lost.\nenter \'p\' to proceed\n')
+        if selection == 'p':
             # make sure correct journal is retained
             try:
                 os.remove(c.JOURNAL_TITLE)
@@ -219,6 +237,7 @@ class Collection:
 
     def gen_config(self):
         'generate config file in pwd'
+
         config = configparser.ConfigParser()
         config['DEFAULT'] = {'END_MARKER': '#*#*#*#*#*#*#*#*#*#*#*#',
                              'DATESTAMP_UNDERLINE': '-----------------------',
@@ -233,3 +252,23 @@ class Collection:
         configfile.close()
 
         print('\nconfig updated in pwd as \'journal_mngr.ini\'\n')
+
+    def quick_delete(self):
+        'quick-deletes the last entry made'
+
+        # return if journal is empty
+        self.scan_journal()
+        if not self.check_for_entries():
+            print('\nerror: nothing to delete\n')
+            return
+
+        answer = input('\ndelete last entry? \'p\' to proceed\n')
+        if answer == 'p':
+            print('\ndeleting...')
+            del self.collection[-1]
+            self.refresh_journal()
+            print('deleted.\n')
+            return
+        else:
+            print('\nnothing deleted\n')
+            return
