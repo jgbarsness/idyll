@@ -1,28 +1,27 @@
 import configparser
 
 
-WELCOME_DISPLAY = '------------\nJOURNAL MNGR\n------------\n\
-journal on the command line. \'h\' for help.'
-
 HELP = '----\nHELP\n----\nthis is a command line tool for recording\
  and accessing things.\nnotes about entry\
- are recorded through a pop-up window.\n\
-\noptional sys arguements:\n\
+ are recorded through a pop-up window. running with any command will\
+ create a journal file.\n\
+\nsys arguements:\n\
 \'-n\': new entry with both notes and why sections\n\
 \'-ng\': new entry with notes section\n\
 \'-nw\': new entry with why section\n\
 \'-e\': new title entry\n\
+\'-a\': new tagged entry. format: \'journal -a [tag] [entry]\'\n\
+entry titles can be one-lined like \'journal -n my title\'\n\n\
 \'-v\': view journal\n\
 \'-wipe\': delete entire journal\n\
 \'-b\': create backup of journal\n\
+\'-load\': load entries from backup\n\
+\'-config\': generate config file in pwd. if config exists, defaults reset.\n\
+           updating config may outdate journal\n\
+\'-del\': delete entry\n\
 \'-q\': quick delete the last entry made\
-\n\nall sys arguement titles can be one-lined like \'journal -n my title\'\
-\n\nhidden commands:\n\
-\'wipe\': permanently delete all entries\n\
-\'backup\': create a backup copy of entire journal\n\
-\'load\': load entries from backup\n\
-\'config\': generate config file in pwd. if config exists, defaults reset.\n\
-          updating config may outdate journal'\
+\n\'-k\': search for entries with keywork\
+\n\'-t\': search for entries with a tag'
 
 WHY = '\'enter\' key to open text box. prompt: why record this entry?'
 

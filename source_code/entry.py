@@ -8,8 +8,10 @@ from entrybox import TextBox
 class Entry():
     'an entry to be stored in the collection'
     def __init__(self, thing_that_was_done, shortcut=None):
+        'accepts a title and an optional shortcut'
         self.logged_time = dt.datetime.now()
-        self.recorded_datetime = self.logged_time.strftime('%a %I:%M%p %b %d %Y')
+        self.recorded_datetime = self.logged_time.strftime('%a %I:%M%p'
+                                                           ' %b %d %Y')
         self.time = self.logged_time.strftime('%-I:%M %p')
         self.date = self.logged_time.strftime('%A, %B %-d %Y')
         self.notes = None
@@ -17,8 +19,8 @@ class Entry():
         self.thing_experienced = thing_that_was_done
         self.begin_entry(shortcut)
 
-    def write_to(self):
-        'writes entry to file, formatted with date/time first'
+    def write_to(self, tag=None):
+        'writes entry to file, formatted with date/time first. checks for tag'
 
         # make file writeable
         # checks if file was maliciously removed mid-session
@@ -28,7 +30,18 @@ class Entry():
             pass
 
         entries = open(c.JOURNAL_TITLE, 'a+')
-        if self.notes != 'N/A' and self.why != 'N/A':
+
+        # is there a tag to include?
+        if tag is not None:
+            # write with tag
+            entries.writelines([str(self.recorded_datetime), '\n',
+                                c.DATESTAMP_UNDERLINE, '\n',
+                                '(' + tag + ')\n',
+                                self.thing_experienced, '\n',
+                                c.END_MARKER + '\n\n'])
+            entries.close()
+
+        elif self.notes != 'N/A' and self.why != 'N/A':
             # write all
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
@@ -87,6 +100,14 @@ class Entry():
 
         elif which == '-e':
             pass
+
+        elif which == '-a':
+            # create tag and exit function
+            tag = self.thing_experienced[0]
+            del self.thing_experienced[0]
+            self.thing_experienced = ' '.join(self.thing_experienced)
+            self.write_to(tag)
+            return
 
         # readability formatting
         if self.notes is None or self.notes == '':

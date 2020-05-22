@@ -12,43 +12,13 @@ class Collection:
     def __init__(self):
         self.collection = []
 
-    def select(self):
-        'call user selected function'
-
-        selection = input('\nview full journal (j), del entry (del), ' +
-                          'view random (o) or use keyword (k)?\n')
-
-        if selection == 'o' or selection == 'random':
-            self.random_entry()
-        elif selection == 'k' or selection == 'key' or selection == 'keyword':
-            user_key = input('\nenter a word to search for:\n')
-            self.show_keyword(user_key)
-        elif selection == 'j' or selection == 'journal':
-            self.display_journal()
-        elif selection == 'del' or selection == 'delete':
-            criteria = input('\nenter a phrase to search for:\n')
-            self.delete_entry(criteria)
-        else:
-            print('\nno selection - returning. run again if desired\n')
-            return
-
     def check_for_entries(self):
         'checks if any entries are present'
+
         if len(self.collection) == 0:
             return False
         else:
             return True
-
-    def random_entry(self):
-        'prints random journal entry'
-
-        # verify entry present
-        if self.check_for_entries():
-            print('\nrandom entry\n')
-            random_entry = random.choice(self.collection)
-            print(random_entry)
-        else:
-            print('\nnone found. check location of journal\n')
 
     def show_keyword(self, key):
         'shows entries if keyword matches'
@@ -114,7 +84,7 @@ class Collection:
             self.refresh_journal()
 
         else:
-            print('\nentries preserved. returning\n')
+            print('entries preserved. returning\n')
             return
 
     def scan_journal(self):

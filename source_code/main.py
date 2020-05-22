@@ -10,16 +10,17 @@ joseph barsness 2020
 
 
 def main(sys_arguement=None, title=None):
+    'routes function calls'
+    if sys_arguement is None:
+        print(c.HELP)
+        # disallow running without sys
+        return
     # check files
     stored_entries.file_check()
     stored_entries.scan_journal()
 
-    if sys_arguement is None:
-        print(c.WELCOME_DISPLAY)
-        welcome()
-
     # skip to command if launched using sys arguement
-    elif sys_arguement == '-n':
+    if sys_arguement == '-n':
         if len(title) != 0:
             new_entry(None, ' '.join(title))
         else:
@@ -47,30 +48,37 @@ def main(sys_arguement=None, title=None):
         stored_entries.backup_journal()
     elif sys_arguement == '-q':
         stored_entries.quick_delete()
-
-
-def welcome():
-    'always-on loop. controls function calls'
-    while True:
-        action = input(c.ACTION)
-
-        if action == 'o' or action == 'new' or action == 'O':
-            new_entry()
-        elif action == 'p' or action == 'previous' or action == 'P':
-            view_previous()
-        elif action == 'h' or action == 'help' or action == 'H':
-            print(f'\n{c.HELP}\n')
-        elif action == 'wipe':
-            stored_entries.wipe_journal()
-        elif action == 'backup':
-            stored_entries.backup_journal()
-        elif action == 'load':
-            stored_entries.load_from_backup()
-        elif action == 'config':
-            stored_entries.gen_config()
-        elif action == 'k' or action == 'quit' or action == 'K':
-            print('\nclosing')
-            return
+    elif sys_arguement == '-del':
+        # check for presence of file. continue if so
+        if check() is False:
+            criteria = input('\nenter a phrase to search for:\n')
+            stored_entries.delete_entry(criteria)
+        else:
+            print('\nno entries.\n')
+    elif sys_arguement == '-h' or sys_arguement == '-help':
+        print(f'\n{c.HELP}\n')
+    elif sys_arguement == '-load':
+        stored_entries.load_from_backup()
+    elif sys_arguement == '-config':
+        stored_entries.gen_config()
+    elif sys_arguement == '-k':
+        is_entries = check()
+        if is_entries is False and (len(title) != 0):
+            stored_entries.show_keyword(' '.join(title))
+        else:
+            print('\nformat: journal -k [keyword]\n')
+    elif sys_arguement == '-t':
+        is_entries = check()
+        if is_entries is False and (len(title) != 0):
+            stored_entries.show_keyword('(' + ' '.join(title) + ')')
+        else:
+            print('\nformat: journal -t [keyword]\n')
+    elif sys_arguement == '-a':
+        # must be at least two words long for both a tag and entry
+        if len(title) > 1:
+            new_entry('-a', title)
+        else:
+            print('\nno tag selected\n')
 
 
 def new_entry(is_shortcut=None, entry_title=None):
@@ -85,24 +93,23 @@ def new_entry(is_shortcut=None, entry_title=None):
     elif is_shortcut == '-ng':
         if entry_title is not None:
             new = Entry(entry_title, '-ng')
-            new.thing_experienced == sys.argv[2:]
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience, '-ng')
     elif is_shortcut == '-nw':
         if entry_title is not None:
             new = Entry(entry_title, '-nw')
-            new.thing_experienced == sys.argv[2:]
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience, '-nw')
     elif is_shortcut == '-e':
         if entry_title is not None:
             new = Entry(entry_title, '-e')
-            new.thing_experienced == sys.argv[2:]
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience, '-e')
+    elif is_shortcut == '-a':
+        new = Entry(entry_title, '-a')
 
     # refresh searchable list after every entry
     stored_entries.scan_journal()
@@ -110,17 +117,13 @@ def new_entry(is_shortcut=None, entry_title=None):
           f'you wrote \'{new.thing_experienced}\'\n')
 
 
-def view_previous():
-    'prompts course of action on which entry to view'
+def check():
+    'checks for entry presence. returns true if empty file'
     # refresh collection
-    stored_entries.file_check()
-    stored_entries.scan_journal()
-
     if len(stored_entries.collection) == 0:
-        print('\nnone found. check location of journal\n')
-        return
-
-    stored_entries.select()
+        return True
+    else:
+        return False
 
 
 stored_entries = Collection()
