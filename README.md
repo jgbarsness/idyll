@@ -8,7 +8,6 @@ is a command line tool used to create and manage journal entries
 '**-nw**': new entry with why section<br />
 '**-e**': new title entry<br />
 '**-a**': new tagged entry. format: 'journal -a [tag] [entry]'<br />
-entry titles can be one-lined like 'journal -n my title'<br />
 '**-v**': view journal<br />
 '**-wipe**': delete entire journal<br />
 '**-b**': create backup of journal<br />
