@@ -19,3 +19,5 @@ updating config may outdate journal<br />
 '**-q**': quick delete the last entry made<br />
 '**-k**': search for entries with keywork<br />
 '**-t**': search for entries with a tag
+
+'journal [sys_arg] [title_or_keyword]'
