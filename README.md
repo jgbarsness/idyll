@@ -18,4 +18,4 @@ updating config may outdate journal<br />
 '**-del**': delete entry<br />
 '**-q**': quick delete the last entry made<br />
 '**-k**': search for entries with keywork<br />
-'**-t': search for entries with a tag
+'**-t**': search for entries with a tag
