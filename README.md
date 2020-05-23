@@ -1,6 +1,10 @@
 ## journal mngr <br />
 is a command line tool used to create and manage journal entries
 
+####install:
+
+move the `journal` folder within `dist` anywhere in your $PATH
+
 #### sys arguments:
 
 '**-n**': new entry with both notes and why sections<br />
@@ -19,4 +23,6 @@ updating config may outdate journal<br />
 '**-k**': search for entries with keywork<br />
 '**-t**': search for entries with a tag
 
-'journal [sys_arg] [title_or_keyword]'
+#### using:
+
+journal [sys_arg] "[title_or_keyword]"
