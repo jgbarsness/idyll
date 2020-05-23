@@ -23,4 +23,6 @@ updating config may outdate journal<br />
 '**-k**': search for entries with keywork<br />
 '**-t**': search for entries with a tag
 
-'journal [sys_arg] [title_or_keyword]'
+#### using:
+
+journal [sys_arg] "[title_or_keyword]"
