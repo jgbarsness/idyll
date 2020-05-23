@@ -1,7 +1,7 @@
 ## journal mngr <br />
 is a command line tool used to create and manage journal entries
 
-#### install:
+#### install (OS X):
 
 move the `journal` folder within `dist` anywhere in your $PATH
 
