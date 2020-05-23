@@ -120,15 +120,17 @@ def new_entry(is_shortcut=None, entry_title=None):
 def check():
     'checks for entry presence. returns true if empty file'
     # refresh collection
+
     if len(stored_entries.collection) == 0:
         return True
     else:
         return False
 
 
-stored_entries = Collection()
-# check if a sys arguement is present
-try:
-    main(sys.argv[1], sys.argv[2:])
-except IndexError:
-    main()
+if __name__ == '__main__':
+    stored_entries = Collection()
+    # check if a sys arguement is present
+    try:
+        main(sys.argv[1], sys.argv[2:])
+    except IndexError:
+        main()

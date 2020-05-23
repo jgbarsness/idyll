@@ -3,6 +3,7 @@ import tkinter as tk
 
 class TextBox():
     'a text box for taking in input and displaying it'
+
     def __init__(self, object_passed, attribute):
         self.text = None
         self.root = tk.Tk()
@@ -23,6 +24,7 @@ class TextBox():
 
         def get_text():
             'retrieve input and destroy window'
+
             if attribute == 'note':
                 object_passed.notes = text_box.get('1.0', 'end-1c')
             elif attribute == 'why':
