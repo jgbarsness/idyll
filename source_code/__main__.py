@@ -12,7 +12,7 @@ joseph barsness 2020
 def main(sys_arguement=None, title=None):
     'routes function calls'
     if sys_arguement is None:
-        print(c.HELP)
+        print(c.HEADER + c.HELP)
         # disallow running without sys
         return
     # check files

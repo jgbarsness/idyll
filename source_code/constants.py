@@ -1,17 +1,18 @@
 import configparser
 
 
-HELP = '----\nHELP\n----\nthis is a command line tool for recording\
+HEADER = '\n---\njnl\n---\nv0.01\nmade by joseph barsness\n\nthis is a command line tool for recording\
  and accessing things.\nnotes about entry\
- are recorded through a pop-up window. running with any command will\
- create a journal file.\n\
-\nsys arguements:\n\
+ are recorded through a pop-up window.\nrunning with any command will\
+ create a journal file.\n\'jnl arg title/keyword/etc\'\n\n' 
+
+HELP = 'sys arguements:\n\
 \'-n\': new entry with both notes and why sections\n\
 \'-ng\': new entry with notes section\n\
 \'-nw\': new entry with why section\n\
 \'-e\': new title entry\n\
-\'-a\': new tagged entry. format: \'journal -a [tag] [entry]\'\n\
-entry titles can be one-lined like \'journal -n my title\'\n\n\
+\'-a\': new tagged entry. format: \'jnl -a tag title\'\n\
+\nentry titles can be one-lined like \'jnl arg title\'\n\n\
 \'-v\': view journal\n\
 \'-wipe\': delete entire journal\n\
 \'-b\': create backup of journal\n\
@@ -21,7 +22,7 @@ entry titles can be one-lined like \'journal -n my title\'\n\n\
 \'-del\': delete entry\n\
 \'-q\': quick delete the last entry made\
 \n\'-k\': search for entries with keywork\
-\n\'-t\': search for entries with a tag'
+\n\'-t\': search for entries with a tag\n'
 
 WHY = '\'enter\' key to open text box. prompt: why record this entry?'
 

@@ -1,9 +1,10 @@
-## journal mngr <br />
-is a command line tool used to create and manage journal entries
+## jnl <br />
+is a command line tool used to create and manage journal entries<br />
+move 'jnl' executable in 'dist' directory to a directory in $PATH
 
-#### install (OS X):
+#### using:
 
-move the `journal` folder within `dist` anywhere in your $PATH
+jnl sys_arg title_or_keyword
 
 #### sys arguments:
 
@@ -22,7 +23,3 @@ updating config may outdate journal<br />
 '**-q**': quick delete the last entry made<br />
 '**-k**': search for entries with keywork<br />
 '**-t**': search for entries with a tag
-
-#### using:
-
-journal [sys_arg] "[title_or_keyword]"
