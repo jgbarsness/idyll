@@ -13,5 +13,9 @@ setuptools.setup(
     url="https://github.com/jgbarsness/journal_mngr",
     packages=setuptools.find_packages(),
     python_requires='>=3.7',
-    classifiers=["License :: OSI Approved :: MIT License"]
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "License :: MIT License",
+        "Operating System :: MacOS",
+    ]
 )

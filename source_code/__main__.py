@@ -56,7 +56,7 @@ def main(sys_arguement=None, title=None):
         else:
             print('\nno entries.\n')
     elif sys_arguement == '-h' or sys_arguement == '-help':
-        print(f'\n{c.HELP}\n')
+        print(c.HELP)
     elif sys_arguement == '-load':
         stored_entries.load_from_backup()
     elif sys_arguement == '-config':
@@ -79,6 +79,9 @@ def main(sys_arguement=None, title=None):
             new_entry('-a', title)
         else:
             print('\nno tag selected\n')
+    else:
+        # default to a one-lined title only entry
+        new_entry('-e', ' '.join(sys.argv[1:]))
 
 
 def new_entry(is_shortcut=None, entry_title=None):

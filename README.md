@@ -1,6 +1,6 @@
 ## jnl <br />
 is a command line tool used to create and manage journal entries<br />
-move 'jnl' executable in 'dist' directory to a directory in $PATH
+packaged for manual install on macOS - create symbolic link (```sudo ln -s```) between ```jnl``` executable in ```dist/jnl``` and ```/usr/local/bin``` to be able to run from shell by calling ```jnl```
 
 #### using:
 
