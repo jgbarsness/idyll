@@ -1,7 +1,6 @@
 ## jnl <br />
-is a command line tool used to create and manage journal entries<br />
-move 'jnl' executable in 'dist' directory to a directory in $PATH
-
+is a command line tool used to create and manage journal entries<br /><br />
+packaged on OSX
 #### using:
 
 jnl sys_arg title_or_keyword
