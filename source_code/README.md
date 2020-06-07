@@ -5,7 +5,7 @@ packaged on OSX
 
 jnl sys_arg title_or_keyword
 
-#### sys arguments:
+#### arguments:
 
 '**-n**': new entry with both notes and why sections<br />
 '**-ng**': new entry with notes section<br />
