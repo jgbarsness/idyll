@@ -4,15 +4,16 @@ import configparser
 HEADER = '\n---\njnl\n---\nv0.01\nmade by joseph barsness\n\nthis is a command line tool for recording\
  and accessing things.\nnotes about entry\
  are recorded through a pop-up window.\nrunning with any command will\
- create a journal file.\n\'jnl arg title/keyword/etc\'\n\n' 
+ create a journal file.\n'
 
-HELP = 'sys arguements:\n\
+HELP = '\nusage:\nfull: \'jnl arg\'\nquick: \'jnl entry\'\n\
+all entry titles can be one-lined like \'jnl arg title\'\n\
+\narguements:\n\
 \'-n\': new entry with both notes and why sections\n\
 \'-ng\': new entry with notes section\n\
 \'-nw\': new entry with why section\n\
 \'-e\': new title entry\n\
 \'-a\': new tagged entry. format: \'jnl -a tag title\'\n\
-\nentry titles can be one-lined like \'jnl arg title\'\n\n\
 \'-v\': view journal\n\
 \'-wipe\': delete entire journal\n\
 \'-b\': create backup of journal\n\
