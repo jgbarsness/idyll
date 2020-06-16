@@ -1,7 +1,7 @@
 import configparser
 
 
-HEADER = '\n---\njnl\n---\nv a0.02\nmade by joseph barsness\n\nthis is a command line tool for recording\
+HEADER = '\n---\njnl\n---\nv1.1.0\nmade by joseph barsness\n\nthis is a command line tool for recording\
  and accessing things.\nnotes about entry\
  are recorded through a pop-up window.\nrunning with any command will\
  create a journal file.\n'
