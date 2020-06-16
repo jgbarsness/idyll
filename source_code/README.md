@@ -8,8 +8,8 @@ jnl sys_arg title_or_keyword
 #### arguments:
 
 '**-n**': new entry with both notes and why sections<br />
-'**-ng**': new entry with notes section<br />
-'**-nw**': new entry with why section<br />
+'**-n1**': new entry with first section<br />
+'**-n1**': new entry with second section<br />
 '**-e**': new title entry<br />
 '**-a**': new tagged entry. format: 'journal -a [tag] [entry]'<br />
 '**-v**': view journal<br />
@@ -22,3 +22,6 @@ updating config may outdate journal<br />
 '**-q**': quick delete the last entry made<br />
 '**-k**': search for entries with keywork<br />
 '**-t**': search for entries with a tag
+
+first / second sections are intended to make journals flexible in use.<br />
+e.g. running -config and changing the markers to 'where' and 'when'

@@ -213,8 +213,8 @@ class Collection:
                              'DATESTAMP_UNDERLINE': '-----------------------',
                              'JOURNAL_TITLE': 'journal',
                              'BACKUP_TITLE': 'backup_journal',
-                             'NOTES_MARKER': '-n:',
-                             'WHY_MARKER': '-w:'}
+                             'FIRST_MARKER': '1st:',
+                             'SECOND_MARKER': '2nd:'}
 
         configfile = open('journal_mngr.ini', 'w')
         config.write(configfile)

@@ -20,17 +20,18 @@ def main(sys_arguement=None, title=None):
     stored_entries.scan_journal()
 
     # skip to command if launched using sys arguement
+    # ng and nw are depreciated commands. disregard and consider 'first' and 'second'
     if sys_arguement == '-n':
         if len(title) != 0:
             new_entry(None, ' '.join(title))
         else:
             new_entry()
-    elif sys_arguement == '-ng':
+    elif sys_arguement == '-n1':
         if len(title) != 0:
             new_entry('-ng', ' '.join(title))
         else:
             new_entry('-ng')
-    elif sys_arguement == '-nw':
+    elif sys_arguement == '-n2':
         if len(title) != 0:
             new_entry('-nw', ' '.join(title))
         else:

@@ -25,10 +25,11 @@ class TextBox():
         def get_text():
             'retrieve input and destroy window'
 
-            if attribute == 'note':
-                object_passed.notes = text_box.get('1.0', 'end-1c')
-            elif attribute == 'why':
-                object_passed.why = text_box.get('1.0', 'end-1c')
+            # refers to which section was passed, and assigns accordingly
+            if attribute == 'first':
+                object_passed.first = text_box.get('1.0', 'end-1c')
+            elif attribute == 'second':
+                object_passed.second = text_box.get('1.0', 'end-1c')
 
             # destroy root
             self.root.after(1, self.root.destroy())

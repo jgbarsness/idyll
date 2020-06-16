@@ -14,8 +14,8 @@ class Entry():
                                                            ' %b %d %Y')
         self.time = self.logged_time.strftime('%-I:%M %p')
         self.date = self.logged_time.strftime('%A, %B %-d %Y')
-        self.notes = None
-        self.why = None
+        self.first = None
+        self.second = None
         self.thing_experienced = thing_that_was_done
         self.begin_entry(shortcut)
 
@@ -41,33 +41,33 @@ class Entry():
                                 c.END_MARKER + '\n\n'])
             entries.close()
 
-        elif self.notes != 'N/A' and self.why != 'N/A':
+        elif self.first != 'N/A' and self.second != 'N/A':
             # write all
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n',
-                                c.NOTES_MARKER, '\n',
-                                self.notes, '\n',
-                                c.WHY_MARKER, '\n',
-                                self.why, '\n' + c.END_MARKER + '\n\n'])
+                                self.thing_experienced, '\n\n',
+                                c.FIRST_MARKER, '\n',
+                                self.first, '\n\n',
+                                c.SECOND_MARKER, '\n',
+                                self.second, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
 
-        elif self.notes == 'N/A' and self.why != 'N/A':
+        elif self.first == 'N/A' and self.second != 'N/A':
             # write without notes marker
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n',
-                                c.WHY_MARKER + '\n',
-                                self.why, '\n' + c.END_MARKER + '\n\n'])
+                                self.thing_experienced, '\n\n',
+                                c.SECOND_MARKER + '\n',
+                                self.second, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
 
-        elif self.why == 'N/A' and self.notes != 'N/A':
+        elif self.second == 'N/A' and self.first != 'N/A':
             # write without why marker
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n',
-                                c.NOTES_MARKER, '\n',
-                                self.notes, '\n' + c.END_MARKER + '\n\n'])
+                                self.thing_experienced, '\n\n',
+                                c.FIRST_MARKER, '\n',
+                                self.first, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
 
         else:
@@ -85,18 +85,18 @@ class Entry():
         'initializes textboxes, records input, manages call to write_to()'
 
         if which is None:
-            input(c.NOTE)
-            TextBox(self, 'note')
-            input(c.WHY)
-            TextBox(self, 'why')
+            input(c.FIRST)
+            TextBox(self, 'first')
+            input(c.SECOND)
+            TextBox(self, 'second')
 
         elif which == '-ng':
-            input(c.NOTE)
-            TextBox(self, 'note')
+            input(c.FIRST)
+            TextBox(self, 'first')
 
         elif which == '-nw':
-            input(c.WHY)
-            TextBox(self, 'why')
+            input(c.SECOND)
+            TextBox(self, 'second')
 
         elif which == '-e':
             pass
@@ -110,11 +110,11 @@ class Entry():
             return
 
         # readability formatting
-        if self.notes is None or self.notes == '':
-            self.notes = 'N/A'
+        if self.first is None or self.first == '':
+            self.first = 'N/A'
 
-        if self.why is None or self.why == '':
-            self.why = 'N/A'
+        if self.second is None or self.second == '':
+            self.second = 'N/A'
 
         # call write function regardless of shortcut taken
         self.write_to()
