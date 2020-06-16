@@ -7,7 +7,7 @@ jnl sys_arg title_or_keyword
 
 #### arguments:
 
-'**-n**': new entry with both notes and why sections<br />
+'**-n**': new entry with both first and second sections<br />
 '**-n1**': new entry with first section<br />
 '**-n1**': new entry with second section<br />
 '**-e**': new title entry<br />
