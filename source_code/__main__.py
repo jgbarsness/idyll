@@ -11,16 +11,15 @@ joseph barsness 2020
 
 def main(sys_arguement=None, title=None):
     'routes function calls'
+
     if sys_arguement is None:
         print(c.HEADER + c.HELP)
-        # disallow running without sys
         return
     # check files
     stored_entries.file_check()
     stored_entries.scan_journal()
 
     # skip to command if launched using sys arguement
-    # ng and nw are depreciated commands. disregard and consider 'first' and 'second'
     if sys_arguement == '-n':
         if len(title) != 0:
             new_entry(None, ' '.join(title))
@@ -28,21 +27,24 @@ def main(sys_arguement=None, title=None):
             new_entry()
     elif sys_arguement == '-n1':
         if len(title) != 0:
-            new_entry('-ng', ' '.join(title))
+            new_entry('-n1', ' '.join(title))
         else:
-            new_entry('-ng')
+            new_entry('-n1')
     elif sys_arguement == '-n2':
         if len(title) != 0:
-            new_entry('-nw', ' '.join(title))
+            new_entry('-n2', ' '.join(title))
         else:
-            new_entry('-nw')
+            new_entry('-n2')
     elif sys_arguement == '-e':
         if len(title) != 0:
             new_entry('-e', ' '.join(title))
         else:
             new_entry('-e')
     elif sys_arguement == '-v':
-        stored_entries.display_journal()
+        if (len(title) != 0):
+            stored_entries.show_keyword(' '.join(title))
+        else:
+            stored_entries.display_journal()
     elif sys_arguement == '-wipe':
         stored_entries.wipe_journal()
     elif sys_arguement == '-b':
@@ -62,12 +64,6 @@ def main(sys_arguement=None, title=None):
         stored_entries.load_from_backup()
     elif sys_arguement == '-config':
         stored_entries.gen_config()
-    elif sys_arguement == '-k':
-        is_entries = check()
-        if is_entries is False and (len(title) != 0):
-            stored_entries.show_keyword(' '.join(title))
-        else:
-            print('\nformat: journal -k [keyword]\n')
     elif sys_arguement == '-t':
         is_entries = check()
         if is_entries is False and (len(title) != 0):
@@ -94,18 +90,18 @@ def new_entry(is_shortcut=None, entry_title=None):
         else:
             experience = str(input('\ntitle:\n'))
             new = Entry(experience)
-    elif is_shortcut == '-ng':
+    elif is_shortcut == '-n1':
         if entry_title is not None:
-            new = Entry(entry_title, '-ng')
+            new = Entry(entry_title, '-n1')
         else:
             experience = str(input('\ntitle:\n'))
-            new = Entry(experience, '-ng')
-    elif is_shortcut == '-nw':
+            new = Entry(experience, '-n1')
+    elif is_shortcut == '-n2':
         if entry_title is not None:
-            new = Entry(entry_title, '-nw')
+            new = Entry(entry_title, '-n2')
         else:
             experience = str(input('\ntitle:\n'))
-            new = Entry(experience, '-nw')
+            new = Entry(experience, '-n2')
     elif is_shortcut == '-e':
         if entry_title is not None:
             new = Entry(entry_title, '-e')
@@ -117,13 +113,13 @@ def new_entry(is_shortcut=None, entry_title=None):
 
     # refresh searchable list after every entry
     stored_entries.scan_journal()
+    # print out entry info + title
     print(f'\nnew\n---\non {new.date} at {new.time}, '
           f'you wrote \'{new.thing_experienced}\'\n')
 
 
 def check():
     'checks for entry presence. returns true if empty file'
-    # refresh collection
 
     if len(stored_entries.collection) == 0:
         return True

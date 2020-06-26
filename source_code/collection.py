@@ -12,16 +12,16 @@ class Collection:
     def __init__(self):
         self.collection = []
 
-    def check_for_entries(self):
+    def check_for_entries(self, to_check):
         'checks if any entries are present'
 
-        if len(self.collection) == 0:
+        if len(to_check) == 0:
             return False
         else:
             return True
 
-    def show_keyword(self, key):
-        'shows entries if keyword matches'
+    def check_for_thing(self, key):
+        'returns a list of all entries containing a keywork'
 
         # search for instances of keyword
         entry = [elmnt for elmnt in self.collection if key in elmnt]
@@ -29,6 +29,15 @@ class Collection:
         # if none were found, return
         if len(entry) == 0:
             print('\nno entry with that term. returning\n')
+            return entry
+
+        return entry
+
+    def show_keyword(self, key):
+        'shows entries if keyword matches'
+        
+        entry = self.check_for_thing(key)
+        if self.check_for_entries(entry) is False:
             return
 
         # if function can continue, print out entry
@@ -40,7 +49,7 @@ class Collection:
     def display_journal(self):
         'prints out entire journal'
 
-        if self.check_for_entries():
+        if self.check_for_entries(self.collection):
             # print out entire journal
             print('\nentries\n')
             for entry in self.collection:
@@ -51,12 +60,8 @@ class Collection:
     def delete_entry(self, entry):
         'bulk or single delete entries'
 
-        # list of all occurances of key
-        delete = [elmnt for elmnt in self.collection if entry in elmnt]
-
-        # if none were found, return
-        if len(delete) == 0:
-            print('\nno entry with that term. returning\n')
+        delete = self.check_for_thing(entry)
+        if self.check_for_entries(delete) is False:
             return
 
         # if function can continue, print out entry
@@ -84,7 +89,7 @@ class Collection:
             self.refresh_journal()
 
         else:
-            print('entries preserved. returning\n')
+            print('\nentries preserved. returning\n')
             return
 
     def scan_journal(self):
@@ -228,8 +233,8 @@ class Collection:
 
         # return if journal is empty
         self.scan_journal()
-        if not self.check_for_entries():
-            print('\nerror: nothing to delete\n')
+        if not self.check_for_entries(self.collection):
+            print('\nnothing to delete\n')
             return
 
         answer = input('\ndelete last entry? \'p\' to proceed\n')

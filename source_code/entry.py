@@ -90,11 +90,11 @@ class Entry():
             input(c.SECOND)
             TextBox(self, 'second')
 
-        elif which == '-ng':
+        elif which == '-n1':
             input(c.FIRST)
             TextBox(self, 'first')
 
-        elif which == '-nw':
+        elif which == '-n2':
             input(c.SECOND)
             TextBox(self, 'second')
 
