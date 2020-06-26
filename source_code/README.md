@@ -9,7 +9,7 @@ jnl [sys_arg] [title_or_keyword]
 
 '**-n**': new entry with both first and second sections<br />
 '**-n1**': new entry with first section<br />
-'**-n1**': new entry with second section<br />
+'**-n2**': new entry with second section<br />
 '**-e**': new title entry<br />
 '**-a**': new tagged entry. syntax: jnl -a [tag] [entry]<br />
 '**-v**': view journal. syntax: jnl -v // jnl -v [keyword]<br />
