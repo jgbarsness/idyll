@@ -115,7 +115,7 @@ def new_entry(is_shortcut=None, entry_title=None):
     stored_entries.scan_journal()
     # print out entry info + title
     print(f'\nnew\n---\non {new.date} at {new.time}, '
-          f'you wrote \'{new.thing_experienced}\'\n')
+          f'you wrote \'{new.title}\'\n')
 
 
 def check():

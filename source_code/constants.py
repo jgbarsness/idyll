@@ -1,19 +1,19 @@
 import configparser
 
 
-HEADER = '\n---\njnl\n---\nv1.2.0\nmade by joseph barsness\n\nthis is a command line tool for recording\
+HEADER = '\n---\njnl\n---\nv1.3.0\nmade by joseph barsness\n\nthis is a command line tool for recording\
  and accessing things.\nnotes about entry\
  are recorded through a pop-up window.\nrunning with any command will\
  create a journal file.\n'
 
-HELP = '\nusage:\nfull: \'jnl arg\'\nquick: \'jnl entry\'\n\
-all entry titles can be one-lined like \'jnl arg title\'\n\
+HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick: \'jnl [title]\'\n\
+alternatively, entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
 \narguements:\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
-\'-e\': new title entry\n\
-\'-a\': new tagged entry. format: \'jnl -a tag title\'\n\n\
+\'-e\': new title entry, synonymous with \'jnl [title]\'\n\
+\'-a\': new tagged entry. format: \'jnl -a [tag] [title]\'\n\n\
 \'-v\': view journal. follow with keyword to search\n\
 \'-t\': search for entries with a tag\n\
 \'-del\': delete entry\n\
@@ -25,9 +25,6 @@ all entry titles can be one-lined like \'jnl arg title\'\n\
            updating config may outdate journal\n\
 \nfirst / second sections are intended to make journals flexible in use.\n\
 e.g. running -config and changing the markers to \'where\' and \'when\'\n'
-
-ACTION = '\'o\' for new entry, \'p\' to view previous,\
-\'k\' when done\n'
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
 
@@ -43,12 +40,13 @@ the desired default backup file, or change to create a new one.\n\
 # \'first_marker\' determines what should preceed an entry\'s \'first\' \
 section. may be changed without outdating anything.\n\
 # \'second_marker\' determines what should preceed an entry\'s \'second\' \
-section. may be changed without outdating anything.'
+section. may be changed without outdating anything.\n\
+# \'use_textbox\' can be set to false if tk textbox use is undesired.'
 
 # use config values if present, else use default
 try:
     config = configparser.ConfigParser()
-    config.read('journal_mngr.ini')
+    config.read('jnl.ini')
 
     END_MARKER = config['DEFAULT']['END_MARKER']
     DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
@@ -56,6 +54,7 @@ try:
     BACKUP_TITLE = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
     FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']
     SECOND_MARKER = config['DEFAULT']['SECOND_MARKER']
+    USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
 
 except KeyError:
     END_MARKER = '#*#*#*#*#*#*#*#*#*#*#*#'
@@ -64,7 +63,12 @@ except KeyError:
     BACKUP_TITLE = 'backup_journal.txt'
     FIRST_MARKER = '1st:'
     SECOND_MARKER = '2nd:'
+    USE_TEXTBOX = True
 
 # used to determine prompt for entries with sections
 SECOND = '\'enter\' key to open text box. ' + SECOND_MARKER + ' '
 FIRST = '\n\'enter\' key to open text box. ' + FIRST_MARKER + ' '
+
+# to be used in absence of text box
+SECOND_NT = '\'enter\' key to submit entry. ' + SECOND_MARKER + ' '
+FIRST_NT = '\'enter\' key to submit entry. ' + FIRST_MARKER + ' '

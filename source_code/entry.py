@@ -7,16 +7,15 @@ from entrybox import TextBox
 
 class Entry():
     'an entry to be stored in the collection'
-    def __init__(self, thing_that_was_done, shortcut=None):
+    def __init__(self, passed_title, shortcut=None):
         'accepts a title and an optional shortcut'
-        self.logged_time = dt.datetime.now()
-        self.recorded_datetime = self.logged_time.strftime('%a %I:%M%p'
-                                                           ' %b %d %Y')
-        self.time = self.logged_time.strftime('%-I:%M %p')
-        self.date = self.logged_time.strftime('%A, %B %-d %Y')
+        self.now = dt.datetime.now()
+        self.recorded_datetime = self.now.strftime('%a %I:%M%p %b %d %Y')
+        self.time = self.now.strftime('%-I:%M %p')
+        self.date = self.now.strftime('%A, %B %-d %Y')
         self.first = None
         self.second = None
-        self.thing_experienced = thing_that_was_done
+        self.title = passed_title
         self.begin_entry(shortcut)
 
     def write_to(self, tag=None):
@@ -37,7 +36,7 @@ class Entry():
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
                                 '(' + tag + ')\n',
-                                self.thing_experienced, '\n',
+                                self.title, '\n',
                                 c.END_MARKER + '\n\n'])
             entries.close()
 
@@ -45,7 +44,7 @@ class Entry():
             # write all
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n\n',
+                                self.title, '\n\n',
                                 c.FIRST_MARKER, '\n',
                                 self.first, '\n\n',
                                 c.SECOND_MARKER, '\n',
@@ -56,7 +55,7 @@ class Entry():
             # write without notes marker
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n\n',
+                                self.title, '\n\n',
                                 c.SECOND_MARKER + '\n',
                                 self.second, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
@@ -65,7 +64,7 @@ class Entry():
             # write without why marker
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n\n',
+                                self.title, '\n\n',
                                 c.FIRST_MARKER, '\n',
                                 self.first, '\n' + c.END_MARKER + '\n\n'])
             entries.close()
@@ -74,7 +73,7 @@ class Entry():
             # write with only title
             entries.writelines([str(self.recorded_datetime), '\n',
                                 c.DATESTAMP_UNDERLINE, '\n',
-                                self.thing_experienced, '\n',
+                                self.title, '\n',
                                 c.END_MARKER + '\n\n'])
             entries.close()
 
@@ -85,27 +84,37 @@ class Entry():
         'initializes textboxes, records input, manages call to write_to()'
 
         if which is None:
-            input(c.FIRST)
-            TextBox(self, 'first')
-            input(c.SECOND)
-            TextBox(self, 'second')
+            if c.USE_TEXTBOX is False:
+                self.first = input(c.FIRST_NT)
+                self.second = input(c.SECOND_NT)
+            else:
+                input(c.FIRST)
+                TextBox(self, 'first')
+                input(c.SECOND)
+                TextBox(self, 'second')
 
         elif which == '-n1':
-            input(c.FIRST)
-            TextBox(self, 'first')
+            if c.USE_TEXTBOX is False:
+                self.first = input(c.FIRST_NT)
+            else:
+                input(c.FIRST)
+                TextBox(self, 'first')
 
         elif which == '-n2':
-            input(c.SECOND)
-            TextBox(self, 'second')
+            if c.USE_TEXTBOX is False:
+                self.second = input(c.SECOND_NT)
+            else:
+                input(c.SECOND)
+                TextBox(self, 'second')
 
         elif which == '-e':
             pass
 
         elif which == '-a':
             # create tag and exit function
-            tag = self.thing_experienced[0]
-            del self.thing_experienced[0]
-            self.thing_experienced = ' '.join(self.thing_experienced)
+            tag = self.title[0]
+            del self.title[0]
+            self.title = ' '.join(self.title)
             self.write_to(tag)
             return
 

@@ -35,16 +35,13 @@ class Collection:
 
     def show_keyword(self, key):
         'shows entries if keyword matches'
-        
+
         entry = self.check_for_thing(key)
         if self.check_for_entries(entry) is False:
             return
 
         # if function can continue, print out entry
-        print('\nentries containing',
-              '\'' + key + '\'\n')
-        for thing in entry:
-            print(thing)
+        self.print_entries(key, entry)
 
     def display_journal(self):
         'prints out entire journal'
@@ -57,18 +54,24 @@ class Collection:
         else:
             print('\nnone found. check location of journal\n')
 
+    def print_entries(self, criteria, container):
+        'used to print out things entries after search is ran'
+
+        print('\nentries containing',
+              '\'' + criteria + '\'\n')
+        for thing in container:
+            print(thing)
+
     def delete_entry(self, entry):
         'bulk or single delete entries'
 
         delete = self.check_for_thing(entry)
+        # if nothing is returned by previous call, end
         if self.check_for_entries(delete) is False:
             return
 
         # if function can continue, print out entry
-        print('\nentries containing',
-              '\'' + entry + '\'\n')
-        for thing in delete:
-            print(thing)
+        self.print_entries(entry, delete)
 
         choice = input('delete these entries? cannot be undone. '
                        'if unwanted entries are listed, further '
@@ -93,7 +96,7 @@ class Collection:
             return
 
     def scan_journal(self):
-        'refreshes collection of journal entries'
+        'refreshes collection list of journal entries'
 
         journal = open(c.JOURNAL_TITLE, 'r')
 
@@ -177,6 +180,7 @@ class Collection:
                 return
 
             os.remove(c.BACKUP_TITLE)
+            # retain a backup copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
             print('\nbackup updated as \'' + c.BACKUP_TITLE + '\'\n')
 
@@ -219,14 +223,15 @@ class Collection:
                              'JOURNAL_TITLE': 'journal',
                              'BACKUP_TITLE': 'backup_journal',
                              'FIRST_MARKER': '1st:',
-                             'SECOND_MARKER': '2nd:'}
+                             'SECOND_MARKER': '2nd:',
+                             'USE_TEXTBOX': 'true'}
 
-        configfile = open('journal_mngr.ini', 'w')
+        configfile = open('jnl.ini', 'w')
         config.write(configfile)
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
 
-        print('\nconfig updated in pwd as \'journal_mngr.ini\'\n')
+        print('\nconfig updated in pwd as \'jnl.ini\'\n')
 
     def quick_delete(self):
         'quick-deletes the last entry made'
