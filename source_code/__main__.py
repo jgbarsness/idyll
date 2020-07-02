@@ -53,11 +53,10 @@ def main(sys_arguement=None, title=None):
         stored_entries.quick_delete()
     elif sys_arguement == '-del':
         # check for presence of file. continue if so
-        if check() is False:
-            criteria = input('\nenter a phrase to search for:\n')
-            stored_entries.delete_entry(criteria)
+        if check() is False and (len(title) != 0):
+            stored_entries.delete_entry(' '.join(title))
         else:
-            print('\nno entries.\n')
+            print('\nnothing found. format: jnl -del [keyword]\n')
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
     elif sys_arguement == '-load':
@@ -65,11 +64,10 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-config':
         stored_entries.gen_config()
     elif sys_arguement == '-t':
-        is_entries = check()
-        if is_entries is False and (len(title) != 0):
+        if check() is False and (len(title) != 0):
             stored_entries.show_keyword('(' + ' '.join(title) + ')')
         else:
-            print('\nformat: journal -t [keyword]\n')
+            print('\nnothing found. format: jnl -t [keyword]\n')
     elif sys_arguement == '-a':
         # must be at least two words long for both a tag and entry
         if len(title) > 1:

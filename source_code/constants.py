@@ -16,7 +16,7 @@ alternatively, entries with arg use can be one-lined like \'jnl [arg] [title]\'\
 \'-a\': new tagged entry. format: \'jnl -a [tag] [title]\'\n\n\
 \'-v\': view journal. follow with keyword to search\n\
 \'-t\': search for entries with a tag\n\
-\'-del\': delete entry\n\
+\'-del\': delete entry(s). format: \'jnl -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
 \'-wipe\': delete entire journal\n\
 \'-b\': create backup of journal\n\
