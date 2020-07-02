@@ -6,13 +6,12 @@ HEADER = '\n---\njnl\n---\nv1.3.0\nmade by joseph barsness\n\nthis is a command 
  are recorded through a pop-up window.\nrunning with any command will\
  create a journal file.\n'
 
-HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick: \'jnl [title]\'\n\
-alternatively, entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
+HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
+alternatively, the title of entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
 \narguements:\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
-\'-e\': new title entry, synonymous with \'jnl [title]\'\n\
 \'-a\': new tagged entry. format: \'jnl -a [tag] [title]\'\n\n\
 \'-v\': view journal. follow with keyword to search\n\
 \'-t\': search for entries with a tag\n\

@@ -35,11 +35,6 @@ def main(sys_arguement=None, title=None):
             new_entry('-n2', ' '.join(title))
         else:
             new_entry('-n2')
-    elif sys_arguement == '-e':
-        if len(title) != 0:
-            new_entry('-e', ' '.join(title))
-        else:
-            new_entry('-e')
     elif sys_arguement == '-v':
         if (len(title) != 0):
             stored_entries.show_keyword(' '.join(title))
