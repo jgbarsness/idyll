@@ -1,7 +1,7 @@
 ## jnl <br />
 is a command line tool used to create and manage journal entries. entries are managed in 'jnl.txt'. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences.<br /><br />
 packaged on OSX<br />
-```sudo ln -s [...dist/jnl/jnl] [/usr/local/bin]``` to run from root using 'jnl'
+```sudo ln -s [...dist/jnl/jnl] [/usr/local/bin]``` to install from current folder location
 #### using:
 
 jnl [sys_arg] [title_or_keyword]<br />
