@@ -85,12 +85,8 @@ def main(sys_arguement=None, title=None):
         printout(new.date, new.time, new.title)
     else:
         # default to a one-lined title only entry
-        if not_null(sys_arguement):
-            new = Entry(' '.join(sys.argv[1:]), '-e')
-            printout(new.date, new.time, new.title)
-        else:
-            # print help
-            print(c.HEADER + c.HELP)
+        new = Entry(' '.join(sys.argv[1:]), '-e')
+        printout(new.date, new.time, new.title)
 
 
 def printout(date, time, title):
