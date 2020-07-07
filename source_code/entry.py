@@ -18,72 +18,77 @@ class Entry():
         self.title = passed_title
         self.begin_entry(shortcut)
 
-    def write_to(self, tag=None):
-        'writes entry to file, formatted with date/time first. checks for tag'
+    def full_write(self):
+        'a full entry, including both sections'
 
-        # make file writeable
-        # checks if file was maliciously removed mid-session
+        entries = open(c.JOURNAL_TITLE, 'a+')
+        self.format_readability()
+        entries.writelines([str(self.recorded_datetime), '\n',
+                            c.DATESTAMP_UNDERLINE, '\n',
+                            self.title, '\n\n',
+                            c.FIRST_MARKER, '\n',
+                            self.first, '\n\n',
+                            c.SECOND_MARKER, '\n',
+                            self.second, '\n' + c.END_MARKER + '\n\n'])
+        entries.close()
+
+    def first_write(self):
+        'a first-section-only write'
+
+        entries = open(c.JOURNAL_TITLE, 'a+')
+        self.format_readability()
+        entries.writelines([str(self.recorded_datetime), '\n',
+                            c.DATESTAMP_UNDERLINE, '\n',
+                            self.title, '\n\n',
+                            c.FIRST_MARKER, '\n',
+                            self.first, '\n' + c.END_MARKER + '\n\n'])
+        entries.close()
+
+    def second_write(self):
+        'a second-section-only write'
+
+        entries = open(c.JOURNAL_TITLE, 'a+')
+        self.format_readability()
+        entries.writelines([str(self.recorded_datetime), '\n',
+                            c.DATESTAMP_UNDERLINE, '\n',
+                            self.title, '\n\n',
+                            c.SECOND_MARKER + '\n',
+                            self.second, '\n' + c.END_MARKER + '\n\n'])
+        entries.close()
+
+    def title_write(self):
+        'a write with a title only'
+
+        entries = open(c.JOURNAL_TITLE, 'a+')
+        self.format_readability()
+        entries.writelines([str(self.recorded_datetime), '\n',
+                            c.DATESTAMP_UNDERLINE, '\n',
+                            self.title, '\n',
+                            c.END_MARKER + '\n\n'])
+        entries.close()
+
+    def tag_write(self, tag):
+        'a write with a tag'
+
+        entries = open(c.JOURNAL_TITLE, 'a+')
+        self.format_readability()
+        entries.writelines([str(self.recorded_datetime), '\n',
+                            c.DATESTAMP_UNDERLINE, '\n',
+                            '(' + tag + ')\n',
+                            self.title, '\n',
+                            c.END_MARKER + '\n\n'])
+        entries.close()
+
+    def begin_entry(self, which=None):
+        'initializes textboxes, records input, manages call to _write()'
+
         try:
             os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
         except FileNotFoundError:
             pass
 
-        entries = open(c.JOURNAL_TITLE, 'a+')
-
-        # is there a tag to include?
-        if tag is not None:
-            # write with tag
-            entries.writelines([str(self.recorded_datetime), '\n',
-                                c.DATESTAMP_UNDERLINE, '\n',
-                                '(' + tag + ')\n',
-                                self.title, '\n',
-                                c.END_MARKER + '\n\n'])
-            entries.close()
-
-        elif self.first != 'N/A' and self.second != 'N/A':
-            # write all
-            entries.writelines([str(self.recorded_datetime), '\n',
-                                c.DATESTAMP_UNDERLINE, '\n',
-                                self.title, '\n\n',
-                                c.FIRST_MARKER, '\n',
-                                self.first, '\n\n',
-                                c.SECOND_MARKER, '\n',
-                                self.second, '\n' + c.END_MARKER + '\n\n'])
-            entries.close()
-
-        elif self.first == 'N/A' and self.second != 'N/A':
-            # write without notes marker
-            entries.writelines([str(self.recorded_datetime), '\n',
-                                c.DATESTAMP_UNDERLINE, '\n',
-                                self.title, '\n\n',
-                                c.SECOND_MARKER + '\n',
-                                self.second, '\n' + c.END_MARKER + '\n\n'])
-            entries.close()
-
-        elif self.second == 'N/A' and self.first != 'N/A':
-            # write without why marker
-            entries.writelines([str(self.recorded_datetime), '\n',
-                                c.DATESTAMP_UNDERLINE, '\n',
-                                self.title, '\n\n',
-                                c.FIRST_MARKER, '\n',
-                                self.first, '\n' + c.END_MARKER + '\n\n'])
-            entries.close()
-
-        else:
-            # write with only title
-            entries.writelines([str(self.recorded_datetime), '\n',
-                                c.DATESTAMP_UNDERLINE, '\n',
-                                self.title, '\n',
-                                c.END_MARKER + '\n\n'])
-            entries.close()
-
-        # file back to readonly
-        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
-
-    def begin_entry(self, which=None):
-        'initializes textboxes, records input, manages call to write_to()'
-
         if which is None:
+            # check for textbox preference before routing further
             if c.USE_TEXTBOX is False:
                 self.first = input(c.FIRST_NT)
                 self.second = input(c.SECOND_NT)
@@ -92,6 +97,7 @@ class Entry():
                 TextBox(self, 'first')
                 input(c.SECOND)
                 TextBox(self, 'second')
+            self.full_write()
 
         elif which == '-n1':
             if c.USE_TEXTBOX is False:
@@ -99,6 +105,7 @@ class Entry():
             else:
                 input(c.FIRST)
                 TextBox(self, 'first')
+            self.first_write()
 
         elif which == '-n2':
             if c.USE_TEXTBOX is False:
@@ -106,24 +113,33 @@ class Entry():
             else:
                 input(c.SECOND)
                 TextBox(self, 'second')
+            self.second_write()
 
         elif which == '-e':
-            pass
+            self.title_write()
 
         elif which == '-a':
             # create tag and exit function
             tag = self.title[0]
             del self.title[0]
             self.title = ' '.join(self.title)
-            self.write_to(tag)
-            return
+            self.tag_write(tag)
+        
+        elif which == '-nt':
+            # entry with only a textbox
+            TextBox(self, 'title')
+            self.title_write()
+        
+        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
 
-        # readability formatting
+    def format_readability(self):
+        'sets fields to "N/A" if empty'
+
         if self.first is None or self.first == '':
             self.first = 'N/A'
 
         if self.second is None or self.second == '':
             self.second = 'N/A'
 
-        # call write function regardless of shortcut taken
-        self.write_to()
+        if self.title is None or self.title == '':
+            self.title = 'N/A'

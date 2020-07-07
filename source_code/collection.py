@@ -20,7 +20,7 @@ class Collection:
         else:
             return True
 
-    def check_for_thing(self, key):
+    def return_thing(self, key):
         'returns a list of all entries containing a keywork'
 
         # search for instances of keyword
@@ -36,7 +36,7 @@ class Collection:
     def show_keyword(self, key):
         'shows entries if keyword matches'
 
-        entry = self.check_for_thing(key)
+        entry = self.return_thing(key)
         if self.check_for_entries(entry) is False:
             return
 
@@ -50,7 +50,7 @@ class Collection:
             # print out entire journal
             print('\nentries\n')
             for entry in self.collection:
-                print(entry)
+                print(entry + "\n")
         else:
             print('\nnone found. check location of journal\n')
 
@@ -60,12 +60,12 @@ class Collection:
         print('\nentries containing',
               '\'' + criteria + '\'\n')
         for thing in container:
-            print(thing)
+            print(thing + "\n")
 
     def delete_entry(self, entry):
         'bulk or single delete entries'
 
-        delete = self.check_for_thing(entry)
+        delete = self.return_thing(entry)
         # if nothing is returned by previous call, end
         if self.check_for_entries(delete) is False:
             return
@@ -220,8 +220,8 @@ class Collection:
         config = configparser.ConfigParser()
         config['DEFAULT'] = {'END_MARKER': '#*#*#*#*#*#*#*#*#*#*#*#',
                              'DATESTAMP_UNDERLINE': '-----------------------',
-                             'JOURNAL_TITLE': 'journal',
-                             'BACKUP_TITLE': 'backup_journal',
+                             'JOURNAL_TITLE': 'jnl',
+                             'BACKUP_TITLE': 'b_jnl',
                              'FIRST_MARKER': '1st:',
                              'SECOND_MARKER': '2nd:',
                              'USE_TEXTBOX': 'true'}

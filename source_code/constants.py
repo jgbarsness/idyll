@@ -2,9 +2,7 @@ import configparser
 
 
 HEADER = '\n---\njnl\n---\nv1.3.0\nmade by joseph barsness\n\nthis is a command line tool for recording\
- and accessing things.\nnotes about entry\
- are recorded through a pop-up window.\nrunning with any command will\
- create a journal file.\n'
+ and accessing things.\nmanaged by \'jnl.txt\'\n'
 
 HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
@@ -12,6 +10,7 @@ alternatively, the title of entries with arg use can be one-lined like \'jnl [ar
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
+\'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'jnl -a [tag] [title]\'\n\n\
 \'-v\': view journal. follow with keyword to search\n\
 \'-t\': search for entries with a tag\n\
@@ -58,8 +57,8 @@ try:
 except KeyError:
     END_MARKER = '#*#*#*#*#*#*#*#*#*#*#*#'
     DATESTAMP_UNDERLINE = '-----------------------'
-    JOURNAL_TITLE = 'journal.txt'
-    BACKUP_TITLE = 'backup_journal.txt'
+    JOURNAL_TITLE = 'jnl.txt'
+    BACKUP_TITLE = 'b_jnl.txt'
     FIRST_MARKER = '1st:'
     SECOND_MARKER = '2nd:'
     USE_TEXTBOX = True
@@ -69,5 +68,5 @@ SECOND = '\'enter\' key to open text box. ' + SECOND_MARKER + ' '
 FIRST = '\n\'enter\' key to open text box. ' + FIRST_MARKER + ' '
 
 # to be used in absence of text box
-SECOND_NT = '\'enter\' key to submit entry. ' + SECOND_MARKER + ' '
-FIRST_NT = '\'enter\' key to submit entry. ' + FIRST_MARKER + ' '
+SECOND_NT = '\n' + SECOND_MARKER + '\n'
+FIRST_NT = '\n' + FIRST_MARKER + '\n'

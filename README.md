@@ -1,5 +1,5 @@
 ## jnl <br />
-is a command line tool used to create and manage journal entries<br /><br />
+is a command line tool used to create and manage journal entries. entries are managed in 'jnl.txt'. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences.<br /><br />
 packaged on OSX
 #### using:
 
@@ -12,6 +12,7 @@ jnl [entry]
 '**-n**': new entry with both first and second sections<br />
 '**-n1**': new entry with first section<br />
 '**-n2**': new entry with second section<br />
+'**-nt**': new entry using a textbook. ignores config file preferences<br />
 '**-a**': new tagged entry. syntax: jnl -a [tag] [entry]<br />
 '**-v**': view journal. syntax: jnl -v // jnl -v [keyword]<br />
 '**-t**': search for entries with a tag<br />
