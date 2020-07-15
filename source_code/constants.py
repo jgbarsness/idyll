@@ -8,7 +8,7 @@ CYAN = '\033[36m'
 YELLOW = '\033[33m'
 BLUE = '\033[34m'
 
-HEADER = '---\n\
+HEADER = '\n---\n\
 \033[35m\
 jnl\033[0m\
 \n---\n\
