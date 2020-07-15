@@ -1,12 +1,29 @@
 import configparser
+import os
 
+# anscii coloring
+END = '\033[0m'
+PURPLE = '\033[35m'
+CYAN = '\033[36m'
+YELLOW = '\033[33m'
+BLUE = '\033[34m'
 
-HEADER = '\n---\njnl\n---\nv1.3.0\nmade by joseph barsness\n\nthis is a command line tool for recording\
- and accessing things.\nmanaged by \'jnl.txt\'\n'
+HEADER = '---\n\
+\033[35m\
+jnl\033[0m\
+\n---\n\
+\033[36m\
+v1.4.0\
+\033[0m\
+\033[33m\
+\nmade by joseph barsness\
+\033[0m\n\
+\nthis is a command line tool for recording\
+ and accessing things.\n'
 
-HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
+HELP = '\n\033[34musage\033[0m:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
-\narguements:\n\
+\n\033[34marguements\033[0m:\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
@@ -23,6 +40,9 @@ alternatively, the title of entries with arg use can be one-lined like \'jnl [ar
            updating config may outdate journal\n\
 \nfirst / second sections are intended to make journals flexible in use.\n\
 e.g. running -config and changing the markers to \'where\' and \'when\'\n'
+
+# escape sequences for color
+SEPERATOR = '<\>'
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
 

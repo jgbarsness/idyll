@@ -7,6 +7,7 @@ from entrybox import TextBox
 
 class Entry():
     'an entry to be stored in the collection'
+    
     def __init__(self, passed_title, shortcut=None):
         'accepts a title and an optional shortcut'
         self.now = dt.datetime.now()
