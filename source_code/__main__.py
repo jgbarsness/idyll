@@ -16,9 +16,11 @@ def main(sys_arguement=None, title=None):
 
     if sys_arguement is None:
         if os.path.exists(c.JOURNAL_TITLE):
-            print('\n' + 'collection: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
-            if os.path.exists(c.BACKUP_TITLE):
-                print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+            print('collection: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
+        if os.path.exists(c.BACKUP_TITLE):
+            print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+        if os.path.exists("jnl.ini"):
+            print("config: " + c.PURPLE + os.path.abspath("jnl.ini") + c.END)
         print(c.HEADER + c.HELP)
         return
     # check files
