@@ -19,8 +19,6 @@ def main(sys_arguement=None, title=None):
             print('\n' + 'collection: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
             if os.path.exists(c.BACKUP_TITLE):
                 print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
-        else:
-            print('\n' + c.PURPLE + 'in an unused directory' + c.END)
         print(c.HEADER + c.HELP)
         return
     # check files
