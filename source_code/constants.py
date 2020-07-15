@@ -29,12 +29,12 @@ alternatively, the title of entries with arg use can be one-lined like \'jnl [ar
 \'-n2\': new entry with a second section\n\
 \'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'jnl -a [tag] [title]\'\n\n\
-\'-v\': view journal. follow with keyword to search\n\
+\'-v\': view entries. follow with keyword to search\n\
 \'-t\': search for entries with a tag\n\
 \'-del\': delete entry(s). format: \'jnl -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
-\'-wipe\': delete entire journal\n\
-\'-b\': create backup of journal\n\
+\'-wipe\': delete collection\n\
+\'-b\': create backup\n\
 \'-load\': load entries from backup\n\
 \'-config\': generate config file in pwd. if config exists, defaults reset.\n\
            updating config may outdate journal\n\
