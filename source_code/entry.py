@@ -13,7 +13,7 @@ class Entry():
         self.now = dt.datetime.now()
         self.recorded_datetime = self.now.strftime('%a %I:%M%p %b %d %Y')
         self.time = self.now.strftime('%-I:%M %p')
-        self.date = self.now.strftime('%A, %B %-d %Y')
+        self.date = self.now.strftime('%B %d')
         self.first = None
         self.second = None
         self.title = passed_title
@@ -89,6 +89,7 @@ class Entry():
             pass
 
         if which is None:
+            # a full entry
             # check for textbox preference before routing further
             if c.USE_TEXTBOX is False:
                 self.first = input(c.FIRST_NT)

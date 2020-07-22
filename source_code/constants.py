@@ -1,7 +1,7 @@
 import configparser
 import os
 
-# anscii coloring
+# ascii coloring
 END = '\033[0m'
 PURPLE = '\033[35m'
 CYAN = '\033[36m'
@@ -21,9 +21,9 @@ v1.4.0\
 \nthis is a command line tool for recording\
  and accessing things.\n'
 
-HELP = '\n\033[34musage\033[0m:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
+HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
-\n\033[34marguements\033[0m:\n\
+\narguements:\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
@@ -39,7 +39,7 @@ alternatively, the title of entries with arg use can be one-lined like \'jnl [ar
 \'-config\': generate config file in pwd. if config exists, defaults reset.\n\
            updating config may outdate journal\n\
 \nfirst / second sections are intended to make journals flexible in use.\n\
-e.g. running -config and changing the markers to \'where\' and \'when\'\n'
+e.g. running -config and changing the markers to \'where\' and \'when\''
 
 # escape sequences for color
 SEPERATOR = '<\>'
@@ -84,7 +84,7 @@ except KeyError:
     USE_TEXTBOX = True
 
 # used to determine prompt for entries with sections
-SECOND = '\'enter\' key to open text box. ' + SECOND_MARKER + ' '
+SECOND = '\n\'enter\' key to open text box. ' + SECOND_MARKER + ' '
 FIRST = '\n\'enter\' key to open text box. ' + FIRST_MARKER + ' '
 
 # to be used in absence of text box

@@ -33,15 +33,15 @@ def main(sys_arguement=None, title=None):
         # if there is a keyword to search with
         if (len(title) != 0):
             criteria = ' '.join(title)
-            print('\nentries containing ' + '\'' + c.CYAN + criteria + c.END + '\'\n')
+            print(c.YELLOW + 'entries containing ' + c.END + '\'' + c.CYAN + criteria + c.END + '\'')
             stored_entries.show_keyword(' '.join(title))
         # if no keyword is present, print out entire journal
         else:
             if (len(stored_entries.collection) != 0):
-                print('\n' + c.YELLOW + 'all entries:\n' + c.END)
+                print(c.YELLOW + 'all entries:' + c.END)
                 stored_entries.print_entries(stored_entries.collection)
             else:
-                print('\nnothing here\n')
+                print('\nnothing here')
     elif sys_arguement == '-wipe':
         stored_entries.wipe_journal()
     elif sys_arguement == '-b':
@@ -54,7 +54,7 @@ def main(sys_arguement=None, title=None):
             stored_entries.delete_entry(' '.join(title))
         # if no keyword is supplied to search with, show syntax
         else:
-            print('\nformat: jnl -del [keyword]\n')
+            print('\nformat: jnl -del [keyword]' + c.END)
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
     elif sys_arguement == '-load':
@@ -63,61 +63,60 @@ def main(sys_arguement=None, title=None):
         stored_entries.gen_config()
     elif sys_arguement == '-t':
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
-            print('\nsearching for tag ' + '\'' + c.CYAN + ' '.join(title) + c.END + '\'\n')
+            print(c.YELLOW + 'searching for tag ' + c.END + '\'' + c.CYAN + ' '.join(title) + c.END + '\'')
             stored_entries.show_keyword('(' + ' '.join(title) + ')')
         else:
-            print('\nformat: jnl -t [tag]\n')
+            print('\nformat: jnl -t [tag]')
 
     elif sys_arguement == '-n':
         # if a title is supplied in the same line
         if (len(title) != 0):
+            # keep 'new' as a variable to possibly reference in later formatting decisions
             new = Entry(joined_title)
         else:
             # run a full entry
-            experience = str(input('\ntitle:\n'))
+            experience = str(input('title:\n'))
             new = Entry(experience)
-        printout(new.date, new.time, new.title)
+        printout()
     elif sys_arguement == '-n1':
         if (len(title) != 0):
             new = Entry(joined_title, '-n1')
         else:
-            experience = str(input('\ntitle:\n'))
+            experience = str(input('title:\n'))
             new = Entry(experience, '-n1')
-        printout(new.date, new.time, new.title)
+        printout()
     elif sys_arguement == '-n2':
         if (len(title) != 0):
             new = Entry(joined_title, '-n2')
         else:
-            experience = str(input('\ntitle:\n'))
+            experience = str(input('title:\n'))
             new = Entry(experience, '-n2')
-        printout(new.date, new.time, new.title)
+        printout()
     elif sys_arguement == '-a':
         # must be at least two words long for both a tag and entry
         if len(title) > 1:
             # pass in tag as list to allow for formatting
             new = Entry(title, '-a')
-            printout(new.date, new.time, new.title)
+            printout()
         else:
-            print('\nno tag selected\n')
+            print('\nno tag selected')
     elif sys_arguement == '-nt':
         # force a textbox entry
         new = Entry(None, '-nt')
-        printout(new.date, new.time, new.title)
+        printout()
     else:
         # default to a one-lined title only entry
         new = Entry(' '.join(sys.argv[1:]), '-e')
-        printout(new.date, new.time, new.title)
+        printout()
 
 
-def printout(date, time, title):
+def printout():
     'prints out the entry'
 
     # refresh searchable list after every entry
     stored_entries.scan_journal()
     # print out entry info + title
-    print('\n' + 'new\n---\n' + 'on ' + c.PURPLE + date + ' ' + c.END + 
-          'at ' + c.CYAN + time + c.END + ', ' +
-          'you wrote \'' + title + '\'\n')
+    print(c.YELLOW + '\nnew entry in ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
 
 
 if __name__ == '__main__':

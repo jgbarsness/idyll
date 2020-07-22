@@ -26,7 +26,7 @@ class Collection:
 
         entry = self.return_thing(key)
         if (len(entry) == 0):
-            print('nothing to show.\n')
+            print('nothing to show.')
 
         # if function can continue, print out entry
         self.print_entries(entry)
@@ -36,7 +36,7 @@ class Collection:
         'used to print out things entries after search is ran'
 
         for thing in container:
-            print(thing + c.SEPERATOR + '\n')
+            print('\n' + thing + c.SEPERATOR)
 
     def delete_entry(self, entry):
         'bulk or single delete entries'
@@ -44,33 +44,31 @@ class Collection:
         delete = self.return_thing(entry)
         # if nothing is returned by previous call, end
         if (len(delete) == 0):
-            print('\nnothing to delete containing ' + '\'' + '\033[36m' + entry + '\033[0m\'\n')
+            print('nothing to delete containing ' 
+                  + '\'' + c.CYAN + entry + c.END + '\'')
             return
 
         # if function can continue, print out entry
-        print('\nto be deleted, containing ' + '\'' + '\033[36m' + entry + '\033[0m' + '\':\n')
+        print(c.YELLOW + 'to be deleted, containing ' + c.END + '\'' + c.CYAN + entry + c.END + '\':')
         self.print_entries(delete)
 
-        choice = input('delete these entries? cannot be undone. '
-                       'if unwanted entries are listed, further '
-                       'specify search criteria.\nenter '
-                       '\'' + c.CYAN + 'p' + c.END + '\'' + ' to proceed\n')
+        choice = input('\ndelete? y/n\n')
 
-        if choice == 'p':
-            print('\ndeleting entries...')
+        if choice == 'y':
+            print(c.YELLOW + '\ndeleting entries...' + c.END)
 
             # find all occurances
             for things in delete:
                 # remove them
                 self.collection.remove(things)
 
-            print('entries deleted\n')
+            print(c.YELLOW + 'entries deleted' + c.END)
             # refresh entries
             self.file_check()
             self.refresh_journal()
 
         else:
-            print('\nentries preserved. returning\n')
+            print('\nentries preserved')
             return
 
     def scan_journal(self):
@@ -109,18 +107,17 @@ class Collection:
     def wipe_journal(self):
         'completely delete journal'
 
-        selection = input('\nthis will delete entire collection.' +
-                          '\nare you sure? enter ' + '\'' + c.CYAN + 'p' + c.END + '\' to proceed\n')
+        selection = input('\ndelete all? y/n\n')
 
-        if selection == 'p':
+        if selection == 'y':
             try:
-                print('\ndeleting...')
+                print(c.YELLOW + '\ndeleting...' + c.END)
                 os.remove(c.JOURNAL_TITLE)
-                print(c.PURPLE + c.JOURNAL_TITLE + c.END + ' deleted\n')
+                print(c.PURPLE + c.JOURNAL_TITLE + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
-                print('nothing present\n')
+                print('nothing present')
         else:
-            print('\nfile preserved. returning\n')
+            print('\nfile preserved')
             return
 
     def file_check(self):
@@ -146,21 +143,20 @@ class Collection:
         self.file_check()
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('\nbackup created as ' + c.PURPLE + c.BACKUP_TITLE + c.END + '\n')
+            print(c.YELLOW + '\nbackup created as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
         except PermissionError:
             # verify desired behavior
-            choice = input('\nbackup copy detected. are you sure you'
-                           ' want to override? enter \'' + c.CYAN + 'p' + c.END + '\' if so.\n')
-            if choice == 'p':
+            choice = input('\nbackup detected. overwrite? y/n\n')
+            if choice == 'y':
                 pass
             else:
-                print('\nno update made. returning\n')
+                print('\nno update made')
                 return
 
             os.remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('\nbackup updated as ' + c.PURPLE + c.BACKUP_TITLE + c.END + '\n')
+            print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
 
     def load_from_backup(self):
         'makes backup the running document'
@@ -169,27 +165,25 @@ class Collection:
             open(c.BACKUP_TITLE, 'r')
             pass
         except FileNotFoundError:
-            print('\nno backup found\n')
+            print('\nno backup found')
             return
-        selection = input('\nrestore from backup?\nif backup'
-                          ' is outdated, recent entries will '
-                          'be lost.\nenter \'' + c.CYAN + 'p' + c.END + '\' to proceed\n')
-        if selection == 'p':
+        selection = input('\nrestore from backup? y/n\n')
+        if selection == 'y':
             # make sure correct journal is retained
             try:
                 os.remove(c.JOURNAL_TITLE)
             except FileNotFoundError:
                 pass
 
-            print('\nrestoring...')
+            print(c.YELLOW + '\nrestoring...' + c.END)
             # backup -> running file
             os.rename(c.BACKUP_TITLE, c.JOURNAL_TITLE)
             # retain a copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('restored from ' + c.PURPLE + c.BACKUP_TITLE + c.END + '\n')
+            print(c.YELLOW + 'restored from ' + c.PURPLE + c.BACKUP_TITLE + c.END)
 
         else:
-            print('\nload from backup cancelled. returning\n')
+            print('\nload from backup cancelled')
             return
 
     def gen_config(self):
@@ -209,7 +203,7 @@ class Collection:
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
 
-        print('\nconfig updated in pwd as ' + c.PURPLE + 'jnl.ini' + c.END + '\n')
+        print(c.YELLOW + '\nconfig updated in pwd as ' + c.PURPLE + 'jnl.ini' + c.END)
 
     def quick_delete(self):
         'quick-deletes the last entry made'
@@ -217,16 +211,16 @@ class Collection:
         # return if journal is empty
         self.scan_journal()
         if (len(self.collection) == 0):
-            print('\nnothing to delete\n')
+            print('\nnothing to delete')
             return
 
-        answer = input('\ndelete last entry? \'' + c.CYAN + 'p' + c.END + '\' to proceed\n')
-        if answer == 'p':
-            print('\ndeleting...')
+        answer = input('\ndelete last entry? y/n\n')
+        if answer == 'y':
+            print(c.YELLOW + '\ndeleting...' + c.END)
             del self.collection[-1]
             self.refresh_journal()
-            print('deleted.\n')
+            print(c.YELLOW + 'deleted' + c.END)
             return
         else:
-            print('\nnothing deleted\n')
+            print('\nnothing deleted')
             return
