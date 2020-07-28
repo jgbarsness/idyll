@@ -123,7 +123,7 @@ class Collection:
         'checks for presence of entry file'
 
         try:
-            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
+            os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
             return True
         except FileNotFoundError:
             return False
