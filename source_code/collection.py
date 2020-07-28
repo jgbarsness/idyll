@@ -63,9 +63,6 @@ class Collection:
                 self.collection.remove(things)
 
             print(c.YELLOW + 'entries deleted' + c.END)
-            # refresh entries
-            self.file_check()
-            self.refresh_journal()
 
         else:
             print('\nentries preserved')
@@ -74,11 +71,13 @@ class Collection:
     def scan_journal(self):
         'refreshes collection list of journal entries'
 
+        os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
         journal = open(c.JOURNAL_TITLE, 'r')
 
         bulk = []
         for lines in journal:
             bulk.append(lines)
+        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
         journal.close()
 
         bulk = ''.join(bulk)
@@ -119,21 +118,6 @@ class Collection:
         else:
             print('\nfile preserved')
             return
-
-    def file_check(self):
-        '''check if file is present. if so, close. if not, create.
-        make file read-only'''
-
-        try:
-            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
-        except FileNotFoundError:
-            pass
-
-        file_check = open(c.JOURNAL_TITLE, 'a+')
-        file_check.close()
-
-        # make file read only
-        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
 
     def file_verify(self) :
         'checks for presence of entry file'
