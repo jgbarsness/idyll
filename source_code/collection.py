@@ -8,7 +8,7 @@ import configparser
 
 
 class Collection:
-    'a collection of entries. manages file storage'
+    'a collection of entries. manages file storage and display'
     
     def __init__(self):
         self.collection = []
@@ -26,7 +26,7 @@ class Collection:
 
         entry = self.return_thing(key)
         if (len(entry) == 0):
-            print('nothing to show.')
+            print('\nnothing to show')
 
         # if function can continue, print out entry
         self.print_entries(entry)
@@ -44,7 +44,7 @@ class Collection:
         delete = self.return_thing(entry)
         # if nothing is returned by previous call, end
         if (len(delete) == 0):
-            print('nothing to delete containing ' 
+            print('\nnothing to delete containing ' 
                   + '\'' + c.CYAN + entry + c.END + '\'')
             return
 
@@ -122,7 +122,7 @@ class Collection:
 
     def file_check(self):
         '''check if file is present. if so, close. if not, create.
-        make file writable if file exists'''
+        make file read-only'''
 
         try:
             os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
@@ -135,12 +135,20 @@ class Collection:
         # make file read only
         os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
 
+    def file_verify(self) :
+        'checks for presence of entry file'
+
+        try:
+            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
+            return True
+        except FileNotFoundError:
+            return False
+
     def backup_journal(self):
         'creates a backup journal file'
 
         # uses 'copy' to preserve permissions
         # in case future update relies on permission at close
-        self.file_check()
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
             print(c.YELLOW + '\nbackup created as ' + c.PURPLE + c.BACKUP_TITLE + c.END)

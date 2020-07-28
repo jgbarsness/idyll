@@ -86,7 +86,11 @@ class Entry():
         try:
             os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
         except FileNotFoundError:
-            pass
+            # permission handling will be passed down if continued
+            check = input("\nno entry file in pwd. create? y/n\n")
+            if check != 'y':
+                print("\nnothing created")
+                return
 
         if which is None:
             # a full entry
@@ -133,6 +137,7 @@ class Entry():
             self.title_write()
         
         os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
+        print(c.YELLOW + '\nnew entry in ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
 
     def format_readability(self):
         'sets fields to "N/A" if empty'
