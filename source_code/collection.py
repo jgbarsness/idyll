@@ -49,7 +49,7 @@ class Collection:
             return
 
         # if function can continue, print out entry
-        print(c.YELLOW + 'to be deleted, containing ' + c.END + '\'' + c.CYAN + entry + c.END + '\':')
+        print('to be deleted, containing ' + '\'' + c.CYAN + entry + c.END + '\':')
         self.print_entries(delete)
 
         choice = input('\ndelete? y/n\n')
@@ -135,7 +135,7 @@ class Collection:
         # in case future update relies on permission at close
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup created as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
+            print('\nbackup created as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
         except PermissionError:
             # verify desired behavior
             choice = input('\nbackup detected. overwrite? y/n\n')
@@ -148,7 +148,7 @@ class Collection:
             os.remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
+            print('\nbackup updated as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
 
     def load_from_backup(self):
         'makes backup the running document'

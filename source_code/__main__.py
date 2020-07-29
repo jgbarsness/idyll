@@ -36,13 +36,13 @@ def main(sys_arguement=None, title=None):
         # if there is a keyword to search with
         if (len(title) != 0):
             criteria = joined_title
-            print(c.YELLOW + 'entries containing ' + c.END + '\'' + c.CYAN + criteria + c.END + '\'')
+            print('entries containing ' + '\'' + c.CYAN + criteria + c.END + '\':')
             stored_entries.show_keyword(joined_title)
         # if no keyword is present, print out entire journal
         else:
             # check for formatted entries
             if (len(stored_entries.collection) != 0):
-                print(c.YELLOW + 'all entries:' + c.END)
+                print('all entries:')
                 stored_entries.print_entries(stored_entries.collection)
             else:
                 # means that a file is present, but nothing could be parsed from it
@@ -85,7 +85,7 @@ def main(sys_arguement=None, title=None):
             return
         stored_entries.scan_journal()
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
-            print(c.YELLOW + 'searching for tag ' + c.END + '\'' + c.CYAN + joined_title + c.END + '\'')
+            print('searching for tag ' + '\'' + c.CYAN + joined_title + c.END + '\':')
             stored_entries.show_keyword('(' + joined_title + ')')
         else:
             print('\nnothing to show\nformat: jnl -t [tag]')

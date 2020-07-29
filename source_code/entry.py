@@ -137,7 +137,8 @@ class Entry():
             self.title_write()
         
         os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
-        print(c.YELLOW + '\nnew entry in ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
+        print('\nnew entry in ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END +
+              '\ntitled: ' + '\'' + self.title + '\'')
 
     def format_readability(self):
         'sets fields to "N/A" if empty'
