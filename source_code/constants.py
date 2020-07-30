@@ -8,6 +8,7 @@ PURPLE = '\033[35m'
 CYAN = '\033[36m'
 YELLOW = '\033[33m'
 BLUE = '\033[34m'
+RED = '\033[91m'
 
 # name of the directory
 DIR_NAME = "jnl"
@@ -67,36 +68,43 @@ section. may be changed without outdating anything.\n\
 section. may be changed without outdating anything.\n\
 # \'use_textbox\' can be set to false if tk textbox use is undesired.'
 
+DEFAULTS = ['#*#*#*#*#*#*#*#*#*#*#*#', '-----------------------',
+            '1st:', '2nd:', True]
+
+FOLDER = Path(DIR_NAME)
+
+END_MARKER = DEFAULTS[0]
+DATESTAMP_UNDERLINE = DEFAULTS[1]
+JOURNAL_TITLE = FOLDER / 'jnl.txt'
+BACKUP_TITLE = FOLDER / 'b_jnl.txt'
+FIRST_MARKER = DEFAULTS[2]
+SECOND_MARKER = DEFAULTS[3]
+USE_TEXTBOX = DEFAULTS[4]
+
 # use config values if present, else use default
-try:
-    # use pathlib to hide filepaths from user
-    FOLDER = Path(DIR_NAME)
+if os.path.exists(FOLDER / 'jnl.ini'):
+    try:
+        # use pathlib to hide filepaths from user
+        config = configparser.ConfigParser()
+        config.read(FOLDER / 'jnl.ini')
 
-    config = configparser.ConfigParser()
-    config.read(FOLDER / 'jnl.ini')
+        END_MARKER = config['DEFAULT']['END_MARKER']
+        DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
 
-    END_MARKER = config['DEFAULT']['END_MARKER']
-    DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
+        jtitle_nopath = config['DEFAULT']['JOURNAL_TITLE'] + '.txt'
+        btitle_nopath = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
 
-    jtitle_nopath = config['DEFAULT']['JOURNAL_TITLE'] + '.txt'
-    btitle_nopath = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
+        JOURNAL_TITLE = FOLDER / jtitle_nopath
+        BACKUP_TITLE = FOLDER / btitle_nopath
 
-    JOURNAL_TITLE = FOLDER / jtitle_nopath
-    BACKUP_TITLE = FOLDER / btitle_nopath
+        FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']
+        SECOND_MARKER = config['DEFAULT']['SECOND_MARKER']
+        USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
 
-    FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']
-    SECOND_MARKER = config['DEFAULT']['SECOND_MARKER']
-    USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
-
-except KeyError:
-    FOLDER = Path(DIR_NAME)
-    END_MARKER = '#*#*#*#*#*#*#*#*#*#*#*#'
-    DATESTAMP_UNDERLINE = '-----------------------'
-    JOURNAL_TITLE = FOLDER / 'jnl.txt'
-    BACKUP_TITLE = FOLDER / 'b_jnl.txt'
-    FIRST_MARKER = '1st:'
-    SECOND_MARKER = '2nd:'
-    USE_TEXTBOX = True
+    # indicates something is unable to be fixed
+    except (configparser.ParsingError, ValueError, KeyError):
+        print(RED + "\nsomething wrong with config file format. delete file or fix to proceed\n" + END)
+        raise
 
 # used to determine prompt for entries with sections
 SECOND = '\n\'enter\' key to open text box. ' + SECOND_MARKER + ' '

@@ -76,8 +76,9 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-load':
         stored_entries.load_from_backup()
     elif sys_arguement == '-config':
-        if stored_entries.check_dir() == False:
-            stored_entries.gen_config()
+        if stored_entries.check_dir() != False:
+            # reset defaults
+            stored_entries.gen_config('jnl', c.DEFAULTS)
     elif sys_arguement == '-t':
         if not stored_entries.file_verify():
             print("\nno entry file")

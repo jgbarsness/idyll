@@ -175,18 +175,18 @@ class Collection:
             print('\nload from backup cancelled')
             return
 
-    def gen_config(self, active='jnl'):
+    def gen_config(self, active='jnl', deff=c.DEFAULTS):
         'generate config file in pwd'
 
         folder = Path(c.DIR_NAME)
         config = configparser.ConfigParser()
-        config['DEFAULT'] = {'END_MARKER': '#*#*#*#*#*#*#*#*#*#*#*#',
-                             'DATESTAMP_UNDERLINE': '-----------------------',
+        config['DEFAULT'] = {'END_MARKER': deff[0],
+                             'DATESTAMP_UNDERLINE': deff[1],
                              'JOURNAL_TITLE': active,
                              'BACKUP_TITLE': 'b_' + active,
-                             'FIRST_MARKER': '1st:',
-                             'SECOND_MARKER': '2nd:',
-                             'USE_TEXTBOX': 'true'}
+                             'FIRST_MARKER': deff[2],
+                             'SECOND_MARKER': deff[3],
+                             'USE_TEXTBOX': deff[4]}
 
         configfile = open(folder / 'jnl.ini', 'w')
         config.write(configfile)
@@ -228,8 +228,10 @@ class Collection:
                 print("\nnothing modified")
                 return
 
+        # preserve modifications
+        keep = [c.END_MARKER, c.DATESTAMP_UNDERLINE, c.FIRST_MARKER, c.SECOND_MARKER, c.USE_TEXTBOX]
         print("\nsetting " + c.PURPLE + new + ".txt" + c.END + "...")
-        self.gen_config(new)
+        self.gen_config(new, keep)
         print("\n" + c.PURPLE + new + ".txt" + c.END + " is new working collection")
 
     def check_dir(self, dire=c.DIR_NAME):
