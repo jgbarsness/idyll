@@ -4,6 +4,7 @@ import re
 import os
 import stat
 from shutil import copy
+from pathlib import Path
 import configparser
 
 
@@ -112,21 +113,17 @@ class Collection:
             try:
                 print(c.YELLOW + '\ndeleting...' + c.END)
                 os.remove(c.JOURNAL_TITLE)
-                print(c.PURPLE + c.JOURNAL_TITLE + c.YELLOW + ' deleted' + c.END)
+                print(c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
                 print('nothing present')
         else:
             print('\nfile preserved')
             return
 
-    def file_verify(self) :
+    def file_verify(self, f=c.JOURNAL_TITLE) :
         'checks for presence of entry file'
 
-        try:
-            os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
-            return True
-        except FileNotFoundError:
-            return False
+        return os.path.exists(f)
 
     def backup_journal(self):
         'creates a backup journal file'
@@ -135,7 +132,7 @@ class Collection:
         # in case future update relies on permission at close
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('\nbackup created as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
+            print(c.YELLOW + '\nbackup created in ' + c.PURPLE + c.DIR_NAME + c.END)
         except PermissionError:
             # verify desired behavior
             choice = input('\nbackup detected. overwrite? y/n\n')
@@ -148,7 +145,7 @@ class Collection:
             os.remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print('\nbackup updated as ' + c.PURPLE + c.BACKUP_TITLE + c.END)
+            print(c.YELLOW + '\nbackup updated in ' + c.PURPLE + c.DIR_NAME + c.END)
 
     def load_from_backup(self):
         'makes backup the running document'
@@ -172,30 +169,31 @@ class Collection:
             os.rename(c.BACKUP_TITLE, c.JOURNAL_TITLE)
             # retain a copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + 'restored from ' + c.PURPLE + c.BACKUP_TITLE + c.END)
+            print(c.YELLOW + 'restored from ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
 
         else:
             print('\nload from backup cancelled')
             return
 
-    def gen_config(self):
+    def gen_config(self, active='jnl'):
         'generate config file in pwd'
 
+        folder = Path(c.DIR_NAME)
         config = configparser.ConfigParser()
         config['DEFAULT'] = {'END_MARKER': '#*#*#*#*#*#*#*#*#*#*#*#',
                              'DATESTAMP_UNDERLINE': '-----------------------',
-                             'JOURNAL_TITLE': 'jnl',
-                             'BACKUP_TITLE': 'b_jnl',
+                             'JOURNAL_TITLE': active,
+                             'BACKUP_TITLE': 'b_' + active,
                              'FIRST_MARKER': '1st:',
                              'SECOND_MARKER': '2nd:',
                              'USE_TEXTBOX': 'true'}
 
-        configfile = open('jnl.ini', 'w')
+        configfile = open(folder / 'jnl.ini', 'w')
         config.write(configfile)
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
 
-        print(c.YELLOW + '\nconfig updated in pwd as ' + c.PURPLE + 'jnl.ini' + c.END)
+        print(c.YELLOW + '\nconfig updated as ' + c.PURPLE + os.path.abspath(folder / 'jnl.ini') + c.END)
 
     def quick_delete(self):
         'quick-deletes the last entry made'
@@ -216,3 +214,31 @@ class Collection:
         else:
             print('\nnothing deleted')
             return
+    
+    def switch(self, new):
+        'sets a new name for default collection'
+
+        # if file doesn't exist, verify
+        folder = Path(c.DIR_NAME)
+        name = new + '.txt'
+        path = folder / name
+        if self.file_verify(path) == False:
+            verify = input("\nno collection by that name. set as working collection? y/n\n")
+            if verify != 'y':
+                print("\nnothing modified")
+                return
+
+        print("\nsetting " + c.PURPLE + new + ".txt" + c.END + "...")
+        self.gen_config(new)
+        print("\n" + c.PURPLE + new + ".txt" + c.END + " is new working collection")
+
+    def check_dir(self, dire=c.DIR_NAME):
+        'checks for presence of a directory, and creates if not found'
+
+        if not os.path.exists(dire):
+            verify = input("\nno collection directory here. create? y/n\n")
+            if verify != "y":
+                print("\nnothing created")
+                return False
+            os.makedirs(dire)
+            return True

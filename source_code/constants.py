@@ -1,5 +1,6 @@
 import configparser
 import os
+from pathlib import Path
 
 # ascii coloring
 END = '\033[0m'
@@ -7,6 +8,9 @@ PURPLE = '\033[35m'
 CYAN = '\033[36m'
 YELLOW = '\033[33m'
 BLUE = '\033[34m'
+
+# name of the directory
+DIR_NAME = "jnl"
 
 HEADER = '\n---\n\
 \033[35m\
@@ -37,9 +41,11 @@ alternatively, the title of entries with arg use can be one-lined like \'jnl [ar
 \'-b\': create backup\n\
 \'-load\': load entries from backup\n\
 \'-config\': generate config file in pwd. if config exists, defaults reset.\n\
-           updating config may outdate journal\n\
+           updating config may outdate collection\n\
+\'-s\': specify default collection file.\n\
+      does not modify existing files. modifes / creates config file.\n\
 \nfirst / second sections are intended to make journals flexible in use.\n\
-e.g. running -config and changing the markers to \'where\' and \'when\''
+e.g. running -config and changing markers to \'where\' and \'when\''
 
 # escape sequences for color
 SEPERATOR = '<\>'
@@ -63,22 +69,31 @@ section. may be changed without outdating anything.\n\
 
 # use config values if present, else use default
 try:
+    # use pathlib to hide filepaths from user
+    FOLDER = Path(DIR_NAME)
+
     config = configparser.ConfigParser()
-    config.read('jnl.ini')
+    config.read(FOLDER / 'jnl.ini')
 
     END_MARKER = config['DEFAULT']['END_MARKER']
     DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
-    JOURNAL_TITLE = config['DEFAULT']['JOURNAL_TITLE'] + '.txt'
-    BACKUP_TITLE = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
+
+    jtitle_nopath = config['DEFAULT']['JOURNAL_TITLE'] + '.txt'
+    btitle_nopath = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
+
+    JOURNAL_TITLE = FOLDER / jtitle_nopath
+    BACKUP_TITLE = FOLDER / btitle_nopath
+
     FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']
     SECOND_MARKER = config['DEFAULT']['SECOND_MARKER']
     USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
 
 except KeyError:
+    FOLDER = Path(DIR_NAME)
     END_MARKER = '#*#*#*#*#*#*#*#*#*#*#*#'
     DATESTAMP_UNDERLINE = '-----------------------'
-    JOURNAL_TITLE = 'jnl.txt'
-    BACKUP_TITLE = 'b_jnl.txt'
+    JOURNAL_TITLE = FOLDER / 'jnl.txt'
+    BACKUP_TITLE = FOLDER / 'b_jnl.txt'
     FIRST_MARKER = '1st:'
     SECOND_MARKER = '2nd:'
     USE_TEXTBOX = True

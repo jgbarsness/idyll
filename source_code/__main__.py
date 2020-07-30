@@ -20,8 +20,6 @@ def main(sys_arguement=None, title=None):
             print('collection: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
         if os.path.exists(c.BACKUP_TITLE):
             print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
-        if os.path.exists("jnl.ini"):
-            print("config: " + c.PURPLE + os.path.abspath("jnl.ini") + c.END)
         print(c.HEADER + c.HELP)
         return
     # check files
@@ -78,7 +76,8 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-load':
         stored_entries.load_from_backup()
     elif sys_arguement == '-config':
-        stored_entries.gen_config()
+        if stored_entries.check_dir() == False:
+            stored_entries.gen_config()
     elif sys_arguement == '-t':
         if not stored_entries.file_verify():
             print("\nno entry file")
@@ -89,8 +88,16 @@ def main(sys_arguement=None, title=None):
             stored_entries.show_keyword('(' + joined_title + ')')
         else:
             print('\nnothing to show\nformat: jnl -t [tag]')
+    elif sys_arguement == '-s':
+        if len(title) != 0:
+            if stored_entries.check_dir() != False:
+                stored_entries.switch(joined_title)
+        else:
+            print("\nno name specified")
     
     elif sys_arguement == '-n':
+        if stored_entries.check_dir() == False:
+            return
         # if a title is supplied in the same line
         if (len(title) != 0):
             # keep 'new' as a variable to possibly reference in later formatting decisions
@@ -100,12 +107,16 @@ def main(sys_arguement=None, title=None):
             experience = str(input('title:\n'))
             Entry(experience)
     elif sys_arguement == '-n1':
+        if stored_entries.check_dir() == False:
+            return
         if (len(title) != 0):
             Entry(joined_title, '-n1')
         else:
             experience = str(input('title:\n'))
             Entry(experience, '-n1')
     elif sys_arguement == '-n2':
+        if stored_entries.check_dir() == False:
+            return
         if (len(title) != 0):
             Entry(joined_title, '-n2')
         else:
@@ -114,14 +125,20 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-a':
         # must be at least two words long for both a tag and entry
         if len(title) > 1:
+            if stored_entries.check_dir() == False:
+                return
             # pass in tag as list to allow for formatting
             Entry(title, '-a')
         else:
             print('\nno tag selected')
     elif sys_arguement == '-nt':
+        if stored_entries.check_dir() == False:
+            return
         # force a textbox entry
         Entry(None, '-nt')
     else:
+        if stored_entries.check_dir() == False:
+            return
         # default to a one-lined title only entry
         Entry(' '.join(sys.argv[1:]), '-e')
 

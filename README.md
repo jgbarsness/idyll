@@ -1,5 +1,5 @@
 ## jnl <br />
-is a command line tool used to create and manage entries. entries are managed in 'jnl.txt'. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences.<br /><br />
+is a command line tool used to create and manage entries. entries are managed in 'jnl'. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences.<br /><br />
 packaged on OSX<br />
 ```sudo ln -s [...dist/jnl/jnl] [/usr/local/bin]``` to install from current folder location
 #### using:
