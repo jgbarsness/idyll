@@ -62,7 +62,7 @@ class Collection:
             for things in delete:
                 # remove them
                 self.collection.remove(things)
-
+            self.refresh_journal()
             print(c.YELLOW + 'entries deleted' + c.END)
 
         else:
