@@ -42,6 +42,7 @@ def main(sys_arguement=None, title=None):
             if (len(stored_entries.collection) != 0):
                 print('all entries:')
                 stored_entries.print_entries(stored_entries.collection)
+                print("\n" + str(len(stored_entries.collection)) + " entries")
             else:
                 # means that a file is present, but nothing could be parsed from it
                 print('\ninvalid entry format')

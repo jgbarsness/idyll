@@ -132,7 +132,7 @@ class Collection:
         # in case future update relies on permission at close
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup created in ' + c.PURPLE + c.DIR_NAME + c.END)
+            print(c.YELLOW + '\nbackup created as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE)+ c.END)
         except PermissionError:
             # verify desired behavior
             choice = input('\nbackup detected. overwrite? y/n\n')
@@ -145,7 +145,7 @@ class Collection:
             os.remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup updated in ' + c.PURPLE + c.DIR_NAME + c.END)
+            print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
 
     def load_from_backup(self):
         'makes backup the running document'
