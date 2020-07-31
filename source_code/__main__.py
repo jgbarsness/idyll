@@ -4,6 +4,7 @@ from collection import Collection
 from entrybox import TextBox
 import constants as c
 import os
+from pathlib import Path
 
 '''
 jnl is a command line tool used to manage text entries.
@@ -15,14 +16,10 @@ def main(sys_arguement=None, title=None):
     'routes function calls'
 
     if sys_arguement is None:
-        # print out file locations
-        if os.path.exists(c.JOURNAL_TITLE):
-            print('collection: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
-        if os.path.exists(c.BACKUP_TITLE):
-            print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
-        print(c.HEADER + c.HELP)
+        help_print()
         return
-    # check files
+
+    # reduce calls to join
     joined_title = ' '.join(title)
 
     # skip to command if launched using sys arguement
@@ -30,7 +27,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\nno entry file")
             return 
-        stored_entries.scan_journal()
+        stored_entries.collection = stored_entries.scan_journal()
         # if there is a keyword to search with
         if (len(title) != 0):
             criteria = joined_title
@@ -45,7 +42,7 @@ def main(sys_arguement=None, title=None):
                 print("\n" + str(len(stored_entries.collection)) + " entries")
             else:
                 # means that a file is present, but nothing could be parsed from it
-                print('\ninvalid entry format')
+                print('\nempty collection and/or invalid entry format')
     elif sys_arguement == '-wipe':
         if not stored_entries.file_verify():
             print("\nno entry file")
@@ -65,7 +62,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\nno entry file")
             return
-        stored_entries.scan_journal()
+        stored_entries.collection = stored_entries.scan_journal()
         # check for presence of entries. continue if so
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
             stored_entries.delete_entry(joined_title)
@@ -84,7 +81,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\nno entry file")
             return
-        stored_entries.scan_journal()
+        stored_entries.collection = stored_entries.scan_journal()
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
             print('searching for tag ' + '\'' + c.CYAN + joined_title + c.END + '\':')
             stored_entries.show_keyword('(' + joined_title + ')')
@@ -143,6 +140,25 @@ def main(sys_arguement=None, title=None):
             return
         # default to a one-lined title only entry
         Entry(' '.join(sys.argv[1:]), '-e')
+
+
+def help_print():
+    'prints out program info, including current active directories'
+
+    # print out file locations
+    if os.path.exists(c.DIR_NAME):
+        if os.path.exists(c.JOURNAL_TITLE):
+            print('current default: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
+        if os.path.exists(c.BACKUP_TITLE):
+            print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+        collections = [f for f in os.listdir(c.DIR_NAME) if f.endswith('.txt')]
+        d = Path(c.DIR_NAME)
+        if len(collections) > 0:
+            # check for presence of formatted entries
+            entry = [f for f in collections if len(stored_entries.scan_journal(d / f)) > 0]
+            if len(entry) > 0:
+                print('collections: ' + c.PURPLE + ' '.join(entry) + c.END)
+    print(c.HEADER + c.HELP)
 
 
 if __name__ == '__main__':

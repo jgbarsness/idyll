@@ -69,16 +69,20 @@ class Collection:
             print('\nentries preserved')
             return
 
-    def scan_journal(self):
-        'refreshes collection list of journal entries'
+    def scan_journal(self, fpath=c.JOURNAL_TITLE):
+        'returns collection list of journal entries'
 
-        os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
-        journal = open(c.JOURNAL_TITLE, 'r')
+        os.chmod(fpath, stat.S_IRWXU)
+        try:
+            journal = open(fpath, 'r')
+        except FileNotFoundError:
+            print(c.RED + 'no file to read - something went wrong' + c.END)
+            raise
 
         bulk = []
         for lines in journal:
             bulk.append(lines)
-        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
+        os.chmod(fpath, stat.S_IREAD)
         journal.close()
 
         bulk = ''.join(bulk)
@@ -88,14 +92,18 @@ class Collection:
         bulk = bulk.split(c.END_MARKER)
         del bulk[-1]  # remove newline element
 
-        self.collection = bulk
+        return bulk
 
     def refresh_journal(self):
         'after deletion of entry, re-write journal to reflect changes'
 
-        # make journal writeable
-        os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
-        refresh = open(c.JOURNAL_TITLE, 'w')
+        try :
+            # make journal writeable
+            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
+            refresh = open(c.JOURNAL_TITLE, 'w')
+        except FileNotFoundError:
+            print(c.RED + 'no file to modify - something went wrong' + c.END)
+            raise
 
         for entry in self.collection:
             refresh.write(entry)
@@ -115,7 +123,9 @@ class Collection:
                 os.remove(c.JOURNAL_TITLE)
                 print(c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
-                print('nothing present')
+                # user machine removed file themselves after running program
+                print(c.RED + '\nerror: file doesn\'t exist' + c.END)
+                raise
         else:
             print('\nfile preserved')
             return
@@ -133,6 +143,7 @@ class Collection:
         try:
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
             print(c.YELLOW + '\nbackup created as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE)+ c.END)
+            return
         except PermissionError:
             # verify desired behavior
             choice = input('\nbackup detected. overwrite? y/n\n')
@@ -142,34 +153,42 @@ class Collection:
                 print('\nno update made')
                 return
 
+        try:
             os.remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
             print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+        except FileNotFoundError:
+            # user machine removed file themselves after running program
+            print(c.RED + '\nerror: bad backup' + c.END)
+            raise
 
     def load_from_backup(self):
         'makes backup the running document'
 
-        try:
-            open(c.BACKUP_TITLE, 'r')
-            pass
-        except FileNotFoundError:
+        if not os.path.exists(c.BACKUP_TITLE):
             print('\nno backup found')
             return
+
         selection = input('\nrestore from backup? y/n\n')
         if selection == 'y':
             # make sure correct journal is retained
             try:
                 os.remove(c.JOURNAL_TITLE)
             except FileNotFoundError:
-                pass
+                print(c.PURPLE + "creating new file, retaining backup..." + c.END)
 
             print(c.YELLOW + '\nrestoring...' + c.END)
             # backup -> running file
-            os.rename(c.BACKUP_TITLE, c.JOURNAL_TITLE)
-            # retain a copy
-            copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + 'restored from ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+            try:
+                os.rename(c.BACKUP_TITLE, c.JOURNAL_TITLE)
+                # retain a copy
+                copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
+                print(c.YELLOW + 'restored from ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+            except FileNotFoundError:
+                # user machine removed file themselves after running program
+                print(c.RED + '\nerror: bad backup' + c.END)
+                raise
 
         else:
             print('\nload from backup cancelled')
@@ -188,7 +207,11 @@ class Collection:
                              'SECOND_MARKER': deff[3],
                              'USE_TEXTBOX': deff[4]}
 
-        configfile = open(folder / 'jnl.ini', 'w')
+        try:
+            configfile = open(folder / 'jnl.ini', 'w')
+        except FileNotFoundError:
+            print(c.RED + 'no file to modify - something went wrong' + c.END)
+            raise
         config.write(configfile)
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
@@ -199,7 +222,7 @@ class Collection:
         'quick-deletes the last entry made'
 
         # return if journal is empty
-        self.scan_journal()
+        self.collection = self.scan_journal()
         if (len(self.collection) == 0):
             print('\nnothing to delete')
             return

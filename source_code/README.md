@@ -22,6 +22,8 @@ jnl [entry]
 '**-load**': load entries from backup<br />
 '**-config**': generate config file in pwd. if config exists, defaults reset.
 updating config may outdate jnl<br />
+'**-s**': specify default collection file.
+does not modify existing files. modifes / creates config file.<br />
 '**-del**': delete entry<br />
 '**-q**': quick delete the last entry made
 
