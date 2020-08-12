@@ -45,9 +45,7 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-config\': generate config file in pwd. if config exists, defaults reset.\n\
            updating config may outdate collection\n\
 \'-s\': specify default collection file.\n\
-      does not modify existing files. modifes / creates config file.\n\
-\nfirst / second sections are intended to make journals flexible in use.\n\
-e.g. running -config and changing markers to \'where\' and \'when\''
+      does not modify existing files. modifes / creates config file'
 
 # escape sequences for color
 SEPERATOR = '<\>'

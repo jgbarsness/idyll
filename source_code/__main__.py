@@ -25,7 +25,7 @@ def main(sys_arguement=None, title=None):
     # skip to command if launched using sys arguement
     if sys_arguement == '-v':
         if not stored_entries.file_verify():
-            print("\nno entry file")
+            print("\ndefault entry file doesn't exist")
             return 
         stored_entries.collection = stored_entries.scan_journal()
         # if there is a keyword to search with
@@ -45,7 +45,7 @@ def main(sys_arguement=None, title=None):
                 print('\nempty collection and/or invalid entry format')
     elif sys_arguement == '-wipe':
         if not stored_entries.file_verify():
-            print("\nno entry file")
+            print("\ndefault entry file doesn't exist")
             return
         stored_entries.wipe_journal()
     elif sys_arguement == '-wipe-all':
@@ -55,17 +55,17 @@ def main(sys_arguement=None, title=None):
         stored_entries.wipe_all()
     elif sys_arguement == '-b':
         if not stored_entries.file_verify():
-            print("\nno entry file")
+            print("\ndefault entry file doesn't exist")
             return
         stored_entries.backup_journal()
     elif sys_arguement == '-q':
         if not stored_entries.file_verify():
-            print("\nno entry file")
+            print("\ndefault entry file doesn't exist")
             return
         stored_entries.quick_delete()
     elif sys_arguement == '-del':
         if not stored_entries.file_verify():
-            print("\nno entry file")
+            print("\ndefault entry file doesn't exist")
             return
         stored_entries.collection = stored_entries.scan_journal()
         # check for presence of entries. continue if so

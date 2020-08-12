@@ -18,6 +18,7 @@ idl [entry]
 '**-v**': view entries. syntax: idl -v // idl -v [keyword]<br />
 '**-t**': search for entries with a tag<br />
 '**-wipe**': delete entire idl<br />
+'**-wipe-all**': delete collection folder in pwd<br />
 '**-b**': create backup of idl<br />
 '**-load**': load entries from backup<br />
 '**-config**': generate config file in pwd. if config exists, defaults reset.
