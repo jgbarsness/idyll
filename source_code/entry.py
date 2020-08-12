@@ -87,9 +87,9 @@ class Entry():
             os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
         except FileNotFoundError:
             # permission handling will be passed down if continued
-            check = input("\nno entry file in pwd. create? y/n\n")
+            check = input("\nno collection file in pwd. create? y/n\n")
             if check != 'y':
-                print("\nnothing created")
+                print("\ncollection not created")
                 return
 
         if which is None:

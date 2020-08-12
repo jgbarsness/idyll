@@ -7,7 +7,7 @@ import os
 from pathlib import Path
 
 '''
-jnl is a command line tool used to manage text entries.
+idl is a command line tool used to manage text entries.
 joseph barsness 2020
 '''
 
@@ -48,6 +48,11 @@ def main(sys_arguement=None, title=None):
             print("\nno entry file")
             return
         stored_entries.wipe_journal()
+    elif sys_arguement == '-wipe-all':
+        if not stored_entries.file_verify(c.DIR_NAME):
+            print('\nno collection folder')
+            return
+        stored_entries.wipe_all()
     elif sys_arguement == '-b':
         if not stored_entries.file_verify():
             print("\nno entry file")
@@ -68,7 +73,7 @@ def main(sys_arguement=None, title=None):
             stored_entries.delete_entry(joined_title)
         # if no keyword is supplied to search with, show syntax
         else:
-            print('\nnothing to show\nformat: jnl -del [keyword]')
+            print('\nnothing to show\nformat: idl -del [keyword]')
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
     elif sys_arguement == '-load':
@@ -76,7 +81,7 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-config':
         if stored_entries.check_dir() != False:
             # reset defaults
-            stored_entries.gen_config('jnl', c.DEFAULTS)
+            stored_entries.gen_config('idl', c.DEFAULTS)
     elif sys_arguement == '-t':
         if not stored_entries.file_verify():
             print("\nno entry file")
@@ -86,7 +91,7 @@ def main(sys_arguement=None, title=None):
             print('searching for tag ' + '\'' + c.CYAN + joined_title + c.END + '\':')
             stored_entries.show_keyword('(' + joined_title + ')')
         else:
-            print('\nnothing to show\nformat: jnl -t [tag]')
+            print('\nnothing to show\nformat: idl -t [tag]')
     elif sys_arguement == '-s':
         if len(title) != 0:
             if stored_entries.check_dir() != False:

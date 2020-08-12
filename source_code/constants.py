@@ -11,14 +11,14 @@ BLUE = '\033[34m'
 RED = '\033[91m'
 
 # name of the directory
-DIR_NAME = "jnl"
+DIR_NAME = "idl"
 
-HEADER = '\n---\n\
+HEADER = '-----\n\
 \033[35m\
-jnl\033[0m\
-\n---\n\
+idyll\033[0m\
+\n-----\n\
 \033[36m\
-v1.4.0\
+v1.5.0\
 \033[0m\
 \033[33m\
 \nmade by joseph barsness\
@@ -26,19 +26,20 @@ v1.4.0\
 \nthis is a command line tool for recording\
  and accessing things.\n'
 
-HELP = '\nusage:\nfull: \'jnl [arg]\'\nquick entry: \'jnl [entry]\'\n\
-alternatively, the title of entries with arg use can be one-lined like \'jnl [arg] [title]\'\n\
+HELP = '\nusage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
+alternatively, the title of entries with arg use can be one-lined like \'idl [arg] [title]\'\n\
 \narguements:\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
 \'-nt\': new title entry using a textbox\n\
-\'-a\': new tagged entry. format: \'jnl -a [tag] [title]\'\n\n\
+\'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
 \'-t\': search for entries with a tag\n\
-\'-del\': delete entry(s). format: \'jnl -del [keyword]\'\n\
+\'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
-\'-wipe\': delete collection\n\
+\'-wipe\': delete default collection\n\
+\'-wipe-all\': delete all collections and traces of program in pwd\n\
 \'-b\': create backup\n\
 \'-load\': load entries from backup\n\
 \'-config\': generate config file in pwd. if config exists, defaults reset.\n\
@@ -75,18 +76,18 @@ FOLDER = Path(DIR_NAME)
 
 END_MARKER = DEFAULTS[0]
 DATESTAMP_UNDERLINE = DEFAULTS[1]
-JOURNAL_TITLE = FOLDER / 'jnl.txt'
-BACKUP_TITLE = FOLDER / 'b_jnl.txt'
+JOURNAL_TITLE = FOLDER / 'idl.txt'
+BACKUP_TITLE = FOLDER / 'b_idl.txt'
 FIRST_MARKER = DEFAULTS[2]
 SECOND_MARKER = DEFAULTS[3]
 USE_TEXTBOX = DEFAULTS[4]
 
 # use config values if present, else use default
-if os.path.exists(FOLDER / 'jnl.ini'):
+if os.path.exists(FOLDER / 'idl.ini'):
     try:
         # use pathlib to hide filepaths from user
         config = configparser.ConfigParser()
-        config.read(FOLDER / 'jnl.ini')
+        config.read(FOLDER / 'idl.ini')
 
         END_MARKER = config['DEFAULT']['END_MARKER']
         DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']

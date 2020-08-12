@@ -3,7 +3,7 @@ import random
 import re
 import os
 import stat
-from shutil import copy
+from shutil import copy, rmtree
 from pathlib import Path
 import configparser
 
@@ -115,7 +115,7 @@ class Collection:
     def wipe_journal(self):
         'completely delete journal'
 
-        selection = input('\ndelete all? y/n\n')
+        selection = input('\ndelete default collection? y/n\n')
 
         if selection == 'y':
             try:
@@ -194,7 +194,7 @@ class Collection:
             print('\nload from backup cancelled')
             return
 
-    def gen_config(self, active='jnl', deff=c.DEFAULTS):
+    def gen_config(self, active='idl', deff=c.DEFAULTS):
         'generate config file in pwd'
 
         folder = Path(c.DIR_NAME)
@@ -208,7 +208,7 @@ class Collection:
                              'USE_TEXTBOX': deff[4]}
 
         try:
-            configfile = open(folder / 'jnl.ini', 'w')
+            configfile = open(folder / 'idl.ini', 'w')
         except FileNotFoundError:
             print(c.RED + 'no file to modify - something went wrong' + c.END)
             raise
@@ -216,7 +216,7 @@ class Collection:
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
 
-        print(c.YELLOW + '\nconfig updated as ' + c.PURPLE + os.path.abspath(folder / 'jnl.ini') + c.END)
+        print(c.YELLOW + '\nconfig updated as ' + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
 
     def quick_delete(self):
         'quick-deletes the last entry made'
@@ -263,7 +263,22 @@ class Collection:
         if not os.path.exists(dire):
             verify = input("\nno collection directory here. create? y/n\n")
             if verify != "y":
-                print("\nnothing created")
+                print("\nno directory created")
                 return False
             os.makedirs(dire)
             return True
+
+    def wipe_all(self):
+        'deletes entire contents folder'
+
+        answer = input('\ndelete every collection in this directory? y/n\n')
+        if answer != 'y':
+            print('\nnothing deleted')
+            return
+        print(c.YELLOW + 'deleting all...' + c.END)
+        try:
+            rmtree(c.DIR_NAME)
+        except Exception:
+            print(c.RED + '\nsomething went wrong\n' + c.END)
+            raise
+        print(c.YELLOW + 'everything deleted' + c.END)
