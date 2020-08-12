@@ -27,13 +27,13 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\ndefault entry file doesn't exist")
             return 
-        stored_entries.collection = stored_entries.scan_journal()
+        stored_entries.collection = stored_entries.scan_collection()
         # if there is a keyword to search with
         if (len(title) != 0):
             criteria = joined_title
             print('entries containing ' + '\'' + c.CYAN + criteria + c.END + '\':')
             stored_entries.show_keyword(joined_title)
-        # if no keyword is present, print out entire journal
+        # if no keyword is present, print out entire collection
         else:
             # check for formatted entries
             if (len(stored_entries.collection) != 0):
@@ -47,7 +47,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\ndefault entry file doesn't exist")
             return
-        stored_entries.wipe_journal()
+        stored_entries.wipe_collection()
     elif sys_arguement == '-wipe-all':
         if not stored_entries.file_verify(c.DIR_NAME):
             print('\nno collection folder')
@@ -57,7 +57,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\ndefault entry file doesn't exist")
             return
-        stored_entries.backup_journal()
+        stored_entries.backup_collection()
     elif sys_arguement == '-q':
         if not stored_entries.file_verify():
             print("\ndefault entry file doesn't exist")
@@ -67,7 +67,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\ndefault entry file doesn't exist")
             return
-        stored_entries.collection = stored_entries.scan_journal()
+        stored_entries.collection = stored_entries.scan_collection()
         # check for presence of entries. continue if so
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
             stored_entries.delete_entry(joined_title)
@@ -86,7 +86,7 @@ def main(sys_arguement=None, title=None):
         if not stored_entries.file_verify():
             print("\nno entry file")
             return
-        stored_entries.collection = stored_entries.scan_journal()
+        stored_entries.collection = stored_entries.scan_collection()
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
             print('searching for tag ' + '\'' + c.CYAN + joined_title + c.END + '\':')
             stored_entries.show_keyword('(' + joined_title + ')')
@@ -152,15 +152,15 @@ def help_print():
 
     # print out file locations
     if os.path.exists(c.DIR_NAME):
-        if os.path.exists(c.JOURNAL_TITLE):
-            print('current default: ' + c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.END)
+        if os.path.exists(c.collection_TITLE):
+            print('current default: ' + c.PURPLE + os.path.abspath(c.collection_TITLE) + c.END)
         if os.path.exists(c.BACKUP_TITLE):
             print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
         collections = [f for f in os.listdir(c.DIR_NAME) if f.endswith('.txt')]
         d = Path(c.DIR_NAME)
         if len(collections) > 0:
             # check for presence of formatted entries
-            entry = [f for f in collections if len(stored_entries.scan_journal(d / f)) > 0]
+            entry = [f for f in collections if len(stored_entries.scan_collection(d / f)) > 0]
             if len(entry) > 0:
                 print('collections: ' + c.PURPLE + ' '.join(entry) + c.END)
     print(c.HEADER + c.HELP)

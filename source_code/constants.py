@@ -52,13 +52,13 @@ SEPERATOR = '<\>'
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
 
-CONFIG_MESSAGE = '\n# WRNG: updating may outdate journal in pwd\n\n\
-# \'end_marker\' determines entry marker recorded in journal file. \
-updating will outdate journal file in pwd.\n\
+CONFIG_MESSAGE = '\n# WRNG: updating may outdate collection in pwd\n\n\
+# \'end_marker\' determines entry marker recorded in collection file. \
+updating will outdate collection file in pwd.\n\
 # \'datestamp_underline\' determines the series of underscores under the entry\
  date time stamp. may be changed without outdating anything.\n\
-# \'journal_title\' determines the name of the journal file. set this to \
-the desired default journal file, or change to create a new one.\n\
+# \'collection_title\' determines the name of the collection file. set this to \
+the desired default collection file, or change to create a new one.\n\
 # \'backup_title\' determines the name of the backup file. set this to \
 the desired default backup file, or change to create a new one.\n\
 # \'first_marker\' determines what should preceed an entry\'s \'first\' \
@@ -74,7 +74,7 @@ FOLDER = Path(DIR_NAME)
 
 END_MARKER = DEFAULTS[0]
 DATESTAMP_UNDERLINE = DEFAULTS[1]
-JOURNAL_TITLE = FOLDER / 'idl.txt'
+collection_TITLE = FOLDER / 'idl.txt'
 BACKUP_TITLE = FOLDER / 'b_idl.txt'
 FIRST_MARKER = DEFAULTS[2]
 SECOND_MARKER = DEFAULTS[3]
@@ -90,10 +90,10 @@ if os.path.exists(FOLDER / 'idl.ini'):
         END_MARKER = config['DEFAULT']['END_MARKER']
         DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
 
-        jtitle_nopath = config['DEFAULT']['JOURNAL_TITLE'] + '.txt'
+        jtitle_nopath = config['DEFAULT']['collection_TITLE'] + '.txt'
         btitle_nopath = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
 
-        JOURNAL_TITLE = FOLDER / jtitle_nopath
+        collection_TITLE = FOLDER / jtitle_nopath
         BACKUP_TITLE = FOLDER / btitle_nopath
 
         FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']

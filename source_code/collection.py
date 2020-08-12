@@ -62,28 +62,28 @@ class Collection:
             for things in delete:
                 # remove them
                 self.collection.remove(things)
-            self.refresh_journal()
+            self.refresh_collection()
             print(c.YELLOW + 'entries deleted' + c.END)
 
         else:
             print('\nentries preserved')
             return
 
-    def scan_journal(self, fpath=c.JOURNAL_TITLE):
-        'returns collection list of journal entries'
+    def scan_collection(self, fpath=c.collection_TITLE):
+        'returns collection list of collection entries'
 
         os.chmod(fpath, stat.S_IRWXU)
         try:
-            journal = open(fpath, 'r')
+            collection = open(fpath, 'r')
         except FileNotFoundError:
             print(c.RED + 'no file to read - something went wrong' + c.END)
             raise
 
         bulk = []
-        for lines in journal:
+        for lines in collection:
             bulk.append(lines)
         os.chmod(fpath, stat.S_IREAD)
-        journal.close()
+        collection.close()
 
         bulk = ''.join(bulk)
         # cleans string - subs out excess newline characters
@@ -94,13 +94,13 @@ class Collection:
 
         return bulk
 
-    def refresh_journal(self):
-        'after deletion of entry, re-write journal to reflect changes'
+    def refresh_collection(self):
+        'after deletion of entry, re-write collection to reflect changes'
 
         try :
-            # make journal writeable
-            os.chmod(c.JOURNAL_TITLE, stat.S_IRWXU)
-            refresh = open(c.JOURNAL_TITLE, 'w')
+            # make collection writeable
+            os.chmod(c.collection_TITLE, stat.S_IRWXU)
+            refresh = open(c.collection_TITLE, 'w')
         except FileNotFoundError:
             print(c.RED + 'no file to modify - something went wrong' + c.END)
             raise
@@ -109,19 +109,19 @@ class Collection:
             refresh.write(entry)
             refresh.write(c.END_MARKER + '\n\n')
 
-        os.chmod(c.JOURNAL_TITLE, stat.S_IREAD)
+        os.chmod(c.collection_TITLE, stat.S_IREAD)
         refresh.close()
 
-    def wipe_journal(self):
-        'completely delete journal'
+    def wipe_collection(self):
+        'completely delete collection'
 
         selection = input('\ndelete default collection? y/n\n')
 
         if selection == 'y':
             try:
                 print(c.YELLOW + '\ndeleting...' + c.END)
-                os.remove(c.JOURNAL_TITLE)
-                print(c.PURPLE + os.path.abspath(c.JOURNAL_TITLE) + c.YELLOW + ' deleted' + c.END)
+                os.remove(c.collection_TITLE)
+                print(c.PURPLE + os.path.abspath(c.collection_TITLE) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: file doesn\'t exist' + c.END)
@@ -130,18 +130,18 @@ class Collection:
             print('\nfile preserved')
             return
 
-    def file_verify(self, f=c.JOURNAL_TITLE) :
+    def file_verify(self, f=c.collection_TITLE) :
         'checks for presence of entry file'
 
         return os.path.exists(f)
 
-    def backup_journal(self):
-        'creates a backup journal file'
+    def backup_collection(self):
+        'creates a backup collection file'
 
         # uses 'copy' to preserve permissions
         # in case future update relies on permission at close
         try:
-            copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
+            copy(c.collection_TITLE, c.BACKUP_TITLE)
             print(c.YELLOW + '\nbackup created as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE)+ c.END)
             return
         except PermissionError:
@@ -156,7 +156,7 @@ class Collection:
         try:
             os.remove(c.BACKUP_TITLE)
             # retain a backup copy
-            copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
+            copy(c.collection_TITLE, c.BACKUP_TITLE)
             print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
         except FileNotFoundError:
             # user machine removed file themselves after running program
@@ -172,18 +172,18 @@ class Collection:
 
         selection = input('\nrestore from backup? y/n\n')
         if selection == 'y':
-            # make sure correct journal is retained
+            # make sure correct collection is retained
             try:
-                os.remove(c.JOURNAL_TITLE)
+                os.remove(c.collection_TITLE)
             except FileNotFoundError:
                 print(c.PURPLE + "creating new file, retaining backup..." + c.END)
 
             print(c.YELLOW + '\nrestoring...' + c.END)
             # backup -> running file
             try:
-                os.rename(c.BACKUP_TITLE, c.JOURNAL_TITLE)
+                os.rename(c.BACKUP_TITLE, c.collection_TITLE)
                 # retain a copy
-                copy(c.JOURNAL_TITLE, c.BACKUP_TITLE)
+                copy(c.collection_TITLE, c.BACKUP_TITLE)
                 print(c.YELLOW + 'restored from ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
             except FileNotFoundError:
                 # user machine removed file themselves after running program
@@ -201,7 +201,7 @@ class Collection:
         config = configparser.ConfigParser()
         config['DEFAULT'] = {'END_MARKER': deff[0],
                              'DATESTAMP_UNDERLINE': deff[1],
-                             'JOURNAL_TITLE': active,
+                             'collection_TITLE': active,
                              'BACKUP_TITLE': 'b_' + active,
                              'FIRST_MARKER': deff[2],
                              'SECOND_MARKER': deff[3],
@@ -221,8 +221,8 @@ class Collection:
     def quick_delete(self):
         'quick-deletes the last entry made'
 
-        # return if journal is empty
-        self.collection = self.scan_journal()
+        # return if collection is empty
+        self.collection = self.scan_collection()
         if (len(self.collection) == 0):
             print('\nnothing to delete')
             return
@@ -231,7 +231,7 @@ class Collection:
         if answer == 'y':
             print(c.YELLOW + '\ndeleting...' + c.END)
             del self.collection[-1]
-            self.refresh_journal()
+            self.refresh_collection()
             print(c.YELLOW + 'deleted' + c.END)
             return
         else:
