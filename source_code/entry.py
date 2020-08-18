@@ -5,7 +5,7 @@ import constants as c
 from entrybox import TextBox
 
 
-class Entry():
+class Entry:
     'an entry to be stored in the collection'
     
     def __init__(self, passed_title, shortcut=None):
@@ -22,7 +22,7 @@ class Entry():
     def full_write(self):
         'a full entry, including both sections'
 
-        entries = open(c.collection_TITLE, 'a+')
+        entries = open(c.COLLECTION_TITLE, 'a+')
         self.format_readability()
         entries.writelines([str(self.recorded_datetime), '\n',
                             c.DATESTAMP_UNDERLINE, '\n',
@@ -36,7 +36,7 @@ class Entry():
     def first_write(self):
         'a first-section-only write'
 
-        entries = open(c.collection_TITLE, 'a+')
+        entries = open(c.COLLECTION_TITLE, 'a+')
         self.format_readability()
         entries.writelines([str(self.recorded_datetime), '\n',
                             c.DATESTAMP_UNDERLINE, '\n',
@@ -48,7 +48,7 @@ class Entry():
     def second_write(self):
         'a second-section-only write'
 
-        entries = open(c.collection_TITLE, 'a+')
+        entries = open(c.COLLECTION_TITLE, 'a+')
         self.format_readability()
         entries.writelines([str(self.recorded_datetime), '\n',
                             c.DATESTAMP_UNDERLINE, '\n',
@@ -60,7 +60,7 @@ class Entry():
     def title_write(self):
         'a write with a title only'
 
-        entries = open(c.collection_TITLE, 'a+')
+        entries = open(c.COLLECTION_TITLE, 'a+')
         self.format_readability()
         entries.writelines([str(self.recorded_datetime), '\n',
                             c.DATESTAMP_UNDERLINE, '\n',
@@ -71,7 +71,7 @@ class Entry():
     def tag_write(self, tag):
         'a write with a tag'
 
-        entries = open(c.collection_TITLE, 'a+')
+        entries = open(c.COLLECTION_TITLE, 'a+')
         self.format_readability()
         entries.writelines([str(self.recorded_datetime), '\n',
                             c.DATESTAMP_UNDERLINE, '\n',
@@ -84,7 +84,7 @@ class Entry():
         'initializes textboxes, records input, manages call to _write()'
 
         try:
-            os.chmod(c.collection_TITLE, stat.S_IRWXU)
+            os.chmod(c.COLLECTION_TITLE, stat.S_IRWXU)
         except FileNotFoundError:
             # permission handling will be passed down if continued
             check = input("\nno collection file in pwd. create? y/n\n")
@@ -136,8 +136,8 @@ class Entry():
             TextBox(self, 'title')
             self.title_write()
         
-        os.chmod(c.collection_TITLE, stat.S_IREAD)
-        print('\nnew entry in ' + c.PURPLE + os.path.abspath(c.collection_TITLE) + c.END +
+        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        print('\nnew entry in ' + c.PURPLE + os.path.abspath(c.COLLECTION_TITLE) + c.END +
               '\ntitled: ' + '\'' + self.title + '\'')
 
     def format_readability(self):

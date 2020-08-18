@@ -5,6 +5,7 @@ from entrybox import TextBox
 import constants as c
 import os
 from pathlib import Path
+from file_handle import FileHandle
 
 '''
 idl is a command line tool used to manage text entries.
@@ -24,7 +25,7 @@ def main(sys_arguement=None, title=None):
 
     # skip to command if launched using sys arguement
     if sys_arguement == '-v':
-        if not stored_entries.file_verify():
+        if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return 
         stored_entries.collection = stored_entries.scan_collection()
@@ -44,27 +45,27 @@ def main(sys_arguement=None, title=None):
                 # means that a file is present, but nothing could be parsed from it
                 print('\nempty collection and/or invalid entry format')
     elif sys_arguement == '-wipe':
-        if not stored_entries.file_verify():
+        if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
-        stored_entries.wipe_collection()
+        FileHandle.wipe_collection()
     elif sys_arguement == '-wipe-all':
-        if not stored_entries.file_verify(c.DIR_NAME):
+        if not FileHandle.file_verify(c.DIR_NAME):
             print('\nno collection folder')
             return
-        stored_entries.wipe_all()
+        FileHandle.wipe_all()
     elif sys_arguement == '-b':
-        if not stored_entries.file_verify():
+        if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
-        stored_entries.backup_collection()
+        FileHandle.backup_collection()
     elif sys_arguement == '-q':
-        if not stored_entries.file_verify():
+        if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
         stored_entries.quick_delete()
     elif sys_arguement == '-del':
-        if not stored_entries.file_verify():
+        if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
         stored_entries.collection = stored_entries.scan_collection()
@@ -77,13 +78,13 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
     elif sys_arguement == '-load':
-        stored_entries.load_from_backup()
+        FileHandle.load_from_backup()
     elif sys_arguement == '-config':
-        if stored_entries.check_dir() != False:
+        if FileHandle.check_dir() != False:
             # reset defaults
-            stored_entries.gen_config('idl', c.DEFAULTS)
+            FileHandle.gen_config('idl', c.DEFAULTS)
     elif sys_arguement == '-t':
-        if not stored_entries.file_verify():
+        if not FileHandle.file_verify():
             print("\nno entry file")
             return
         stored_entries.collection = stored_entries.scan_collection()
@@ -94,24 +95,23 @@ def main(sys_arguement=None, title=None):
             print('\nnothing to show\nformat: idl -t [tag]')
     elif sys_arguement == '-s':
         if len(title) != 0:
-            if stored_entries.check_dir() != False:
-                stored_entries.switch(joined_title)
+            if FileHandle.check_dir() != False:
+                FileHandle.switch(joined_title)
         else:
             print("\nno name specified")
     
     elif sys_arguement == '-n':
-        if stored_entries.check_dir() == False:
+        if FileHandle.check_dir() == False:
             return
         # if a title is supplied in the same line
         if (len(title) != 0):
-            # keep 'new' as a variable to possibly reference in later formatting decisions
             Entry(joined_title)
         else:
             # run a full entry
             experience = str(input('title:\n'))
             Entry(experience)
     elif sys_arguement == '-n1':
-        if stored_entries.check_dir() == False:
+        if FileHandle.check_dir() == False:
             return
         if (len(title) != 0):
             Entry(joined_title, '-n1')
@@ -119,7 +119,7 @@ def main(sys_arguement=None, title=None):
             experience = str(input('title:\n'))
             Entry(experience, '-n1')
     elif sys_arguement == '-n2':
-        if stored_entries.check_dir() == False:
+        if FileHandle.check_dir() == False:
             return
         if (len(title) != 0):
             Entry(joined_title, '-n2')
@@ -129,31 +129,31 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-a':
         # must be at least two words long for both a tag and entry
         if len(title) > 1:
-            if stored_entries.check_dir() == False:
+            if FileHandle.check_dir() == False:
                 return
             # pass in tag as list to allow for formatting
             Entry(title, '-a')
         else:
             print('\nno tag selected')
     elif sys_arguement == '-nt':
-        if stored_entries.check_dir() == False:
+        if FileHandle.check_dir() == False:
             return
         # force a textbox entry
         Entry(None, '-nt')
     else:
-        if stored_entries.check_dir() == False:
+        if FileHandle.check_dir() == False:
             return
         # default to a one-lined title only entry
         Entry(' '.join(sys.argv[1:]), '-e')
 
 
 def help_print():
-    'prints out program info, including current active directories'
+    'prints out program info, including current active collections'
 
     # print out file locations
     if os.path.exists(c.DIR_NAME):
-        if os.path.exists(c.collection_TITLE):
-            print('current default: ' + c.PURPLE + os.path.abspath(c.collection_TITLE) + c.END)
+        if os.path.exists(c.COLLECTION_TITLE):
+            print('current default: ' + c.PURPLE + os.path.abspath(c.COLLECTION_TITLE) + c.END)
         if os.path.exists(c.BACKUP_TITLE):
             print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
         collections = [f for f in os.listdir(c.DIR_NAME) if f.endswith('.txt')]

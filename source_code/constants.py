@@ -28,7 +28,7 @@ v1.5.0\
 
 HELP = '\nusage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'idl [arg] [title]\'\n\
-\narguements:\n\
+\ncommands:\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
@@ -57,7 +57,7 @@ CONFIG_MESSAGE = '\n# WRNG: updating may outdate collection in pwd\n\n\
 updating will outdate collection file in pwd.\n\
 # \'datestamp_underline\' determines the series of underscores under the entry\
  date time stamp. may be changed without outdating anything.\n\
-# \'collection_title\' determines the name of the collection file. set this to \
+# \'COLLECTION_TITLE\' determines the name of the collection file. set this to \
 the desired default collection file, or change to create a new one.\n\
 # \'backup_title\' determines the name of the backup file. set this to \
 the desired default backup file, or change to create a new one.\n\
@@ -74,7 +74,7 @@ FOLDER = Path(DIR_NAME)
 
 END_MARKER = DEFAULTS[0]
 DATESTAMP_UNDERLINE = DEFAULTS[1]
-collection_TITLE = FOLDER / 'idl.txt'
+COLLECTION_TITLE = FOLDER / 'idl.txt'
 BACKUP_TITLE = FOLDER / 'b_idl.txt'
 FIRST_MARKER = DEFAULTS[2]
 SECOND_MARKER = DEFAULTS[3]
@@ -90,10 +90,10 @@ if os.path.exists(FOLDER / 'idl.ini'):
         END_MARKER = config['DEFAULT']['END_MARKER']
         DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
 
-        jtitle_nopath = config['DEFAULT']['collection_TITLE'] + '.txt'
+        jtitle_nopath = config['DEFAULT']['COLLECTION_TITLE'] + '.txt'
         btitle_nopath = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
 
-        collection_TITLE = FOLDER / jtitle_nopath
+        COLLECTION_TITLE = FOLDER / jtitle_nopath
         BACKUP_TITLE = FOLDER / btitle_nopath
 
         FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']
