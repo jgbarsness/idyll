@@ -82,7 +82,10 @@ def main(sys_arguement=None, title=None):
     elif sys_arguement == '-config':
         if FileHandle.check_dir() != False:
             # reset defaults
+            folder = Path(c.DIR_NAME)
             FileHandle.gen_config('idl', c.DEFAULTS)
+            print(c.YELLOW + '\nconfig updated as ' 
+                  + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
     elif sys_arguement == '-t':
         if not FileHandle.file_verify():
             print("\nno entry file")

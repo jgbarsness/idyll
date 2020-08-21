@@ -81,7 +81,7 @@ class FileHandle:
         name = new + '.txt'
         path = folder / name
         if FileHandle.file_verify(path) == False:
-            verify = input("\nno collection by that name. set as working collection? y/n\n")
+            verify = input("\nno collection by that name. set as default collection? y/n\n")
             if verify != 'y':
                 print("\nnothing modified")
                 return
@@ -90,7 +90,7 @@ class FileHandle:
         keep = [c.END_MARKER, c.DATESTAMP_UNDERLINE, c.FIRST_MARKER, c.SECOND_MARKER, c.USE_TEXTBOX]
         print("\nsetting " + c.PURPLE + new + ".txt" + c.END + "...")
         FileHandle.gen_config(new, keep)
-        print("\n" + c.PURPLE + new + ".txt" + c.END + " is new working collection")
+        print(c.PURPLE + new + ".txt" + c.END + " is new default collection")
 
     @staticmethod
     def gen_config(active='idl', deff=c.DEFAULTS):
@@ -114,8 +114,6 @@ class FileHandle:
         config.write(configfile)
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
-
-        print(c.YELLOW + '\nconfig updated as ' + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
 
     @staticmethod
     def load_from_backup():
