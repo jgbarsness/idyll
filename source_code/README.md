@@ -1,6 +1,6 @@
 ## idyll <br />
-is a command line tool used to create and manage entries. entries are managed in 'idl'. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences.<br /><br />
-packaged on OSX<br />
+is a command line tool used to create and manage entries. entries are managed in '[cur_dir]/idl'. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences.<br /><br />
+packaged on macOS<br />
 ```sudo ln -s [...dist/idl/idl] [/usr/local/bin]``` to install from current folder location
 #### using:
 
@@ -28,5 +28,5 @@ does not modify existing files. modifes / creates config file.<br />
 '**-del**': delete entry<br />
 '**-q**': quick delete the last entry made
 
-first / second sections are intended to make idls flexible in use.<br />
+first / second sections are intended to make collections flexible in use.<br />
 e.g. running -config and changing the markers to 'where' and 'when'
