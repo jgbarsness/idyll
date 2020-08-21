@@ -51,20 +51,20 @@ SEPERATOR = '<\>'
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
 
-CONFIG_MESSAGE = '\n# WRNG: updating may outdate collection in pwd\n\n\
+CONFIG_MESSAGE = '\n# WARNING: updating may outdate collection in pwd\n\n\
 # \'end_marker\' determines entry marker recorded in collection file. \
 updating will outdate collection file in pwd.\n\
 # \'datestamp_underline\' determines the series of underscores under the entry\
  date time stamp. may be changed without outdating anything.\n\
-# \'COLLECTION_TITLE\' determines the name of the collection file. set this to \
+# \'collection_title\' defines the name of the default collection file. set this to \
 the desired default collection file, or change to create a new one.\n\
-# \'backup_title\' determines the name of the backup file. set this to \
+# \'backup_title\' defines the name of the current backup file. set this to \
 the desired default backup file, or change to create a new one.\n\
-# \'first_marker\' determines what should preceed an entry\'s \'first\' \
+# \'first_marker\' determines what should mark an entry\'s \'first\' \
 section. may be changed without outdating anything.\n\
-# \'second_marker\' determines what should preceed an entry\'s \'second\' \
+# \'second_marker\' determines what should mark an entry\'s \'second\' \
 section. may be changed without outdating anything.\n\
-# \'use_textbox\' can be set to false if tk textbox use is undesired.'
+# \'use_textbox\' can be set to false if textbox use is undesired.'
 
 DEFAULTS = ['#*#*#*#*#*#*#*#*#*#*#*#', '-----------------------',
             '1st:', '2nd:', True]
