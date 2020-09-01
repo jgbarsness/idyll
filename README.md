@@ -4,7 +4,7 @@ packaged on macOS<br />
 ```sudo ln -s [...dist/idl/idl] [/usr/local/bin]``` to install from current folder location
 #### using:
 
-```idl```
+```idl```<br />
 ```idl [command] [keyword (if appropriate)]```<br />
 or for a quick entry:<br />
 ```idl [entry]```
