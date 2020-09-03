@@ -25,6 +25,7 @@ class Collection:
         entry = self.return_thing(key)
         if (len(entry) == 0):
             print('\nnothing to show')
+            return entry
 
         # if function can continue, print out entry
         self.print_entries(entry)
@@ -50,7 +51,7 @@ class Collection:
         print('to be deleted, containing ' + '\'' + c.CYAN + entry + c.END + '\':')
         self.print_entries(delete)
 
-        choice = input('\ndelete? y/n\n')
+        choice = input('\ndelete ' + str(len(delete)) + ' entries? y/n\n')
 
         if choice == 'y':
             print(c.YELLOW + '\ndeleting entries...' + c.END)

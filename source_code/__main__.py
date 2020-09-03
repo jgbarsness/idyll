@@ -33,37 +33,43 @@ def main(sys_arguement=None, title=None):
         if (len(title) != 0):
             criteria = joined_title
             print('entries containing ' + '\'' + c.CYAN + criteria + c.END + '\':')
-            stored_entries.show_keyword(joined_title)
+            if len(stored_entries.show_keyword(joined_title)) != 0:
+                print("\n" + str(len(stored_entries.return_thing(joined_title))) + " entry(s)")
         # if no keyword is present, print out entire collection
         else:
             # check for formatted entries
             if (len(stored_entries.collection) != 0):
                 print('all entries:')
                 stored_entries.print_entries(stored_entries.collection)
-                print("\n" + str(len(stored_entries.collection)) + " entries")
+                print("\n" + str(len(stored_entries.collection)) + " entry(s)")
             else:
                 # means that a file is present, but nothing could be parsed from it
                 print('\nempty collection and/or invalid entry format')
+
     elif sys_arguement == '-wipe':
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
         FileHandle.wipe_collection()
+
     elif sys_arguement == '-wipe-all':
         if not FileHandle.file_verify(c.DIR_NAME):
             print('\nno collection folder')
             return
         FileHandle.wipe_all()
+
     elif sys_arguement == '-b':
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
         FileHandle.backup_collection()
+
     elif sys_arguement == '-q':
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
         stored_entries.quick_delete()
+
     elif sys_arguement == '-del':
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
@@ -77,8 +83,10 @@ def main(sys_arguement=None, title=None):
             print('\nnothing to show\nformat: idl -del [keyword]')
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
+
     elif sys_arguement == '-load':
         FileHandle.load_from_backup()
+
     elif sys_arguement == '-config':
         if FileHandle.check_dir() != False:
             # reset defaults
@@ -86,6 +94,7 @@ def main(sys_arguement=None, title=None):
             FileHandle.gen_config('idl', c.DEFAULTS)
             print(c.YELLOW + '\nconfig updated as ' 
                   + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
+
     elif sys_arguement == '-t':
         if not FileHandle.file_verify():
             print("\nno entry file")
@@ -93,16 +102,19 @@ def main(sys_arguement=None, title=None):
         stored_entries.collection = stored_entries.scan_collection()
         if (len(stored_entries.collection) != 0) and (len(title) != 0):
             print('searching for tag ' + '\'' + c.CYAN + joined_title + c.END + '\':')
-            stored_entries.show_keyword('(' + joined_title + ')')
+            if len(stored_entries.show_keyword('(' + joined_title + ')')) != 0:
+                print("\n" + str(len(stored_entries.return_thing('(' + joined_title + ')'))) + " entry(s)")
         else:
             print('\nnothing to show\nformat: idl -t [tag]')
+
     elif sys_arguement == '-s':
         if len(title) != 0:
             if FileHandle.check_dir() != False:
                 FileHandle.switch(joined_title)
         else:
             print("\nno name specified")
-    
+
+
     elif sys_arguement == '-n':
         if FileHandle.check_dir() == False:
             return
@@ -113,6 +125,7 @@ def main(sys_arguement=None, title=None):
             # run a full entry
             experience = str(input('title:\n'))
             Entry(experience)
+
     elif sys_arguement == '-n1':
         if FileHandle.check_dir() == False:
             return
@@ -121,6 +134,7 @@ def main(sys_arguement=None, title=None):
         else:
             experience = str(input('title:\n'))
             Entry(experience, '-n1')
+
     elif sys_arguement == '-n2':
         if FileHandle.check_dir() == False:
             return
@@ -129,6 +143,7 @@ def main(sys_arguement=None, title=None):
         else:
             experience = str(input('title:\n'))
             Entry(experience, '-n2')
+
     elif sys_arguement == '-a':
         # must be at least two words long for both a tag and entry
         if len(title) > 1:
@@ -138,11 +153,13 @@ def main(sys_arguement=None, title=None):
             Entry(title, '-a')
         else:
             print('\nno tag selected')
+
     elif sys_arguement == '-nt':
         if FileHandle.check_dir() == False:
             return
         # force a textbox entry
         Entry(None, '-nt')
+
     else:
         if FileHandle.check_dir() == False:
             return
