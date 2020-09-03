@@ -3,6 +3,7 @@ import re
 import os
 import stat
 from file_handle import FileHandle
+from pathlib import Path
 
 
 class Collection:
@@ -112,3 +113,49 @@ class Collection:
         else:
             print('\nnothing deleted')
             return
+
+    def view_command(self, title=None):
+        if not FileHandle.file_verify():
+            print("\ndefault entry file doesn't exist")
+            return 
+        self.collection = self.scan_collection()
+        # if there is a keyword to search with
+        if (len(title) != 0):
+            criteria = title
+            print('entries containing ' + '\'' + c.CYAN + criteria + c.END + '\':')
+            if len(self.show_keyword(title)) != 0:
+                print("\n" + str(len(self.return_thing(title))) + " entry(s)")
+        # if no keyword is present, print out entire collection
+        else:
+            # check for formatted entries
+            if (len(self.collection) != 0):
+                print('all entries:')
+                self.print_entries(self.collection)
+                print("\n" + str(len(self.collection)) + " entry(s)")
+            else:
+                # means that a file is present, but nothing could be parsed from it
+                print('\nempty collection and/or invalid entry format')
+
+    def delete_command(self, title=None):
+        if not FileHandle.file_verify():
+            print("\ndefault entry file doesn't exist")
+            return
+        self.collection = self.scan_collection()
+        # check for presence of entries. continue if so
+        if (len(self.collection) != 0) and (len(title) != 0):
+            self.delete_entry(title)
+        # if no keyword is supplied to search with, show syntax
+        else:
+            print('\nnothing to show\nformat: idl -del [keyword]')
+
+    def search_tag(self, title=None):
+        if not FileHandle.file_verify():
+            print("\nno entry file")
+            return
+        self.collection = self.scan_collection()
+        if (len(self.collection) != 0) and (len(title) != 0):
+            print('searching for tag ' + '\'' + c.CYAN + title + c.END + '\':')
+            if len(self.show_keyword('(' + title + ')')) != 0:
+                print("\n" + str(len(self.return_thing('(' + title + ')'))) + " entry(s)")
+        else:
+            print('\nnothing to show\nformat: idl -t [tag]')

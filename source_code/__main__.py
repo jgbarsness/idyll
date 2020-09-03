@@ -25,26 +25,7 @@ def main(sys_arguement=None, title=None):
 
     # skip to command if launched using sys arguement
     if sys_arguement == '-v':
-        if not FileHandle.file_verify():
-            print("\ndefault entry file doesn't exist")
-            return 
-        stored_entries.collection = stored_entries.scan_collection()
-        # if there is a keyword to search with
-        if (len(title) != 0):
-            criteria = joined_title
-            print('entries containing ' + '\'' + c.CYAN + criteria + c.END + '\':')
-            if len(stored_entries.show_keyword(joined_title)) != 0:
-                print("\n" + str(len(stored_entries.return_thing(joined_title))) + " entry(s)")
-        # if no keyword is present, print out entire collection
-        else:
-            # check for formatted entries
-            if (len(stored_entries.collection) != 0):
-                print('all entries:')
-                stored_entries.print_entries(stored_entries.collection)
-                print("\n" + str(len(stored_entries.collection)) + " entry(s)")
-            else:
-                # means that a file is present, but nothing could be parsed from it
-                print('\nempty collection and/or invalid entry format')
+        stored_entries.view_command(joined_title)
 
     elif sys_arguement == '-wipe':
         if not FileHandle.file_verify():
@@ -71,16 +52,8 @@ def main(sys_arguement=None, title=None):
         stored_entries.quick_delete()
 
     elif sys_arguement == '-del':
-        if not FileHandle.file_verify():
-            print("\ndefault entry file doesn't exist")
-            return
-        stored_entries.collection = stored_entries.scan_collection()
-        # check for presence of entries. continue if so
-        if (len(stored_entries.collection) != 0) and (len(title) != 0):
-            stored_entries.delete_entry(joined_title)
-        # if no keyword is supplied to search with, show syntax
-        else:
-            print('\nnothing to show\nformat: idl -del [keyword]')
+        stored_entries.delete_command(joined_title)
+
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
 
@@ -96,16 +69,7 @@ def main(sys_arguement=None, title=None):
                   + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
-        if not FileHandle.file_verify():
-            print("\nno entry file")
-            return
-        stored_entries.collection = stored_entries.scan_collection()
-        if (len(stored_entries.collection) != 0) and (len(title) != 0):
-            print('searching for tag ' + '\'' + c.CYAN + joined_title + c.END + '\':')
-            if len(stored_entries.show_keyword('(' + joined_title + ')')) != 0:
-                print("\n" + str(len(stored_entries.return_thing('(' + joined_title + ')'))) + " entry(s)")
-        else:
-            print('\nnothing to show\nformat: idl -t [tag]')
+        stored_entries.search_tag(joined_title)
 
     elif sys_arguement == '-s':
         if len(title) != 0:
