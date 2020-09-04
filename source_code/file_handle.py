@@ -184,3 +184,56 @@ class FileHandle:
 
         os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
         refresh.close()
+
+    @staticmethod
+    def delete_entry(entry: str, container: list) -> None:
+        'bulk or single delete entries'
+
+        delete = [elmnt for elmnt in container if entry in elmnt]
+        # if nothing is returned by previous call, end
+        if (len(delete) == 0):
+            print('\nnothing to delete containing ' 
+                  + '\'' + c.CYAN + entry + c.END + '\'')
+            return
+
+        # if function can continue, print out entry
+        print('to be deleted, containing ' + '\'' + c.CYAN + entry + c.END + '\':')
+        for thing in delete:
+            print('\n' + thing + c.SEPERATOR)
+
+        choice = input('\ndelete ' + str(len(delete)) + ' entries? y/n\n')
+
+        if choice == 'y':
+            print(c.YELLOW + '\ndeleting entries...' + c.END)
+
+            # find all occurances
+            for things in delete:
+                # remove them
+                container.remove(things)
+            
+            FileHandle.refresh_collection(container)
+            print(c.YELLOW + 'entries deleted' + c.END)
+
+        else:
+            print('\nentries preserved')
+            return
+
+    @staticmethod
+    def quick_delete(container: list):
+        'quick-deletes the last entry made'
+
+        # return if collection is empty
+        if (len(container) == 0):
+            print('\nnothing to delete')
+            return
+
+        answer = input('\ndelete last entry? y/n\n')
+        if answer == 'y':
+            print(c.YELLOW + '\ndeleting...' + c.END)
+            del container[-1]
+            FileHandle.refresh_collection(container)
+            print(c.YELLOW + 'deleted' + c.END)
+            return
+        else:
+            print('\nnothing deleted')
+            return

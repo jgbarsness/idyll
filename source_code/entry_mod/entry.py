@@ -2,7 +2,7 @@ import os
 import stat
 import datetime as dt
 import constants as c
-from entrybox import TextBox
+from entry_mod.entrybox import TextBox
 
 
 class Entry:

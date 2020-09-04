@@ -1,7 +1,8 @@
 import sys
-from entry import Entry
+from entry_mod.entry import Entry
 from collection import Collection
-from entrybox import TextBox
+from entry_mod.entrybox import TextBox
+from strats import command_strats, strat
 import constants as c
 import os
 from pathlib import Path
@@ -25,34 +26,39 @@ def main(sys_arguement=None, title=None):
 
     # skip to command if launched using sys arguement
     if sys_arguement == '-v':
-        stored_entries.view_command(joined_title)
+        container.strategy = command_strats.ViewStrat()
+        container.call_strat(joined_title)
 
     elif sys_arguement == '-wipe':
-        if not FileHandle.file_verify():
-            print("\ndefault entry file doesn't exist")
+        if error_out("\ndefault entry file doesn't exist"):
             return
         FileHandle.wipe_collection()
 
     elif sys_arguement == '-wipe-all':
-        if not FileHandle.file_verify(c.DIR_NAME):
-            print('\nno collection folder')
+        if error_out('\nno collection folder'):
             return
         FileHandle.wipe_all()
 
     elif sys_arguement == '-b':
-        if not FileHandle.file_verify():
-            print("\ndefault entry file doesn't exist")
+        if error_out("\ndefault entry file doesn't exist"):
             return
         FileHandle.backup_collection()
 
     elif sys_arguement == '-q':
+        if error_out("\ndefault entry file doesn't exist"):
+            return
+        FileHandle.quick_delete(container.collection)
+
+    elif sys_arguement == '-del':
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
             return
-        stored_entries.quick_delete()
-
-    elif sys_arguement == '-del':
-        stored_entries.delete_command(joined_title)
+        # check for presence of entries. continue if so
+        if (len(container.collection) != 0) and (len(joined_title) != 0):
+            FileHandle.delete_entry(joined_title, container.collection)
+        # if no keyword is supplied to search with, show syntax
+        else:
+            print('\nnothing to show\nformat: idl -del [keyword]')
 
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
@@ -69,7 +75,8 @@ def main(sys_arguement=None, title=None):
                   + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
-        stored_entries.search_tag(joined_title)
+        container.strategy = command_strats.TSearchStrat()
+        container.call_strat(joined_title)
 
     elif sys_arguement == '-s':
         if len(title) != 0:
@@ -144,14 +151,23 @@ def help_print():
         d = Path(c.DIR_NAME)
         if len(collections) > 0:
             # check for presence of formatted entries
-            entry = [f for f in collections if len(stored_entries.scan_collection(d / f)) > 0]
+            entry = [f for f in collections if len(Collection(None).scan_collection(d / f)) > 0]
             if len(entry) > 0:
                 print('collections: ' + c.PURPLE + ' '.join(entry) + c.END)
     print(c.HEADER + c.HELP)
 
 
+def error_out(message: str):
+    'prints out message and returns true, else returns false if no error'
+
+    if not FileHandle.file_verify():
+        print(message)
+        return True
+    return False
+
+
 if __name__ == '__main__':
-    stored_entries = Collection()
+    container = Collection(None)
     # check if a sys arguement is present
     try:
         main(sys.argv[1], sys.argv[2:])
