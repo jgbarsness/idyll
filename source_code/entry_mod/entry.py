@@ -3,6 +3,7 @@ import stat
 import datetime as dt
 import constants as c
 from entry_mod.entrybox import TextBox
+from entry_mod.entry_writer import EntryWriter
 
 
 class Entry:
@@ -19,69 +20,8 @@ class Entry:
         self.title = passed_title
         self.begin_entry(shortcut)
 
-    def full_write(self):
-        'a full entry, including both sections'
-
-        entries = open(c.COLLECTION_TITLE, 'a+')
-        self.format_readability()
-        entries.writelines([str(self.recorded_datetime), '\n',
-                            c.DATESTAMP_UNDERLINE, '\n',
-                            self.title, '\n\n',
-                            c.FIRST_MARKER, '\n',
-                            self.first, '\n\n',
-                            c.SECOND_MARKER, '\n',
-                            self.second, '\n' + c.END_MARKER + '\n\n'])
-        entries.close()
-
-    def first_write(self):
-        'a first-section-only write'
-
-        entries = open(c.COLLECTION_TITLE, 'a+')
-        self.format_readability()
-        entries.writelines([str(self.recorded_datetime), '\n',
-                            c.DATESTAMP_UNDERLINE, '\n',
-                            self.title, '\n\n',
-                            c.FIRST_MARKER, '\n',
-                            self.first, '\n' + c.END_MARKER + '\n\n'])
-        entries.close()
-
-    def second_write(self):
-        'a second-section-only write'
-
-        entries = open(c.COLLECTION_TITLE, 'a+')
-        self.format_readability()
-        entries.writelines([str(self.recorded_datetime), '\n',
-                            c.DATESTAMP_UNDERLINE, '\n',
-                            self.title, '\n\n',
-                            c.SECOND_MARKER + '\n',
-                            self.second, '\n' + c.END_MARKER + '\n\n'])
-        entries.close()
-
-    def title_write(self):
-        'a write with a title only'
-
-        entries = open(c.COLLECTION_TITLE, 'a+')
-        self.format_readability()
-        entries.writelines([str(self.recorded_datetime), '\n',
-                            c.DATESTAMP_UNDERLINE, '\n',
-                            self.title, '\n',
-                            c.END_MARKER + '\n\n'])
-        entries.close()
-
-    def tag_write(self, tag):
-        'a write with a tag'
-
-        entries = open(c.COLLECTION_TITLE, 'a+')
-        self.format_readability()
-        entries.writelines([str(self.recorded_datetime), '\n',
-                            c.DATESTAMP_UNDERLINE, '\n',
-                            '(' + tag + ')\n',
-                            self.title, '\n',
-                            c.END_MARKER + '\n\n'])
-        entries.close()
-
     def begin_entry(self, which=None):
-        'initializes textboxes, records input, manages call to _write()'
+        'initializes textboxes, records input, manages call to write'
 
         try:
             os.chmod(c.COLLECTION_TITLE, stat.S_IRWXU)
@@ -103,7 +43,9 @@ class Entry:
                 TextBox(self, 'first')
                 input(c.SECOND)
                 TextBox(self, 'second')
-            self.full_write()
+            # format and call write
+            self.format_readability()
+            EntryWriter.full_write(str(self.recorded_datetime), self.title, self.first, self.second)
 
         elif which == '-n1':
             if c.USE_TEXTBOX is False:
@@ -111,7 +53,8 @@ class Entry:
             else:
                 input(c.FIRST)
                 TextBox(self, 'first')
-            self.first_write()
+            self.format_readability()
+            EntryWriter.first_write(str(self.recorded_datetime), self.title, self.first)
 
         elif which == '-n2':
             if c.USE_TEXTBOX is False:
@@ -119,22 +62,26 @@ class Entry:
             else:
                 input(c.SECOND)
                 TextBox(self, 'second')
-            self.second_write()
+            self.format_readability()
+            EntryWriter.second_write(str(self.recorded_datetime), self.title, self.second)
 
         elif which == '-e':
-            self.title_write()
+            self.format_readability()
+            EntryWriter.title_write(str(self.recorded_datetime), self.title)
 
         elif which == '-a':
             # create tag and exit function
             tag = self.title[0]
             del self.title[0]
             self.title = ' '.join(self.title)
-            self.tag_write(tag)
+            self.format_readability()
+            EntryWriter.tag_write(str(self.recorded_datetime), self.title, tag)
         
         elif which == '-nt':
             # entry with only a textbox
             TextBox(self, 'title')
-            self.title_write()
+            self.format_readability()
+            EntryWriter.title_write(str(self.recorded_datetime), self.title)
         
         os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
         print('\nnew entry in ' + c.PURPLE + os.path.abspath(c.COLLECTION_TITLE) + c.END +
