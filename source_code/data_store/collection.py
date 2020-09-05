@@ -1,10 +1,10 @@
-import Main.constants as c
+import constants_routers.constants as c
 import re
 import os
 import stat
-from Main.file_handle import FileHandle
+from constants_routers.file_handle import FileHandle
 from pathlib import Path
-from Strategies.strat import CommandStrategy
+from strategies.strat import CommandStrategy
 
 
 class Collection:

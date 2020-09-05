@@ -1,9 +1,9 @@
 import os
 import stat
 import datetime as dt
-import Main.constants as c
-from Entrys.entrybox import TextBox
-from Entrys.entry_writer import EntryWriter
+import constants_routers.constants as c
+from entry_managers.entrybox import TextBox
+from entry_managers.entry_writer import EntryWriter
 
 
 class Entry:
