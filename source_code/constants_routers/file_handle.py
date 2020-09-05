@@ -7,7 +7,7 @@ import stat
 
 
 class FileHandle:
-    'utility class containing file handling logic'
+    'utility class. file handling logic for collection data'
 
     @staticmethod
     def file_verify(f=c.COLLECTION_TITLE):

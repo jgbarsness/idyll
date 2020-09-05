@@ -1,4 +1,6 @@
 import constants_routers.constants as c
+import os
+import stat
 
 
 class EntryWriter():
@@ -17,6 +19,7 @@ class EntryWriter():
                             c.SECOND_MARKER, '\n',
                             second, '\n' + c.END_MARKER + '\n\n'])
         entries.close()
+        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
 
     @staticmethod
     def first_write(dt: str, title: str, first: str):
@@ -29,6 +32,7 @@ class EntryWriter():
                             c.FIRST_MARKER, '\n',
                             first, '\n' + c.END_MARKER + '\n\n'])
         entries.close()
+        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
 
     @staticmethod
     def second_write(dt: str, title: str, second: str):
@@ -41,6 +45,7 @@ class EntryWriter():
                             c.SECOND_MARKER + '\n',
                             second, '\n' + c.END_MARKER + '\n\n'])
         entries.close()
+        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
 
     @staticmethod
     def title_write(dt: str, title: str):
@@ -52,6 +57,7 @@ class EntryWriter():
                             title, '\n',
                             c.END_MARKER + '\n\n'])
         entries.close()
+        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
 
     @staticmethod
     def tag_write(dt: str, title: str, tag: str):
@@ -64,3 +70,4 @@ class EntryWriter():
                             title, '\n',
                             c.END_MARKER + '\n\n'])
         entries.close()
+        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)

@@ -1,5 +1,9 @@
 import sys
-from entry_managers.entry import Entry
+from entry_managers.full_entry import FullEntry
+from entry_managers.title_entry import TitleEntry
+from entry_managers.first_entry import FirstEntry
+from entry_managers.second_entry import SecondEntry
+from entry_managers.tag_entry import TagEntry
 from data_store.collection import Collection
 from entry_managers.entrybox import TextBox
 from strategies import command_strats, strat
@@ -12,7 +16,6 @@ from constants_routers.file_handle import FileHandle
 idl is a command line tool used to manage text entries.
 joseph barsness 2020
 '''
-
 
 def main(sys_arguement=None, title=None) -> None:
     'routes function calls'
@@ -109,39 +112,41 @@ def call_entry(type_of: str, title: list, joined_title: str):
     if type_of == 'full':
         if (len(title) != 0):
             # if title is supplied in same line
-            Entry(joined_title)
+            new = FullEntry(joined_title)
         else:
             # run a full entry
             experience = str(input('title:\n'))
-            Entry(experience)
+            new = FullEntry(experience)
     if type_of == 'first':
         if (len(title) != 0):
-            Entry(joined_title, '-n1')
+            new = FirstEntry(joined_title)
         else:
             experience = str(input('title:\n'))
-            Entry(experience, '-n1')
-
+            new = FirstEntry(experience)
     if type_of == 'second':
         if (len(title) != 0):
-            Entry(joined_title, '-n2')
+            new = SecondEntry(joined_title)
+
         else:
             experience = str(input('title:\n'))
-            Entry(experience, '-n2')
-
+            new = SecondEntry(experience)
     if type_of == 'tag':
         # must be at least two words long for both a tag and entry
         if len(title) > 1:
-            # pass in tag as list to allow for formatting
-            Entry(title, '-a')
+            # trim title to account for tag
+            tag = title[0]
+            end_title = ' '.join(title[1:])
+            new = TagEntry(end_title, tag)
         else:
             print('\nno tag selected')
-
     if type_of == 'force':
         # force a textbox entry
-        Entry(None, '-nt')
-
+        new = TitleEntry(None, True)
     if type_of == 'one_line':
-        Entry(' '.join(sys.argv[1:]), '-e')
+        new = TitleEntry(' '.join(sys.argv[1:]))
+    # call write / print on new object
+    new.write()
+    new.printout()
 
 
 def help_print():
