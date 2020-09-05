@@ -18,7 +18,7 @@ HEADER = '-----\n\
 idyll\033[0m\
 \n-----\n\
 \033[36m\
-v1.5.1\
+v2.0.0\
 \033[0m\
 \033[33m\
 \nmade by joseph barsness\
