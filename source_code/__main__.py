@@ -28,22 +28,27 @@ def main(sys_arguement=None, title=None) -> None:
     if sys_arguement == '-v':
         container.strategy = command_strats.ViewStrat()
         container.call_strat(joined_title)
+
     elif sys_arguement == '-wipe':
         if error_out("\ndefault entry file doesn't exist"):
             return
         FileHandle.wipe_collection()
+
     elif sys_arguement == '-wipe-all':
         if error_out('\nno collection folder'):
             return
         FileHandle.wipe_all()
+
     elif sys_arguement == '-b':
         if error_out("\ndefault entry file doesn't exist"):
             return
         FileHandle.backup_collection()
+
     elif sys_arguement == '-q':
         if error_out("\ndefault entry file doesn't exist"):
             return
         FileHandle.quick_delete(container.collection)
+
     elif sys_arguement == '-del':
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
@@ -54,10 +59,13 @@ def main(sys_arguement=None, title=None) -> None:
         # if no keyword is supplied to search with, show syntax
         else:
             print('\nnothing to show\nformat: idl -del [keyword]')
+
     elif sys_arguement == '-h' or sys_arguement == '-help':
         print(c.HELP)
+
     elif sys_arguement == '-load':
         FileHandle.load_from_backup()
+
     elif sys_arguement == '-config':
         if FileHandle.check_dir() != False:
             # reset defaults
@@ -65,9 +73,11 @@ def main(sys_arguement=None, title=None) -> None:
             FileHandle.gen_config('idl', c.DEFAULTS)
             print(c.YELLOW + '\nconfig updated as ' 
                   + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
+
     elif sys_arguement == '-t':
         container.strategy = command_strats.TSearchStrat()
         container.call_strat(joined_title)
+
     elif sys_arguement == '-s':
         if len(title) != 0:
             if FileHandle.check_dir() != False:
