@@ -1,6 +1,6 @@
-from strats.strat import CommandStrategy
-from file_handle import FileHandle
-import constants as c
+from Strategies.strat import CommandStrategy
+from Main.file_handle import FileHandle
+import Main.constants as c
 
 
 class ViewStrat(CommandStrategy):

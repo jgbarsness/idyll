@@ -1,4 +1,4 @@
-import constants as c
+import Main.constants as c
 
 
 class EntryWriter():

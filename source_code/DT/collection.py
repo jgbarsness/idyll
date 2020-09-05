@@ -1,10 +1,10 @@
-import constants as c
+import Main.constants as c
 import re
 import os
 import stat
-from file_handle import FileHandle
+from Main.file_handle import FileHandle
 from pathlib import Path
-from strats.strat import CommandStrategy
+from Strategies.strat import CommandStrategy
 
 
 class Collection:

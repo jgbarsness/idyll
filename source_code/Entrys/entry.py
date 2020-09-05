@@ -1,9 +1,9 @@
 import os
 import stat
 import datetime as dt
-import constants as c
-from entry_mod.entrybox import TextBox
-from entry_mod.entry_writer import EntryWriter
+import Main.constants as c
+from Entrys.entrybox import TextBox
+from Entrys.entry_writer import EntryWriter
 
 
 class Entry:

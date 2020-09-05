@@ -1,12 +1,12 @@
 import sys
-from entry_mod.entry import Entry
-from collection import Collection
-from entry_mod.entrybox import TextBox
-from strats import command_strats, strat
-import constants as c
+from Entrys.entry import Entry
+from DT.collection import Collection
+from Entrys.entrybox import TextBox
+from Strategies import command_strats, strat
+import Main.constants as c
 import os
 from pathlib import Path
-from file_handle import FileHandle
+from Main.file_handle import FileHandle
 
 '''
 idl is a command line tool used to manage text entries.

@@ -1,4 +1,4 @@
-import constants as c
+import Main.constants as c
 import os
 from shutil import copy, rmtree
 from pathlib import Path
