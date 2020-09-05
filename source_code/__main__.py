@@ -50,7 +50,11 @@ def main(sys_arguement=None, title=None) -> None:
     elif sys_arguement == '-q':
         if error_out("\ndefault entry file doesn't exist"):
             return
-        FileHandle.quick_delete(container.collection)
+        container.strategy = command_strats.QuickDeleteStrat()
+        to_continue = container.call_strat(None)
+        # if something was changed
+        if container.collection != to_continue:
+            FileHandle.refresh_collection(to_continue)
 
     elif sys_arguement == '-del':
         if not FileHandle.file_verify():
@@ -58,7 +62,10 @@ def main(sys_arguement=None, title=None) -> None:
             return
         # check for presence of entries. continue if so
         if (len(container.collection) != 0) and (len(joined_title) != 0):
-            FileHandle.delete_entry(joined_title, container.collection)
+            container.strategy = command_strats.DeleteModStrat()
+            to_continue = container.call_strat(joined_title)
+            if container.collection != to_continue:
+                FileHandle.refresh_collection(to_continue)
         # if no keyword is supplied to search with, show syntax
         else:
             print('\nnothing to show\nformat: idl -del [keyword]')
@@ -139,6 +146,7 @@ def call_entry(type_of: str, title: list, joined_title: str):
             new = TagEntry(end_title, tag)
         else:
             print('\nno tag selected')
+            return
     if type_of == 'force':
         # force a textbox entry
         new = TitleEntry(None, True)

@@ -27,10 +27,10 @@ class Collection:
 
         self._strategy = strategy
 
-    def call_strat(self, title: str):
+    def call_strat(self, title: str) -> list:
         'calls strategy on collection'
 
-        self._strategy.call_command(self.collection, title)
+        return self._strategy.call_command(self.collection, title)
 
     def scan_collection(self, fpath=c.COLLECTION_TITLE):
         'returns collection list of collection entries'
