@@ -1,10 +1,11 @@
 import tkinter as tk
+from entry_managers.ab_entry import AEntry
 
 
 class TextBox():
     'a text box for taking in input and displaying it'
 
-    def __init__(self, object_passed=None, attribute=None):
+    def __init__(self, obj_ref: AEntry=None, attribute=None):
         self.text = None
         self.root = tk.Tk()
         text_box = tk.Text(self.root, height=15, width=50,
@@ -26,13 +27,12 @@ class TextBox():
             'retrieve input and destroy window'
 
             # refers to which section was passed, and assigns accordingly
-            # doesn't work generically
             if attribute == 'first':
-                object_passed.first = text_box.get('1.0', 'end-1c')
+                obj_ref.first = text_box.get('1.0', 'end-1c')
             elif attribute == 'second':
-                object_passed.second = text_box.get('1.0', 'end-1c')
+                obj_ref.second = text_box.get('1.0', 'end-1c')
             elif attribute == 'title':
-                object_passed.title = text_box.get('1.0', 'end-1c')
+                obj_ref.title = text_box.get('1.0', 'end-1c')
 
             # destroy root
             self.root.after(1, self.root.destroy())

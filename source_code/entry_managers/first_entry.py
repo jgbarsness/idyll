@@ -1,7 +1,7 @@
 from entry_managers.ab_entry import AEntry
 from constants_routers import constants as c
 from entry_managers.entrybox import TextBox
-from entry_managers.entry_writer import EntryWriter
+from entry_managers import entry_writer
 
 
 class FirstEntry(AEntry):
@@ -10,6 +10,7 @@ class FirstEntry(AEntry):
     def __init__(self, passed_title):
         super().__init__(passed_title)
         self.first = None
+        self.writer = entry_writer.FirstWrite()
         self.begin_entry()
 
     def begin_entry(self):
@@ -22,7 +23,7 @@ class FirstEntry(AEntry):
         self.format_readability()
 
     def write(self):
-        EntryWriter.first_write(str(self.recorded_datetime), self.title, self.first)
+        self.writer.write(self)
 
     def format_readability(self):
         super().format_readability()

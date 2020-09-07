@@ -2,8 +2,6 @@ import os
 import stat
 import datetime as dt
 import constants_routers.constants as c
-from entry_managers.entrybox import TextBox
-from entry_managers.entry_writer import EntryWriter
 from abc import ABC, abstractmethod
 
 
@@ -12,7 +10,7 @@ class AEntry(ABC):
     
     def __init__(self, passed_title):
         'accepts a title and an optional shortcut'
-        self.recorded_datetime = dt.datetime.now().strftime('%a %I:%M%p %b %d %Y')
+        self.recorded_datetime = str(dt.datetime.now().strftime('%a %I:%M%p %b %d %Y'))
         self.title = passed_title
 
     @abstractmethod

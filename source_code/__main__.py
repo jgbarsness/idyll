@@ -6,7 +6,7 @@ from entry_managers.second_entry import SecondEntry
 from entry_managers.tag_entry import TagEntry
 from data_store.collection import Collection
 from entry_managers.entrybox import TextBox
-from strategies import command_strats, strat
+from mod_behaviors import command_strats, i_behavior
 import constants_routers.constants as c
 import os
 from pathlib import Path
@@ -51,21 +51,22 @@ def main(sys_arguement=None, title=None) -> None:
         if error_out("\ndefault entry file doesn't exist"):
             return
         container.strategy = command_strats.QuickDeleteStrat()
-        to_continue = container.call_strat(None)
         # if something was changed
-        if container.collection != to_continue:
-            FileHandle.refresh_collection(to_continue)
+        if container.call_strat(None):
+            print('\n' + c.YELLOW + 'rewriting...' + c.END)
+            FileHandle.refresh_collection(container.collection)
+            print(c.YELLOW + 'done' + c.END)
 
     elif sys_arguement == '-del':
-        if not FileHandle.file_verify():
-            print("\ndefault entry file doesn't exist")
+        if error_out("\ndefault entry file doesn't exist"):
             return
         # check for presence of entries. continue if so
         if (len(container.collection) != 0) and (len(joined_title) != 0):
             container.strategy = command_strats.DeleteModStrat()
-            to_continue = container.call_strat(joined_title)
-            if container.collection != to_continue:
-                FileHandle.refresh_collection(to_continue)
+            if container.call_strat(joined_title):
+                print('\n' + c.YELLOW + 'rewriting...' + c.END)
+                FileHandle.refresh_collection(container.collection)
+                print(c.YELLOW + 'done' + c.END)
         # if no keyword is supplied to search with, show syntax
         else:
             print('\nnothing to show\nformat: idl -del [keyword]')
@@ -122,20 +123,20 @@ def call_entry(type_of: str, title: list, joined_title: str):
             new = FullEntry(joined_title)
         else:
             # run a full entry
-            experience = str(input('title:\n'))
+            experience = str(input('\ntitle:\n'))
             new = FullEntry(experience)
     if type_of == 'first':
         if (len(title) != 0):
             new = FirstEntry(joined_title)
         else:
-            experience = str(input('title:\n'))
+            experience = str(input('\ntitle:\n'))
             new = FirstEntry(experience)
     if type_of == 'second':
         if (len(title) != 0):
             new = SecondEntry(joined_title)
 
         else:
-            experience = str(input('title:\n'))
+            experience = str(input('\ntitle:\n'))
             new = SecondEntry(experience)
     if type_of == 'tag':
         # must be at least two words long for both a tag and entry

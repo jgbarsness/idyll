@@ -4,7 +4,7 @@ import os
 import stat
 from constants_routers.file_handle import FileHandle
 from pathlib import Path
-from strategies.strat import CommandStrategy
+from mod_behaviors.i_behavior import CommandStrategy
 
 
 class Collection:
@@ -27,7 +27,7 @@ class Collection:
 
         self._strategy = strategy
 
-    def call_strat(self, title: str) -> list:
+    def call_strat(self, title: str) -> bool:
         'calls strategy on collection'
 
         return self._strategy.call_command(self.collection, title)

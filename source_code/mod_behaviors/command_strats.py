@@ -1,4 +1,4 @@
-from strategies.strat import CommandStrategy
+from mod_behaviors.i_behavior import CommandStrategy
 from constants_routers.file_handle import FileHandle
 import constants_routers.constants as c
 
@@ -10,7 +10,7 @@ class ViewStrat(CommandStrategy):
     def call_command(self, collections: list, title: str):
         if not FileHandle.file_verify():
             print("\ndefault entry file doesn't exist")
-            return []
+            return
 
         # if there is a keyword to search with
         if (len(title) != 0):
@@ -29,7 +29,7 @@ class ViewStrat(CommandStrategy):
             else:
                 # means that a file is present, but nothing could be parsed from it
                 print('\nempty collection and/or invalid entry format')
-        return collections
+        return
 
 class TSearchStrat(CommandStrategy):
     'strat to search entries for tag'
@@ -37,28 +37,27 @@ class TSearchStrat(CommandStrategy):
     def call_command(self, collections: list, title: str):
         if not FileHandle.file_verify():
             print("\nno entry file")
-            return []
+            return
         if (len(collections) != 0) and (len(title) != 0):
             print('searching for tag ' + '\'' + c.CYAN + title + c.END + '\':')
             if len(StratHelpers.show_keyword('(' + title + ')', collections)) != 0:
                 print("\n" + str(len(StratHelpers.return_thing('(' + title + ')', collections))) + " entry(s)")
         else:
             print('\nnothing to show\nformat: idl -t [tag]')
-        return collections
+        return
 
 class DeleteModStrat(CommandStrategy):
     'returns a list of collections deleted by keyword. nothing modified'
 
-    def call_command(self, collections: list, title: str):
+    def call_command(self, collections: list, title: str) -> bool:
         'bulk or single delete entries'
 
-        mod_collections = collections.copy()
         delete = [elmnt for elmnt in collections if title in elmnt]
         # if nothing is returned by previous call, end
         if (len(delete) == 0):
             print('\nnothing to delete containing ' 
                   + '\'' + c.CYAN + title + c.END + '\'')
-            return collections
+            return False
 
         # if function can continue, print out entry
         print('to be deleted, containing ' + '\'' + c.CYAN + title + c.END + '\':')
@@ -68,39 +67,33 @@ class DeleteModStrat(CommandStrategy):
         choice = input('\ndelete ' + str(len(delete)) + ' entries? y/n\n')
 
         if choice == 'y':
-            print(c.YELLOW + '\ndeleting entries...' + c.END)
-
             # find all occurances
             for things in delete:
                 # remove them
-                mod_collections.remove(things)
+                collections.remove(things)
             
-            print(c.YELLOW + 'entries deleted' + c.END)
-            return mod_collections
+            return True
 
         else:
             print('\nentries preserved')
-            return collections
+            return False
 
 class QuickDeleteStrat(CommandStrategy):
     'returns a representation of a quick-delete for the last entry made. nothing modified'
 
-    def call_command(self, collections: list, title: str):
+    def call_command(self, collections: list, title: str) -> bool:
         # return if collection is empty
         if (len(collections) == 0):
             print('\nnothing to delete')
-            return collections
+            return False
 
         answer = input('\ndelete last entry? y/n\n')
         if answer == 'y':
-            print(c.YELLOW + '\ndeleting...' + c.END)
-            mod_collections = collections.copy()
-            del mod_collections[-1]
-            print(c.YELLOW + 'deleted' + c.END)
-            return mod_collections
+            del collections[-1]
+            return True
         else:
             print('\nnothing deleted')
-            return collections
+            return False
 
 class StratHelpers():
     'helper methods'

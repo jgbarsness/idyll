@@ -1,7 +1,7 @@
 from entry_managers.ab_entry import AEntry
 from constants_routers import constants as c
 from entry_managers.entrybox import TextBox
-from entry_managers.entry_writer import EntryWriter
+from entry_managers import entry_writer
 
 
 class FullEntry(AEntry):
@@ -11,6 +11,7 @@ class FullEntry(AEntry):
         super().__init__(passed_title)
         self.first = None
         self.second = None
+        self.writer = entry_writer.FullWrite()
         self.begin_entry()
 
     def begin_entry(self):
@@ -34,4 +35,4 @@ class FullEntry(AEntry):
             self.second = 'N/A'
 
     def write(self):
-        EntryWriter.full_write(str(self.recorded_datetime), self.title, self.first, self.second)
+        self.writer.write(self)

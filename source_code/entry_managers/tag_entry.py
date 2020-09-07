@@ -1,7 +1,7 @@
 from entry_managers.ab_entry import AEntry
 from constants_routers import constants as c
 from entry_managers.entrybox import TextBox
-from entry_managers.entry_writer import EntryWriter
+from entry_managers import entry_writer
 
 
 class TagEntry(AEntry):
@@ -10,6 +10,7 @@ class TagEntry(AEntry):
     def __init__(self, passed_title, tag):
         super().__init__(passed_title)
         self.tag = tag
+        self.writer = entry_writer.TagWrite()
         self.begin_entry()
 
     def begin_entry(self):
@@ -17,7 +18,7 @@ class TagEntry(AEntry):
         self.format_readability()
 
     def write(self):
-        EntryWriter.tag_write(str(self.recorded_datetime), self.title, self.tag)
+        self.writer.write(self)
 
     def format_readability(self):
         super().format_readability()
