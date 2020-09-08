@@ -1,6 +1,6 @@
 from mod_behaviors.i_behavior import CommandStrategy
-from constants_routers.file_handle import FileHandle
-import constants_routers.constants as c
+from constants.file_handle import FileHandle
+import constants.constants as c
 
 'strategies used to modify and/or display collections'
 

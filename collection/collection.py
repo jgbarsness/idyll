@@ -1,8 +1,8 @@
-import constants_routers.constants as c
+import constants.constants as c
 import re
 import os
 import stat
-from constants_routers.file_handle import FileHandle
+from constants.file_handle import FileHandle
 from pathlib import Path
 from mod_behaviors.i_behavior import CommandStrategy
 

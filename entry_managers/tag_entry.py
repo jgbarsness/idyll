@@ -1,12 +1,12 @@
 from entry_managers.ab_entry import AEntry
-from constants_routers import constants as c
+from constants import constants as c
 from entry_managers.entrybox import TextBox
 from entry_managers import entry_writer
 
 
 class TagEntry(AEntry):
     'represents an entry with a tag'
-    
+
     def __init__(self, passed_title, tag):
         super().__init__(passed_title)
         self.tag = tag

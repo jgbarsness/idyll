@@ -4,18 +4,19 @@ from entry_managers.title_entry import TitleEntry
 from entry_managers.first_entry import FirstEntry
 from entry_managers.second_entry import SecondEntry
 from entry_managers.tag_entry import TagEntry
-from data_store.collection import Collection
+from collection.collection import Collection
 from entry_managers.entrybox import TextBox
 from mod_behaviors import command_strats, i_behavior
-import constants_routers.constants as c
+import constants.constants as c
 import os
 from pathlib import Path
-from constants_routers.file_handle import FileHandle
+from constants.file_handle import FileHandle
 
 '''
 idl is a command line tool used to manage text entries.
 joseph barsness 2020
 '''
+
 
 def main(sys_arguement=None, title=None) -> None:
     'routes function calls'
@@ -26,6 +27,7 @@ def main(sys_arguement=None, title=None) -> None:
 
     # reduce calls to join
     joined_title = ' '.join(title)
+    container = Collection(None)
 
     # call command if launched using sys arguement
     if sys_arguement == '-v':
@@ -78,11 +80,11 @@ def main(sys_arguement=None, title=None) -> None:
         FileHandle.load_from_backup()
 
     elif sys_arguement == '-config':
-        if FileHandle.check_dir() != False:
+        if FileHandle.check_dir() is not False:
             # reset defaults
             folder = Path(c.DIR_NAME)
             FileHandle.gen_config('idl', c.DEFAULTS)
-            print(c.YELLOW + '\nconfig updated as ' 
+            print(c.YELLOW + '\nconfig updated as '
                   + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
@@ -91,7 +93,7 @@ def main(sys_arguement=None, title=None) -> None:
 
     elif sys_arguement == '-s':
         if len(title) != 0:
-            if FileHandle.check_dir() != False:
+            if FileHandle.check_dir() is not False:
                 FileHandle.switch(joined_title)
         else:
             print("\nno name specified")
@@ -114,7 +116,7 @@ def main(sys_arguement=None, title=None) -> None:
 def call_entry(type_of: str, title: list, joined_title: str):
     'factory method to create entry'
 
-    if FileHandle.check_dir() == False:
+    if FileHandle.check_dir() is False:
         return
 
     if type_of == 'full':
@@ -184,12 +186,3 @@ def error_out(message: str):
         print(message)
         return True
     return False
-
-
-if __name__ == '__main__':
-    container = Collection(None)
-    # check if a sys arguement is present
-    try:
-        main(sys.argv[1], sys.argv[2:])
-    except IndexError:
-        main()

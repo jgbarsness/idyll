@@ -4,10 +4,9 @@ packaged on macOS<br />
 ```sudo ln -s [...dist/idl/idl] [/usr/local/bin]``` to install from current folder location
 #### using:
 
-```idl```<br />
-```idl [command] [keyword (if appropriate)]```<br />
+idl [command] [keyword (if appropriate)]<br />
 or for a quick entry:<br />
-```idl [entry]```
+idl [entry]
 
 things are organized within the 'idl' folder of whatever directory is currently the pwd. this folder will be created on first use within a directory. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences. the switch (-s) command, described below, defines what collection file idyll will default to across instances. for example, if a pwd's idl.ini attribute 'collection_title' is set to 'idl.txt', running 'idl -v' will print out entries in this file. if i have another collection file in this directory, 'good_ideas.txt', running 'idl -s good_ideas', then 'idl -v', the entries in 'good_ideas.txt' will print out. 
 

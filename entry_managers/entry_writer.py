@@ -1,8 +1,8 @@
-import constants_routers.constants as c
+import constants.constants as c
 import os
 import stat
-from entry_managers import ab_entry, full_entry, tag_entry, title_entry, second_entry, first_entry
 from abc import ABC, abstractmethod
+from entry_managers import ab_entry
 
 
 class EntryWriter(ABC):
@@ -11,6 +11,7 @@ class EntryWriter(ABC):
     @abstractmethod
     def write(self, obj: ab_entry.AEntry):
         pass
+
 
 class FullWrite(EntryWriter):
     'writes a full entry to file'
@@ -55,6 +56,7 @@ class SecondWrite(EntryWriter):
         entries.close()
         os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
 
+
 class TitleWrite(EntryWriter):
     'a write with a title only'
 
@@ -66,6 +68,7 @@ class TitleWrite(EntryWriter):
                             c.END_MARKER + '\n\n'])
         entries.close()
         os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+
 
 class TagWrite(EntryWriter):
     'a write with a tag'

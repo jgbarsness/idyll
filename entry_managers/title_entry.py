@@ -1,5 +1,5 @@
 from entry_managers.ab_entry import AEntry
-from constants_routers import constants as c
+from constants import constants as c
 from entry_managers.entrybox import TextBox
 from entry_managers import entry_writer
 
