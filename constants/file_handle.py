@@ -54,14 +54,14 @@ class FileHandle:
             return
         print(c.YELLOW + 'deleting all...' + c.END)
         try:
-            rmtree(c.DIR_NAME)
+            rmtree(c.FOLDER)
         except Exception:
             print(c.RED + '\nsomething went wrong\n' + c.END)
             raise
         print(c.YELLOW + 'everything deleted' + c.END)
 
     @staticmethod
-    def check_dir(dire=c.DIR_NAME):
+    def check_dir(dire=c.FOLDER):
         'checks for presence of a directory, and creates if not found'
 
         if not os.path.exists(dire):
@@ -77,9 +77,8 @@ class FileHandle:
         'sets a new name for default collection'
 
         # if file doesn't exist, verify
-        folder = Path(c.DIR_NAME)
         name = new + '.txt'
-        path = folder / name
+        path = c.FOLDER / name
         if FileHandle.file_verify(path) == False:
             verify = input("\nno collection by that name. set as default collection? y/n\n")
             if verify != 'y':
@@ -96,7 +95,6 @@ class FileHandle:
     def gen_config(active='idl', deff=c.DEFAULTS):
         'generate config file in pwd'
 
-        folder = Path(c.DIR_NAME)
         config = configparser.ConfigParser()
         config['DEFAULT'] = {'END_MARKER': deff[0],
                              'DATESTAMP_UNDERLINE': deff[1],
@@ -107,7 +105,7 @@ class FileHandle:
                              'USE_TEXTBOX': deff[4]}
 
         try:
-            configfile = open(folder / 'idl.ini', 'w')
+            configfile = open(c.FOLDER / 'idl.ini', 'w')
         except FileNotFoundError:
             print(c.RED + 'no file to modify - something went wrong' + c.END)
             raise

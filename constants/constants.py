@@ -11,14 +11,14 @@ BLUE = '\033[34m'
 RED = '\033[91m'
 
 # name of the directory
-DIR_NAME = "idl"
+DIR_NAME = Path.home() / 'idl'
 
 HEADER = '-----\n\
 \033[35m\
 idyll\033[0m\
 \n-----\n\
 \033[36m\
-v2.0.0\
+v2.1.0\
 \033[0m\
 \033[33m\
 \nmade by joseph barsness\
@@ -39,7 +39,6 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
 \'-wipe\': delete default collection\n\
-\'-wipe-all\': delete all collections and traces of program in pwd\n\
 \'-b\': create backup\n\
 \'-load\': load entries from backup\n\
 \'-config\': generate config file in pwd. if config exists, defaults reset.\n\
@@ -69,7 +68,8 @@ section. may be changed without outdating anything.\n\
 DEFAULTS = ['#*#*#*#*#*#*#*#*#*#*#*#', '-----------------------',
             '1st:', '2nd:', True]
 
-FOLDER = Path(DIR_NAME)
+# representation of the folder to use for the program instance
+FOLDER = Path.home() / 'idl' / ' ~ '.join(str(Path.cwd()).split('/')[-2:])
 
 END_MARKER = DEFAULTS[0]
 DATESTAMP_UNDERLINE = DEFAULTS[1]

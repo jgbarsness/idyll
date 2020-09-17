@@ -8,11 +8,13 @@ packaged on macOS<br />
 or for a quick entry:<br />
 ```idl [entry]```
 
-things are organized within the 'idl' folder of whatever directory is currently the pwd. this folder will be created on first use within a directory. generating a config file using '-config' allows for customization of file titles, attributes of entries, and preferences. the switch (-s) command, described below, defines what collection file idyll will default to across instances. for example, if a pwd's idl.ini attribute 'collection_title' is set to 'idl.txt', running 'idl -v' will print out entries in this file. if i have another collection file in this directory, 'good_ideas.txt', running 'idl -s good_ideas', then 'idl -v', the entries in 'good_ideas.txt' will print out. 
+#### your home folder is where idl lives.
+
+all of your notes are stored in your home directory in a folder called 'idl'. when you run idyll from a new location, a folder is created inside 'idl' that references this location. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched.
 
 to create a new collection file in the pwd, you can manually set the config file's 'collection_title' attribute to the new desired name, or you can run 'idl -s [new_name]' to create this file automatically on the next attempt to create an entry. running 'idl' will print a header with useful information on the current pwd's collection files.
 
-config attributes allow various changes to how idyll file i/o functions. for example, if you want the date stamp to be underlined differently, this attribute can be modified. if you want a different string to mark the end of an entry, this can be modified. it should be noted that changing things integral to how the program functions, such as an entry end marker, current collection files may become outdated and function irregularity. more documentation can be found in the config file itself.
+config attributes allow various changes to how idyll file formal functions. for example, if you want the date stamp to be underlined differently, this attribute can be modified. if you want a different string to mark the end of an entry, this can be modified. it should be noted that changing things integral to how the program functions, such as an entry end marker, current collection files may become outdated and function irregularity. more documentation can be found in the config file itself.
 
 suggestions for use: to-do list, dream journal, version note manager, recipe experimentation database, anything that you want to keep track of paired with the time you remembered to record it
 #### commands:

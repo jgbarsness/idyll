@@ -15,6 +15,8 @@ class TagEntry(AEntry):
 
     def begin_entry(self):
         super().begin_entry()
+        if self.print is False:
+            return
         self.format_readability()
 
     def write(self):

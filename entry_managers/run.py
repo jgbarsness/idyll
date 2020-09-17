@@ -39,11 +39,6 @@ def main(sys_arguement=None, title=None) -> None:
             return
         FileHandle.wipe_collection()
 
-    elif sys_arguement == '-wipe-all':
-        if error_out('\nno collection folder'):
-            return
-        FileHandle.wipe_all()
-
     elif sys_arguement == '-b':
         if error_out("\ndefault entry file doesn't exist"):
             return
@@ -82,10 +77,9 @@ def main(sys_arguement=None, title=None) -> None:
     elif sys_arguement == '-config':
         if FileHandle.check_dir() is not False:
             # reset defaults
-            folder = Path(c.DIR_NAME)
             FileHandle.gen_config('idl', c.DEFAULTS)
             print(c.YELLOW + '\nconfig updated as '
-                  + c.PURPLE + os.path.abspath(folder / 'idl.ini') + c.END)
+                  + c.PURPLE + os.path.abspath(c.FOLDER / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
         container.strategy = command_strats.TSearchStrat()
@@ -156,8 +150,9 @@ def call_entry(type_of: str, title: list, joined_title: str):
     if type_of == 'one_line':
         new = TitleEntry(' '.join(sys.argv[1:]))
     # call write / print on new object
-    new.write()
-    new.printout()
+    if new.print is True:
+        new.write()
+        new.printout()
 
 
 def help_print():
@@ -169,13 +164,15 @@ def help_print():
             print('current default: ' + c.PURPLE + os.path.abspath(c.COLLECTION_TITLE) + c.END)
         if os.path.exists(c.BACKUP_TITLE):
             print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
-        collections = [f for f in os.listdir(c.DIR_NAME) if f.endswith('.txt')]
-        d = Path(c.DIR_NAME)
-        if len(collections) > 0:
-            # check for presence of formatted entries
-            entry = [f for f in collections if len(Collection(None).scan_collection(d / f)) > 0]
-            if len(entry) > 0:
-                print('collections: ' + c.PURPLE + ' '.join(entry) + c.END)
+
+        # walk dir
+        dirs = [f for f in os.listdir(c.DIR_NAME) if os.path.isdir(c.DIR_NAME / f)]
+        pairs = []
+        for f in dirs:
+            files = [c for c in os.listdir(c.DIR_NAME / f) if c.endswith('.txt')]
+            pairs.append(f + ': ' + ' '.join(files) + '\n')
+        if len(pairs) > 0:
+            print('collections:\n' + c.PURPLE + ''.join(pairs) + c.END)
     print(c.HEADER + c.HELP)
 
 

@@ -15,6 +15,8 @@ class SecondEntry(AEntry):
 
     def begin_entry(self):
         super().begin_entry()
+        if self.print is False:
+            return
         if c.USE_TEXTBOX is False:
             self.second = input(c.SECOND_NT)
         else:

@@ -15,6 +15,9 @@ class TitleEntry(AEntry):
 
     def begin_entry(self):
         super().begin_entry()
+        # indicates the user wants to not create a new file
+        if self.print is False:
+            return
         # if textbox use is forced
         if self.force:
             TextBox(self, 'title')

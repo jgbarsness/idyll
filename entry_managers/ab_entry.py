@@ -12,6 +12,7 @@ class AEntry(ABC):
         'accepts a title and an optional shortcut'
         self.recorded_datetime = str(dt.datetime.now().strftime('%a %I:%M%p %b %d %Y'))
         self.title = passed_title
+        self.print = True
 
     @abstractmethod
     def begin_entry(self) -> None:
@@ -24,6 +25,7 @@ class AEntry(ABC):
             check = input("\nno collection file in pwd. create? y/n\n")
             if check != 'y':
                 print("\ncollection not created")
+                self.print = False
                 return
 
     @abstractmethod

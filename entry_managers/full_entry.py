@@ -1,7 +1,7 @@
 from entry_managers.ab_entry import AEntry
 from constants import constants as c
 from entry_managers.entrybox import TextBox
-import entry_managers.entry_writer
+from entry_managers import entry_writer
 
 
 class FullEntry(AEntry):
@@ -16,6 +16,9 @@ class FullEntry(AEntry):
 
     def begin_entry(self):
         super().begin_entry()
+        # indicates the user wants to not create a new file
+        if self.print is False:
+            return
         if c.USE_TEXTBOX is False:
             self.first = input(c.FIRST_NT)
             self.second = input(c.SECOND_NT)
