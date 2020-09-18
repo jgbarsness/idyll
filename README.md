@@ -1,7 +1,7 @@
 ## idyll <br />
 is a command line tool used to create and manage text entries.<br /><br />
 packaged on macOS<br />
-to install from current folder location (macOS and Linux):<br />
+to install from current folder location (macOS):<br />
 ```sudo ln -s [your path to bin/idl/idl] /usr/local/bin```
 #### using:
 
