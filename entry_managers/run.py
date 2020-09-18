@@ -1,4 +1,4 @@
-import sys
+from sys import argv
 from entry_managers.full_entry import FullEntry
 from entry_managers.title_entry import TitleEntry
 from entry_managers.first_entry import FirstEntry
@@ -8,7 +8,7 @@ from collection.collection import Collection
 from entry_managers.entrybox import TextBox
 from mod_behaviors import command_strats, i_behavior
 import constants.constants as c
-import os
+from os import path, listdir
 from pathlib import Path
 from constants.file_handle import FileHandle
 from gdrive import g_drive_auth
@@ -85,7 +85,7 @@ def main(sys_arguement=None, title=None) -> None:
             # reset defaults
             FileHandle.gen_config('idl', c.DEFAULTS)
             print(c.YELLOW + '\nconfig updated as '
-                  + c.PURPLE + os.path.abspath(c.FOLDER / 'idl.ini') + c.END)
+                  + c.PURPLE + path.abspath(c.FOLDER / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
         container.strategy = command_strats.TSearchStrat()
@@ -156,7 +156,7 @@ def call_entry(type_of: str, title: list, joined_title: str):
         # force a textbox entry
         new = TitleEntry(None, True)
     if type_of == 'one_line':
-        new = TitleEntry(' '.join(sys.argv[1:]))
+        new = TitleEntry(' '.join(argv[1:]))
     # call write / print on new object
     if new.print is True:
         new.write()
@@ -167,17 +167,17 @@ def help_print():
     'prints out program info, including current active collections'
 
     # print out file locations
-    if os.path.exists(c.DIR_NAME):
-        if os.path.exists(c.COLLECTION_TITLE):
-            print('current default: ' + c.PURPLE + os.path.abspath(c.COLLECTION_TITLE) + c.END)
-        if os.path.exists(c.BACKUP_TITLE):
-            print('backup: ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+    if path.exists(c.DIR_NAME):
+        if path.exists(c.COLLECTION_TITLE):
+            print('current default: ' + c.PURPLE + path.abspath(c.COLLECTION_TITLE) + c.END)
+        if path.exists(c.BACKUP_TITLE):
+            print('backup: ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
 
         # walk dir
-        dirs = [f for f in os.listdir(c.DIR_NAME) if os.path.isdir(c.DIR_NAME / f)]
+        dirs = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
         pairs = []
         for f in dirs:
-            files = [c for c in os.listdir(c.DIR_NAME / f) if c.endswith('.txt')]
+            files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
             pairs.append(f + ': ' + ' '.join(files) + '\n')
         if len(pairs) > 0:
             print('collections:\n' + c.PURPLE + ''.join(pairs) + c.END)

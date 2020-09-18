@@ -1,5 +1,5 @@
 import pickle
-import os
+from os import path, listdir
 from googleapiclient.discovery import build
 from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
@@ -26,7 +26,7 @@ def drive_service():
 
     credentials = None
     tkn = c.DIR_NAME / 'token.pickle'
-    if os.path.exists(tkn):
+    if path.exists(tkn):
         with open(tkn, 'rb') as token:
             credentials = pickle.load(token)
             print('\ncredentials succesfully read\n')
@@ -62,7 +62,7 @@ def upload():
     p_folder_id = p_file.get('id')
     print('parent folder created as \'idyll_backups\': ' + p_folder_id + '\n')
     # list of all subdirectories
-    folders = [f for f in os.listdir(c.DIR_NAME) if os.path.isdir(c.DIR_NAME / f)]
+    folders = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
     for f in folders:
         folder_metadata = {
             "name": f,
@@ -74,7 +74,7 @@ def upload():
         print(str(f) + ' folder created: ' + str(s_folder_id))
 
         # subfiles in subfolders
-        files = [c for c in os.listdir(c.DIR_NAME / f) if c.endswith('.txt')]
+        files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
         for subfile in files:
             file_metadata = {
                 'name': str(subfile),

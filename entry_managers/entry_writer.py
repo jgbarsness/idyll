@@ -1,8 +1,8 @@
 import constants.constants as c
-import os
-import stat
+from os import chmod
 from abc import ABC, abstractmethod
 from entry_managers import ab_entry
+from stat import S_IREAD
 
 
 class EntryWriter(ABC):
@@ -26,7 +26,7 @@ class FullWrite(EntryWriter):
                             c.SECOND_MARKER, '\n',
                             obj.second, '\n' + c.END_MARKER + '\n\n'])
         entries.close()
-        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        chmod(c.COLLECTION_TITLE, S_IREAD)
 
 
 class FirstWrite(EntryWriter):
@@ -40,7 +40,7 @@ class FirstWrite(EntryWriter):
                             c.FIRST_MARKER, '\n',
                             obj.first, '\n' + c.END_MARKER + '\n\n'])
         entries.close()
-        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        chmod(c.COLLECTION_TITLE, S_IREAD)
 
 
 class SecondWrite(EntryWriter):
@@ -54,7 +54,7 @@ class SecondWrite(EntryWriter):
                             c.SECOND_MARKER + '\n',
                             obj.second, '\n' + c.END_MARKER + '\n\n'])
         entries.close()
-        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        chmod(c.COLLECTION_TITLE, S_IREAD)
 
 
 class TitleWrite(EntryWriter):
@@ -67,7 +67,7 @@ class TitleWrite(EntryWriter):
                             obj.title, '\n',
                             c.END_MARKER + '\n\n'])
         entries.close()
-        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        chmod(c.COLLECTION_TITLE, S_IREAD)
 
 
 class TagWrite(EntryWriter):
@@ -81,4 +81,4 @@ class TagWrite(EntryWriter):
                             obj.title, '\n',
                             c.END_MARKER + '\n\n'])
         entries.close()
-        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        chmod(c.COLLECTION_TITLE, S_IREAD)

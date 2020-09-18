@@ -1,9 +1,9 @@
 import constants.constants as c
-import os
+from os import path, remove, makedirs, rename, chmod
 from shutil import copy, rmtree
 from pathlib import Path
-import configparser
-import stat
+from configparser import ConfigParser
+from stat import S_IRWXU, S_IREAD
 
 
 class FileHandle:
@@ -13,7 +13,7 @@ class FileHandle:
     def file_verify(f=c.COLLECTION_TITLE):
         'checks for presence of entry file'
 
-        return os.path.exists(f)
+        return path.exists(f)
 
     @staticmethod
     def backup_collection():
@@ -23,7 +23,7 @@ class FileHandle:
         # in case future update relies on permission at close
         try:
             copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup created as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE)+ c.END)
+            print(c.YELLOW + '\nbackup created as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE)+ c.END)
             return
         except PermissionError:
             # verify desired behavior
@@ -35,10 +35,10 @@ class FileHandle:
                 return
 
         try:
-            os.remove(c.BACKUP_TITLE)
+            remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+            print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
         except FileNotFoundError:
             # user machine removed file themselves after running program
             print(c.RED + '\nerror: bad backup' + c.END)
@@ -48,12 +48,12 @@ class FileHandle:
     def check_dir(dire=c.FOLDER):
         'checks for presence of a directory, and creates if not found'
 
-        if not os.path.exists(dire):
+        if not path.exists(dire):
             verify = input("\nno folder referencing this directory. create? y/n\n")
             if verify != "y":
                 print("\nno directory created")
                 return False
-            os.makedirs(dire)
+            makedirs(dire)
             return True
 
     @staticmethod
@@ -79,7 +79,7 @@ class FileHandle:
     def gen_config(active='idl', deff=c.DEFAULTS):
         'generate config file in pwd'
 
-        config = configparser.ConfigParser()
+        config = ConfigParser()
         config['DEFAULT'] = {'END_MARKER': deff[0],
                              'DATESTAMP_UNDERLINE': deff[1],
                              'COLLECTION_TITLE': active,
@@ -101,7 +101,7 @@ class FileHandle:
     def load_from_backup():
         'makes backup the running document'
 
-        if not os.path.exists(c.BACKUP_TITLE):
+        if not path.exists(c.BACKUP_TITLE):
             print('\nno backup found')
             return
 
@@ -109,17 +109,17 @@ class FileHandle:
         if selection == 'y':
             # make sure correct collection is retained
             try:
-                os.remove(c.COLLECTION_TITLE)
+                remove(c.COLLECTION_TITLE)
             except FileNotFoundError:
                 print(c.PURPLE + "creating new file, retaining backup..." + c.END)
 
             print(c.YELLOW + '\nrestoring...' + c.END)
             # backup -> running file
             try:
-                os.rename(c.BACKUP_TITLE, c.COLLECTION_TITLE)
+                rename(c.BACKUP_TITLE, c.COLLECTION_TITLE)
                 # retain a copy
                 copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
-                print(c.YELLOW + 'restored from ' + c.PURPLE + os.path.abspath(c.BACKUP_TITLE) + c.END)
+                print(c.YELLOW + 'restored from ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
             except FileNotFoundError:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: bad backup' + c.END)
@@ -138,8 +138,8 @@ class FileHandle:
         if selection == 'y':
             try:
                 print(c.YELLOW + '\ndeleting...' + c.END)
-                os.remove(c.COLLECTION_TITLE)
-                print(c.PURPLE + os.path.abspath(c.COLLECTION_TITLE) + c.YELLOW + ' deleted' + c.END)
+                remove(c.COLLECTION_TITLE)
+                print(c.PURPLE + path.abspath(c.COLLECTION_TITLE) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: file doesn\'t exist' + c.END)
@@ -172,7 +172,7 @@ class FileHandle:
 
         try :
             # make collection writeable
-            os.chmod(c.COLLECTION_TITLE, stat.S_IRWXU)
+            chmod(c.COLLECTION_TITLE, S_IRWXU)
             refresh = open(c.COLLECTION_TITLE, 'w')
         except FileNotFoundError:
             print(c.RED + 'no file to modify - something went wrong' + c.END)
@@ -182,5 +182,5 @@ class FileHandle:
             refresh.write(entry)
             refresh.write(c.END_MARKER + '\n\n')
 
-        os.chmod(c.COLLECTION_TITLE, stat.S_IREAD)
+        chmod(c.COLLECTION_TITLE, S_IREAD)
         refresh.close()

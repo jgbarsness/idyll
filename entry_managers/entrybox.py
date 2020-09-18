@@ -1,4 +1,4 @@
-import tkinter as tk
+from tkinter import Tk, Text, Button, mainloop
 from entry_managers.ab_entry import AEntry
 
 
@@ -7,8 +7,8 @@ class TextBox():
 
     def __init__(self, obj_ref: AEntry = None, attribute=None):
         self.text = None
-        self.root = tk.Tk()
-        text_box = tk.Text(self.root, height=15, width=50,
+        self.root = Tk()
+        text_box = Text(self.root, height=15, width=50,
                            bg='#1c1d1c', fg='#fafbfa',
                            wrap='word',
                            highlightthickness=0,
@@ -18,7 +18,7 @@ class TextBox():
         # auto focus on window to minimize clicking
         text_box.focus_force()
 
-        button = tk.Button(self.root, text='store',
+        button = Button(self.root, text='store',
                            command=lambda: get_text(),
                            font=(None, 12))
         button.pack(side='top', fill='both')
@@ -37,4 +37,4 @@ class TextBox():
             # destroy root
             self.root.after(1, self.root.destroy())
 
-        tk.mainloop()
+        mainloop()

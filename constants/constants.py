@@ -1,5 +1,5 @@
-import configparser
-import os
+from configparser import ConfigParser, ParsingError
+from os import path
 from pathlib import Path
 
 # ascii coloring
@@ -83,10 +83,10 @@ SECOND_MARKER = DEFAULTS[3]
 USE_TEXTBOX = DEFAULTS[4]
 
 # use config values if present, else use default
-if os.path.exists(FOLDER / 'idl.ini'):
+if path.exists(FOLDER / 'idl.ini'):
     try:
         # use pathlib to hide filepaths from user
-        config = configparser.ConfigParser()
+        config = ConfigParser()
         config.read(FOLDER / 'idl.ini')
 
         END_MARKER = config['DEFAULT']['END_MARKER']
@@ -103,7 +103,7 @@ if os.path.exists(FOLDER / 'idl.ini'):
         USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
 
     # indicates parsing error
-    except (configparser.ParsingError, ValueError, KeyError):
+    except (ParsingError, ValueError, KeyError):
         print(RED + "\nsomething wrong with config file format. delete file or fix to proceed\n" + END)
         raise
 

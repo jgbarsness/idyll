@@ -1,10 +1,10 @@
 import constants.constants as c
-import re
-import os
-import stat
+from os import chmod, path
+from stat import S_IRWXU, S_IREAD
 from constants.file_handle import FileHandle
 from pathlib import Path
 from mod_behaviors.i_behavior import CommandStrategy
+from re import sub
 
 
 class Collection:
@@ -35,10 +35,10 @@ class Collection:
     def scan_collection(self, fpath=c.COLLECTION_TITLE):
         'returns collection list of collection entries'
 
-        if (not os.path.exists(fpath)):
+        if (not path.exists(fpath)):
             return []
 
-        os.chmod(fpath, stat.S_IRWXU)
+        chmod(fpath, S_IRWXU)
         try:
             collection = open(fpath, 'r')
         except FileNotFoundError:
@@ -48,13 +48,13 @@ class Collection:
         bulk = []
         for lines in collection:
             bulk.append(lines)
-        os.chmod(fpath, stat.S_IREAD)
+        chmod(fpath, S_IREAD)
         collection.close()
 
         bulk = ''.join(bulk)
         # cleans string - subs out excess newline characters
         # so that entries print cleanly. replaces w/ first letter occurance
-        bulk = re.sub(c.SCAN_REGEX, r'\g<1>''', bulk)
+        bulk = sub(c.SCAN_REGEX, r'\g<1>''', bulk)
         bulk = bulk.split(c.END_MARKER)
         del bulk[-1]  # remove newline element
 
