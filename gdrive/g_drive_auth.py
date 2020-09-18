@@ -11,7 +11,7 @@ from datetime import datetime
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
           'https://www.googleapis.com/auth/drive.file']
  
-auth = {
+AUTH = {
             "installed":{
                 "client_id":"715887106534-3m2i759uhimd3dg1mhsl87c335oo3frp.apps.googleusercontent.com",
                 "project_id":"idyll-1600381664941","auth_uri":"https://accounts.google.com/o/oauth2/auth",
@@ -35,11 +35,12 @@ def drive_service():
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
+            print('credentials refreshed\n')
         else:
             # authenticate using id
             try:
-                # flow = InstalledAppFlow.from_client_secrets_file(credential_path, SCOPES)
-                flow = InstalledAppFlow.from_client_config(auth, SCOPES)
+                # use hardcoded id/secret
+                flow = InstalledAppFlow.from_client_config(AUTH, SCOPES)
             except ValueError:
                 print(c.RED + 'client id has changed or been tampered with' + c.END)
                 raise
@@ -47,7 +48,7 @@ def drive_service():
         with open(tkn, 'wb') as token:
             # save creds
             pickle.dump(credentials, token)
-            print('\ncredentials created\n')
+            print('\nnew or refreshed credentials saved in: ' + c.PURPLE + str(tkn) + c.END + '\n')
     return build('drive', 'v3', credentials=credentials)
 
 
@@ -59,7 +60,7 @@ def upload():
     # search for instance of backup folder
     is_instance = False
     instance_id = None
-    found = service.files().list(q="name='idyll_backups'" and "mimeType = 'application/vnd.google-apps.folder'",
+    found = service.files().list(q="name='idyll_backups'" and "mimeType = 'application/vnd.google-apps.folder'" and "trashed = false",
                                  spaces='drive',
                                  fields='files(id, name)'
                                  ).execute()
