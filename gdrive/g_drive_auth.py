@@ -5,10 +5,21 @@ from google_auth_oauthlib.flow import InstalledAppFlow
 from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 from constants import constants as c
+from pathlib import Path
 
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
           'https://www.googleapis.com/auth/drive.file']
-
+ 
+auth = {
+            "installed":{
+                "client_id":"715887106534-3m2i759uhimd3dg1mhsl87c335oo3frp.apps.googleusercontent.com",
+                "project_id":"idyll-1600381664941","auth_uri":"https://accounts.google.com/o/oauth2/auth",
+                "token_uri":"https://oauth2.googleapis.com/token",
+                "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
+                "client_secret":"L7o8D9RH9Lb_UnMl-m3KJsGd"
+                ,"redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]
+            }
+        }
 
 def drive_service():
     'authentification'
@@ -25,11 +36,11 @@ def drive_service():
             credentials.refresh(Request())
         else:
             # authenticate using id
-            credential_path = input('enter exact path to credentials.json. you only need to do this once:\n')
             try:
-                flow = InstalledAppFlow.from_client_secrets_file(credential_path, SCOPES)
-            except FileNotFoundError:
-                print(c.RED + 'bad path' + c.END)
+                # flow = InstalledAppFlow.from_client_secrets_file(credential_path, SCOPES)
+                flow = InstalledAppFlow.from_client_config(auth, SCOPES)
+            except ValueError:
+                print(c.RED + 'client id has changed or been tampered with' + c.END)
                 raise
             credentials = flow.run_local_server(port=0)
         with open(tkn, 'wb') as token:
