@@ -1,7 +1,8 @@
 ## idyll <br />
 is a command line tool used to create and manage text entries.<br /><br />
 packaged on macOS<br />
-```sudo ln -s [your path to bin/idl/idl] [/usr/local/bin]``` to install from current folder location
+to install from current folder location (macOS and Linux):<br />
+```sudo ln -s [your path to bin/idl/idl] /usr/local/bin```
 #### using:
 
 ```idl [command] [keyword (if appropriate)]```<br />
@@ -12,7 +13,7 @@ or for a quick entry:<br />
 
 all of your notes are stored in your home directory in a folder called 'idl'. when you run idyll from a new location, a folder is created inside 'idl' that references this location. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched.
 
-to create a new collection file in the pwd, you can manually set the config file's 'collection_title' attribute to the new desired name, or you can run 'idl -s [new_name]' to create this file automatically on the next attempt to create an entry. running 'idl' will print a header with useful information on the current pwd's collection files.
+to create a new collection file, you can manually set the config file's 'collection_title' attribute to the new desired name, or you can run 'idl -s [new_name]' to create this file automatically on the next attempt to create an entry. running 'idl' will print a header with useful information on files in 'idl'.
 
 config attributes allow various changes to how idyll file formal functions. for example, if you want the date stamp to be underlined differently, this attribute can be modified. if you want a different string to mark the end of an entry, this can be modified. it should be noted that changing things integral to how the program functions, such as an entry end marker, current collection files may become outdated and function irregularity. more documentation can be found in the config file itself.
 

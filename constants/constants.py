@@ -39,12 +39,14 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
 \'-wipe\': delete default collection\n\
+\'-wipe-all\': delete folder referencing this location\n\
 \'-b\': create backup\n\
 \'-load\': load entries from backup\n\
-\'-config\': generate config file in pwd. if config exists, defaults reset.\n\
+\'-config\': generate config file in reference folder. if config exists, defaults reset.\n\
            updating config may outdate collection\n\
 \'-s\': specify default collection file.\n\
-      does not modify existing files. modifes / creates config file'
+      does not modify existing files. modifes / creates config file.\n\
+\'-drive\': uploads a new backup folder to google drive. currently only supports new uploads, not updates.'
 
 SEPERATOR = '<\>'
 
@@ -69,7 +71,8 @@ DEFAULTS = ['#*#*#*#*#*#*#*#*#*#*#*#', '-----------------------',
             '1st:', '2nd:', True]
 
 # representation of the folder to use for the program instance
-FOLDER = Path.home() / 'idl' / ' ~ '.join(str(Path.cwd()).split('/')[-2:])
+# works only with posix file path convention - notice the split at '/'
+FOLDER = Path.home() / 'idl' / '_'.join(str(Path.cwd()).split('/')[-3:])
 
 END_MARKER = DEFAULTS[0]
 DATESTAMP_UNDERLINE = DEFAULTS[1]
@@ -99,7 +102,7 @@ if os.path.exists(FOLDER / 'idl.ini'):
         SECOND_MARKER = config['DEFAULT']['SECOND_MARKER']
         USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
 
-    # indicates something is unable to be fixed
+    # indicates parsing error
     except (configparser.ParsingError, ValueError, KeyError):
         print(RED + "\nsomething wrong with config file format. delete file or fix to proceed\n" + END)
         raise

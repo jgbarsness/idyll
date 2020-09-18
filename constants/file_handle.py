@@ -45,27 +45,11 @@ class FileHandle:
             raise
 
     @staticmethod
-    def wipe_all():
-        'deletes entire contents folder'
-
-        answer = input('\ndelete every collection in this directory? y/n\n')
-        if answer != 'y':
-            print('\nnothing deleted')
-            return
-        print(c.YELLOW + 'deleting all...' + c.END)
-        try:
-            rmtree(c.FOLDER)
-        except Exception:
-            print(c.RED + '\nsomething went wrong\n' + c.END)
-            raise
-        print(c.YELLOW + 'everything deleted' + c.END)
-
-    @staticmethod
     def check_dir(dire=c.FOLDER):
         'checks for presence of a directory, and creates if not found'
 
         if not os.path.exists(dire):
-            verify = input("\nno collection directory here. create? y/n\n")
+            verify = input("\nno folder referencing this directory. create? y/n\n")
             if verify != "y":
                 print("\nno directory created")
                 return False
@@ -80,7 +64,7 @@ class FileHandle:
         name = new + '.txt'
         path = c.FOLDER / name
         if FileHandle.file_verify(path) == False:
-            verify = input("\nno collection by that name. set as default collection? y/n\n")
+            verify = input("\nno collection by that name in this folder. set as default collection? y/n\n")
             if verify != 'y':
                 print("\nnothing modified")
                 return
@@ -89,7 +73,7 @@ class FileHandle:
         keep = [c.END_MARKER, c.DATESTAMP_UNDERLINE, c.FIRST_MARKER, c.SECOND_MARKER, c.USE_TEXTBOX]
         print("\nsetting " + c.PURPLE + new + ".txt" + c.END + "...")
         FileHandle.gen_config(new, keep)
-        print(c.PURPLE + new + ".txt" + c.END + " is new default collection")
+        print(c.PURPLE + new + ".txt" + c.END + " is the new default collection")
 
     @staticmethod
     def gen_config(active='idl', deff=c.DEFAULTS):
@@ -147,9 +131,9 @@ class FileHandle:
 
     @staticmethod
     def wipe_collection():
-        'completely delete collection'
+        'completely delete default collection'
 
-        selection = input('\ndelete default collection? y/n\n')
+        selection = input('\ndelete current default collection? y/n\n')
 
         if selection == 'y':
             try:
@@ -162,6 +146,24 @@ class FileHandle:
                 raise
         else:
             print('\nfile preserved')
+            return
+
+    @staticmethod
+    def rm_folder():
+        'deletes entire directory folder'
+
+        selection = selection = input('\ndelete all collections referencing this directory? y/n \n')
+
+        if selection == 'y':
+            try:
+                print(c.YELLOW + '\ndeleting...' + c.END)
+                rmtree(c.FOLDER)
+                print(c.PURPLE + str(c.FOLDER) + c.YELLOW + ' deleted' + c.END)
+            except FileNotFoundError:
+                print(c.RED + '\nerror: folder doesn\'t exist' + c.END)
+                raise
+        else:
+            print('\nfolder preserved')
             return
 
     @staticmethod

@@ -11,6 +11,7 @@ import constants.constants as c
 import os
 from pathlib import Path
 from constants.file_handle import FileHandle
+from gdrive import g_drive_auth
 
 '''
 idl is a command line tool used to manage text entries.
@@ -38,6 +39,11 @@ def main(sys_arguement=None, title=None) -> None:
         if error_out("\ndefault entry file doesn't exist"):
             return
         FileHandle.wipe_collection()
+
+    elif sys_arguement == '-wipe-all':
+        if error_out('\nno folder to delete', c.FOLDER):
+            return
+        FileHandle.rm_folder()
 
     elif sys_arguement == '-b':
         if error_out("\ndefault entry file doesn't exist"):
@@ -91,6 +97,8 @@ def main(sys_arguement=None, title=None) -> None:
                 FileHandle.switch(joined_title)
         else:
             print("\nno name specified")
+    elif sys_arguement == '-drive':
+        g_drive_auth.upload()
 
     # create entry commands
     elif sys_arguement == '-n':
@@ -176,10 +184,10 @@ def help_print():
     print(c.HEADER + c.HELP)
 
 
-def error_out(message: str):
+def error_out(message: str, location=c.COLLECTION_TITLE):
     'prints out message and returns true, else returns false if no error'
 
-    if not FileHandle.file_verify():
+    if not FileHandle.file_verify(location):
         print(message)
         return True
     return False
