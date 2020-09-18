@@ -36,4 +36,6 @@ updating config may outdate idl<br />
 '**-s**': specify default collection file.
 does not modify existing files. modifes / creates config file.<br />
 '**-del**': delete entry<br />
-'**-q**': quick delete the last entry made
+'**-q**': quick delete the last entry made<br />
+'**-drive**': uploads a new backup folder to google drive. currently only supports new uploads, not updates.
+
