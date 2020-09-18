@@ -6,6 +6,7 @@ from google.auth.transport.requests import Request
 from googleapiclient.http import MediaFileUpload
 from constants import constants as c
 from pathlib import Path
+from datetime import datetime
 
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
           'https://www.googleapis.com/auth/drive.file']
@@ -29,7 +30,7 @@ def drive_service():
     if path.exists(tkn):
         with open(tkn, 'rb') as token:
             credentials = pickle.load(token)
-            print('\ncredentials succesfully read\n')
+            print('\ncredentials successfully read\n')
     # if nothing available
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
@@ -54,20 +55,46 @@ def upload():
     'uploads to gdrive'
 
     service = drive_service()
-    p_folder_metadata = {
-        'name': 'idyll_backups',
-        'mimeType': 'application/vnd.google-apps.folder'
+
+    # search for instance of backup folder
+    is_instance = False
+    instance_id = None
+    found = service.files().list(q="name='idyll_backups'" and "mimeType = 'application/vnd.google-apps.folder'",
+                                 spaces='drive',
+                                 fields='files(id, name)'
+                                 ).execute()
+    for file in found.get('files', []):
+        if file.get('name') == 'idyll_backups':
+            is_instance = True
+            instance_id = file.get('id')
+            print('found existing backup as: ' + instance_id + '\n')
+
+    if not is_instance:
+        p_folder_metadata = {
+            'name': 'idyll_backups',
+            'mimeType': 'application/vnd.google-apps.folder'
+        }
+        p_file = service.files().create(body=p_folder_metadata, fields='id').execute()
+        p_folder_id = p_file.get('id')
+        print('parent folder created as \'idyll_backups\': ' + p_folder_id + '\n')
+    else:
+        p_folder_id = instance_id
+    
+    date_folder_meta = {
+        'name': str(datetime.now()),
+        'mimeType': 'application/vnd.google-apps.folder',
+        "parents": [p_folder_id]
     }
-    p_file = service.files().create(body=p_folder_metadata, fields='id').execute()
-    p_folder_id = p_file.get('id')
-    print('parent folder created as \'idyll_backups\': ' + p_folder_id + '\n')
+    date_folder = service.files().create(body=date_folder_meta, fields='id').execute()
+    date_folder_id = date_folder.get('id')
+    print('date folder created as: ' + date_folder_id + '\n')
     # list of all subdirectories
     folders = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
     for f in folders:
         folder_metadata = {
             "name": f,
             "mimeType": "application/vnd.google-apps.folder",
-            "parents": [p_folder_id]
+            "parents": [date_folder_id]
         }
         file = service.files().create(body=folder_metadata, fields='id').execute()
         s_folder_id = file.get('id')
