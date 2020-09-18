@@ -24,7 +24,13 @@ def drive_service():
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
         else:
-            flow = InstalledAppFlow.from_client_secrets_file('credentials.json', SCOPES)
+            # authenticate using id
+            credential_path = input('enter exact path to credentials.json. you only need to do this once:\n')
+            try:
+                flow = InstalledAppFlow.from_client_secrets_file(credential_path, SCOPES)
+            except FileNotFoundError:
+                print(c.RED + 'bad path' + c.END)
+                raise
             credentials = flow.run_local_server(port=0)
         with open(tkn, 'wb') as token:
             # save creds
