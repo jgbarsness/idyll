@@ -1,6 +1,5 @@
 ## idyll <br />
 is a command line tool used to create and manage text entries.<br /><br />
-packaged on macOS<br />
 to install from current folder location (macOS):<br />
 ```sudo ln -s [your path to bin/idl/idl] /usr/local/bin```
 #### using:
@@ -9,9 +8,9 @@ to install from current folder location (macOS):<br />
 or for a quick entry:<br />
 ```idl [entry]```
 
-#### your home folder is where idl lives.
+#### how everything works:
 
-all of your notes are stored in your home directory in a folder called 'idl'. when you run idyll from a new location, a folder is created inside 'idl' that references this location. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched.
+all of your notes are stored in your home directory in a folder called 'idl'. when you run idyll from a new location, a folder is created inside 'idl' that references this location. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched. this allows you to take notes without the worry of cluttering the cwd itself.
 
 to create a new collection file, you can manually set the config file's 'collection_title' attribute to the new desired name, or you can run 'idl -s [new_name]' to create this file automatically on the next attempt to create an entry. running 'idl' will print a header with useful information on files in 'idl'.
 
@@ -27,8 +26,8 @@ suggestions for use: to-do list, dream journal, version note manager, recipe exp
 '**-a**': new tagged entry. syntax: idl -a [tag] [entry]<br />
 '**-v**': view entries. syntax: idl -v // idl -v [keyword]<br />
 '**-t**': search for entries with a tag<br />
-'**-wipe**': delete entire idl<br />
-'**-wipe-all**': delete collection folder in pwd<br />
+'**-wipe**': delete current default<br />
+'**-wipe-all**': delete folder referencing this location<br />
 '**-b**': create backup of collection<br />
 '**-load**': load entries from backup<br />
 '**-config**': generate config file in pwd. if config exists, defaults reset.
