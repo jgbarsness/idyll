@@ -8,7 +8,7 @@ to install from current folder location (macOS):<br />
 or for a quick entry:<br />
 ```idl [entry]```
 
-#### how everything works:
+#### how everything works: 
 
 all of your notes are stored in your home directory in a folder called 'idl'. when you run idyll from a new location, a folder is created inside 'idl' that references this location. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched. this allows you to take notes without the worry of cluttering the cwd itself.
 
