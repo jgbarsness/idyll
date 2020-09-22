@@ -76,15 +76,13 @@ def upload():
             'mimeType': 'application/vnd.google-apps.folder'
         }
         p_file = service.files().create(body=p_folder_metadata, fields='id').execute()
-        p_folder_id = p_file.get('id')
-        print('parent folder created as \'idyll_backups\': ' + p_folder_id + '\n')
-    else:
-        p_folder_id = instance_id
-    
+        instance_id = p_file.get('id')
+        print('parent folder created as \'idyll_backups\': ' + instance_id + '\n')
+
     date_folder_meta = {
         'name': str(datetime.now()),
         'mimeType': 'application/vnd.google-apps.folder',
-        "parents": [p_folder_id]
+        "parents": [instance_id]
     }
     date_folder = service.files().create(body=date_folder_meta, fields='id').execute()
     date_folder_id = date_folder.get('id')
