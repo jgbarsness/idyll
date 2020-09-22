@@ -178,7 +178,7 @@ def help_print():
         pairs = []
         for f in dirs:
             files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
-            pairs.append(f + ': ' + ' '.join(files) + '\n')
+            pairs.append(f + ': ' + '|'.join(files) + '\n')
         if len(pairs) > 0:
             print('collections:\n' + c.PURPLE + ''.join(pairs) + c.END)
     print(c.HEADER + c.HELP)

@@ -35,7 +35,7 @@ def drive_service():
     if not credentials or not credentials.valid:
         if credentials and credentials.expired and credentials.refresh_token:
             credentials.refresh(Request())
-            print('credentials refreshed\n')
+            print('credentials refreshed')
         else:
             # authenticate using id
             try:
@@ -68,7 +68,7 @@ def upload():
         if file.get('name') == 'idyll_backups':
             is_instance = True
             instance_id = file.get('id')
-            print('found existing backup as: ' + instance_id + '\n')
+            print('found existing backup: ' + instance_id + '\n')
 
     if not is_instance:
         p_folder_metadata = {
@@ -88,7 +88,7 @@ def upload():
     }
     date_folder = service.files().create(body=date_folder_meta, fields='id').execute()
     date_folder_id = date_folder.get('id')
-    print('date folder created as: ' + date_folder_id + '\n')
+    print('sub folder created as: ' + date_folder_id + '\n')
     # list of all subdirectories
     folders = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
     for f in folders:
@@ -113,5 +113,7 @@ def upload():
             file = service.files().create(body=file_metadata,
                                           media_body = media,
                                           fields='id').execute()
-            print('file created: ' + str(subfile) + ': ' + file.get('id'))
-    print(c.YELLOW + '\nbackup successful\n' + c.END)
+            print(str(subfile) + ' uploaded: ' + file.get('id'))
+        # new line inbetween folders
+        print()
+    print(c.YELLOW + 'backup successful\n' + c.END)
