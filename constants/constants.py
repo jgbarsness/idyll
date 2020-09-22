@@ -48,7 +48,7 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
       does not modify existing files. modifes / creates config file.\n\
 \'-drive\': uploads a new backup folder to google drive. currently only supports new uploads, not updates.'
 
-SEPERATOR = '<\>'
+SEPERATOR = ''
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
 
