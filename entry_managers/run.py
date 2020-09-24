@@ -166,21 +166,24 @@ def call_entry(type_of: str, title: list, joined_title: str):
 def help_print():
     'prints out program info, including current active collections'
 
+    HEADERS = []
     # print out file locations
     if path.exists(c.DIR_NAME):
         if path.exists(c.COLLECTION_TITLE):
-            print('current default: ' + c.PURPLE + path.abspath(c.COLLECTION_TITLE) + c.END)
+            HEADERS.append(c.PURPLE + 'current default: ' + c.END + path.abspath(c.COLLECTION_TITLE))
         if path.exists(c.BACKUP_TITLE):
-            print('backup: ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
+            HEADERS.append(c.PURPLE + 'backup: ' + c.END + path.abspath(c.BACKUP_TITLE))
 
         # walk dir
         dirs = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
         pairs = []
         for f in dirs:
             files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
-            pairs.append(c.PURPLE + f + ': ' + c.END + ' | '.join(files))
+            pairs.append(f + ': ' + ' | '.join(files))
         if len(pairs) > 0:
-            print('collections:\n' + c.END + ''.join(pairs))
+            HEADERS.append(c.PURPLE + 'directories in use:\n' + c.END + '\n'.join(pairs))
+    
+        print('\n\n'.join(HEADERS))
 
 
 def error_out(message: str, location=c.COLLECTION_TITLE):
