@@ -14,7 +14,7 @@ notes are formatted as follows:<br />
 ```
 Sat 04:48PM Sep 19 2020
 -----------------------
-hello, this is an idyll note
+this is an idyll note
 #*#*#*#*#*#*#*#*#*#*#*#
 ```
 
