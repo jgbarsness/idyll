@@ -13,22 +13,13 @@ RED = '\033[91m'
 # name of the directory
 DIR_NAME = Path.home() / 'idl'
 
-HEADER = '-----\n\
-\033[35m\
-idyll\033[0m\
-\n-----\n\
-\033[36m\
-v2.1.0\
-\033[0m\
-\033[33m\
-\nmade by joseph barsness\
-\033[0m\n\
-\nthis is a command line tool for recording\
- and accessing things.\n'
+VERSION = 'v2.1.0'
 
-HELP = '\nusage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
+
+HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'idl [arg] [title]\'\n\
 \ncommands:\n\
+\'-l\': list out directory information\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\

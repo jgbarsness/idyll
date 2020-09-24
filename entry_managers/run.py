@@ -23,7 +23,7 @@ def main(sys_arguement=None, title=None) -> None:
     'routes function calls'
 
     if sys_arguement is None:
-        help_print()
+        print(c.VERSION + '\n' + c.HELP)
         return
 
     # reduce calls to join
@@ -74,8 +74,8 @@ def main(sys_arguement=None, title=None) -> None:
         else:
             print('\nnothing to show\nformat: idl -del [keyword]')
 
-    elif sys_arguement == '-h' or sys_arguement == '-help':
-        print(c.HELP)
+    elif sys_arguement == '-l':
+        help_print()
 
     elif sys_arguement == '-load':
         FileHandle.load_from_backup()
@@ -178,10 +178,9 @@ def help_print():
         pairs = []
         for f in dirs:
             files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
-            pairs.append(f + ': ' + '|'.join(files) + '\n')
+            pairs.append(c.PURPLE + f + ': ' + c.END + ' | '.join(files))
         if len(pairs) > 0:
-            print('collections:\n' + c.PURPLE + ''.join(pairs) + c.END)
-    print(c.HEADER + c.HELP)
+            print('collections:\n' + c.END + ''.join(pairs))
 
 
 def error_out(message: str, location=c.COLLECTION_TITLE):
