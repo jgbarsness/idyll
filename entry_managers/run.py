@@ -6,7 +6,7 @@ from entry_managers.second_entry import SecondEntry
 from entry_managers.tag_entry import TagEntry
 from collection.collection import Collection
 from entry_managers.entrybox import TextBox
-from mod_behaviors import command_strats, i_behavior
+from mod_behaviors import modify_strats, view_strats
 import constants.constants as c
 from os import path, listdir
 from pathlib import Path
@@ -32,7 +32,11 @@ def main(sys_arguement=None, title=None) -> None:
 
     # call command if launched using sys arguement
     if sys_arguement == '-v':
-        container.strategy = command_strats.ViewStrat()
+        container.strategy = view_strats.ViewStrat()
+        container.call_strat(joined_title)
+    
+    elif sys_arguement == '-ds':
+        container.strategy = view_strats.DateSearch()
         container.call_strat(joined_title)
 
     elif sys_arguement == '-wipe':
@@ -53,7 +57,7 @@ def main(sys_arguement=None, title=None) -> None:
     elif sys_arguement == '-q':
         if error_out("\ndefault entry file doesn't exist"):
             return
-        container.strategy = command_strats.QuickDeleteStrat()
+        container.strategy = modify_strats.QuickDeleteStrat()
         # if something was changed
         if container.call_strat(None):
             print('\n' + c.YELLOW + 'rewriting...' + c.END)
@@ -65,7 +69,7 @@ def main(sys_arguement=None, title=None) -> None:
             return
         # check for presence of entries. continue if so
         if (len(container.collection) != 0) and (len(joined_title) != 0):
-            container.strategy = command_strats.DeleteModStrat()
+            container.strategy = modify_strats.DeleteModStrat()
             if container.call_strat(joined_title):
                 print('\n' + c.YELLOW + 'rewriting...' + c.END)
                 FileHandle.refresh_collection(container.collection)
@@ -88,7 +92,7 @@ def main(sys_arguement=None, title=None) -> None:
                   + c.PURPLE + path.abspath(c.FOLDER / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
-        container.strategy = command_strats.TSearchStrat()
+        container.strategy = view_strats.TSearchStrat()
         container.call_strat(joined_title)
 
     elif sys_arguement == '-s':

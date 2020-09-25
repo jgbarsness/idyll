@@ -1,50 +1,8 @@
-from mod_behaviors.i_behavior import CommandStrategy
+from mod_behaviors.a_strategy import CommandStrategy
 from constants.file_handle import FileHandle
 import constants.constants as c
 
-'strategies used to modify and/or display collections'
-
-class ViewStrat(CommandStrategy):
-    'view / print strat'
-
-    def call_command(self, collections: list, title: str):
-        if not FileHandle.file_verify():
-            print("\ndefault entry file doesn't exist")
-            return
-
-        # if there is a keyword to search with
-        if (len(title) != 0):
-            criteria = title
-            print('entries containing ' + '\'' + c.CYAN + criteria + c.END + '\':')
-            if len(StratHelpers.show_keyword(title, collections)) != 0:
-                print("\n" + str(len(StratHelpers.return_thing(title, collections))) + " entry(s)")
-
-        # if no keyword is present, print out entire collection
-        else:
-            # check for formatted entries
-            if (len(collections) != 0):
-                print('all entries:')
-                StratHelpers.print_entries(collections)
-                print("\n" + str(len(collections)) + " entry(s)")
-            else:
-                # means that a file is present, but nothing could be parsed from it
-                print('\nempty collection and/or invalid entry format')
-        return
-
-class TSearchStrat(CommandStrategy):
-    'strat to search entries for tag'
-
-    def call_command(self, collections: list, title: str):
-        if not FileHandle.file_verify():
-            print("\nno entry file")
-            return
-        if (len(collections) != 0) and (len(title) != 0):
-            print('searching for tag ' + '\'' + c.CYAN + title + c.END + '\':')
-            if len(StratHelpers.show_keyword('(' + title + ')', collections)) != 0:
-                print("\n" + str(len(StratHelpers.return_thing('(' + title + ')', collections))) + " entry(s)")
-        else:
-            print('\nnothing to show\nformat: idl -t [tag]')
-        return
+'strategies used to modify collections'
 
 class DeleteModStrat(CommandStrategy):
     'returns a list of collections deleted by keyword. nothing modified'
@@ -52,7 +10,7 @@ class DeleteModStrat(CommandStrategy):
     def call_command(self, collections: list, title: str) -> bool:
         'bulk or single delete entries'
 
-        delete = [elmnt for elmnt in collections if title in elmnt]
+        delete = StratHelpers.return_thing(title, collections)
         # if nothing is returned by previous call, end
         if (len(delete) == 0):
             print('\nnothing to delete containing ' 

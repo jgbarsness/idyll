@@ -1,0 +1,100 @@
+from mod_behaviors.a_strategy import CommandStrategy
+from constants.file_handle import FileHandle
+import constants.constants as c
+from mod_behaviors.modify_strats import StratHelpers
+from datetime import datetime as dt
+from re import match
+
+'strategies used to display collections'
+
+class ViewStrat(CommandStrategy):
+    'view / print strat'
+
+    def call_command(self, collections: list, title: str):
+        if not ViewHelpers.vs_file_check():
+            return
+
+        # if there is a keyword to search with
+        if (len(title) != 0):
+            criteria = title
+            print('entries containing ' + '\'' + c.BLUE + criteria + c.END + '\':')
+            if len(StratHelpers.show_keyword(title, collections)) != 0:
+                print(str(len(StratHelpers.return_thing(title, collections))) + " entry(s)")
+
+        # if no keyword is present, print out entire collection
+        else:
+            # check for formatted entries
+            if (len(collections) != 0):
+                print('all entries:')
+                StratHelpers.print_entries(collections)
+                print(str(len(collections)) + " entry(s)")
+            else:
+                # means that a file is present, but nothing could be parsed from it
+                print('\nempty collection and/or invalid entry format')
+        return
+
+class TSearchStrat(CommandStrategy):
+    'strat to search entries for tag'
+
+    def call_command(self, collections: list, title: str):
+        if not ViewHelpers.vs_file_check():
+            return
+        if (len(collections) != 0) and (len(title) != 0):
+            print('searching for tag ' + '\'' + c.BLUE + title + c.END + '\':')
+            if len(StratHelpers.show_keyword('(' + title + ')', collections)) != 0:
+                print(str(len(StratHelpers.return_thing('(' + title + ')', collections))) + " entry(s)")
+        else:
+            print('\nnothing to show\nformat: idl -t [tag]')
+        return
+
+class DateSearch(CommandStrategy):
+    'searches entries by date'
+
+    def call_command(self, collections: list, title: str):
+        if not ViewHelpers.vs_file_check():
+            return
+        if (len(collections) != 0) and (len(title) != 0):
+            matches = self.search_by_date(collections, title)
+            if len(matches) != 0:
+                print('entries on ' + c.BLUE + str(title) + c.END + ':')
+                StratHelpers.print_entries(matches)
+                print(str(len(matches)) + " entry(s)")
+            else:
+                print('\nno matches on this date or bad date format')
+                return
+        else:
+            print('\nnothing to show\nformat: idl -ds [mm/dd/yy]')
+        return
+    
+    def search_by_date(self, collections: list, title: str) -> list:
+        matches = []
+        try:
+            # the criteria date given from title
+            criteria = dt.strptime(title, "%m/%d/%y")
+        except ValueError:
+            return []
+        for note in collections:
+            note_date = match(c.VIEW_REGEX, note).group(0)
+            try:
+                # replace call is used to standardize format
+                note_date_obj = dt.strptime(note_date, c.DATETIME).replace(hour=00, minute=00)
+                # if the date is the same
+                if note_date_obj == criteria:
+                    matches.append(note)
+            except ValueError:
+                print('\n' + c.RED + 'entry parsing error. entry date format modified' + c.END + '\n')
+                raise
+        return matches
+
+class ViewHelpers():
+    'utility for view strats'
+
+    @staticmethod
+    def vs_file_check() -> bool:
+        'checks file presence, prints any messages'
+
+        if not FileHandle.file_verify():
+            print("\ndefault entry file doesn't exist")
+            return False
+        else:
+            return True

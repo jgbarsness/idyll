@@ -13,7 +13,7 @@ RED = '\033[91m'
 # name of the directory
 DIR_NAME = Path.home() / 'idl'
 
-VERSION = 'v2.1.0'
+VERSION = 'v2.2.0'
 
 
 HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
@@ -26,6 +26,7 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
+\'-ds\': view entries on a specific date. format: \'idl -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
 \'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
@@ -42,6 +43,8 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 SEPERATOR = ''
 
 SCAN_REGEX = r'\n\n([A-Z])(?=[a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4})'
+VIEW_REGEX = r'[A-Z][a-z]{2}\s[0-9]{2}[:][0-9]{2}[A-Z]{2}\s[A-Z][a-z]{2}\s[0-9]{2}\s[0-9]{4}'
+DATETIME = '%a %I:%M%p %b %d %Y'
 
 CONFIG_MESSAGE = '\n# WARNING: updating may outdate collection in pwd\n\n\
 # \'end_marker\' determines entry marker recorded in collection file. \

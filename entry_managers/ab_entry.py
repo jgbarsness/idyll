@@ -10,7 +10,7 @@ class AEntry(ABC):
     
     def __init__(self, passed_title):
         'accepts a title and an optional shortcut'
-        self.recorded_datetime = str(datetime.now().strftime('%a %I:%M%p %b %d %Y'))
+        self.recorded_datetime = str(datetime.now().strftime(c.DATETIME))
         self.title = passed_title
         self.print = True
 

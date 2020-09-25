@@ -3,7 +3,7 @@ from os import chmod, path
 from stat import S_IRWXU, S_IREAD
 from constants.file_handle import FileHandle
 from pathlib import Path
-from mod_behaviors.i_behavior import CommandStrategy
+from mod_behaviors.a_strategy import CommandStrategy
 from re import sub
 
 
