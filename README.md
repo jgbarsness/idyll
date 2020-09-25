@@ -36,6 +36,7 @@ suggestions for use: to-do list, dream journal, version note manager, recipe exp
 '**-nt**': new entry using a textbox. ignores config file preferences<br />
 '**-a**': new tagged entry. syntax: idl -a [tag] [entry]<br />
 '**-v**': view entries. syntax: idl -v // idl -v [keyword]<br />
+'**-ds**': view entries on a specific date. format: 'idl -ds [mm/dd/yy]'<br />
 '**-t**': search for entries with a tag<br />
 '**-wipe**': delete current default<br />
 '**-wipe-all**': delete folder referencing this location<br />
