@@ -23,7 +23,7 @@ class FileHandle:
         # in case future update relies on permission at close
         try:
             copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup created as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE)+ c.END)
+            print('\nbackup created as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE)+ c.END)
             return
         except PermissionError:
             # verify desired behavior
@@ -38,7 +38,7 @@ class FileHandle:
             remove(c.BACKUP_TITLE)
             # retain a backup copy
             copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
-            print(c.YELLOW + '\nbackup updated as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
+            print('\nbackup updated as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
         except FileNotFoundError:
             # user machine removed file themselves after running program
             print(c.RED + '\nerror: bad backup' + c.END)
@@ -71,12 +71,12 @@ class FileHandle:
 
         # preserve modifications
         keep = [c.END_MARKER, c.DATESTAMP_UNDERLINE, c.FIRST_MARKER, c.SECOND_MARKER, c.USE_TEXTBOX]
-        print("\nsetting " + c.PURPLE + new + ".txt" + c.END + "...")
+        print("\nsetting " + new + ".txt" + "...")
         FileHandle.gen_config(new, keep)
-        print(c.PURPLE + new + ".txt" + c.END + " is the new default collection")
+        print(new + ".txt" + " is the new default collection")
 
     @staticmethod
-    def gen_config(active='idl', deff=c.DEFAULTS):
+    def gen_config(active='idl', deff: list=c.DEFAULTS):
         'generate config file in pwd'
 
         config = ConfigParser()
@@ -111,7 +111,7 @@ class FileHandle:
             try:
                 remove(c.COLLECTION_TITLE)
             except FileNotFoundError:
-                print(c.PURPLE + "creating new file, retaining backup..." + c.END)
+                print("creating new file, retaining backup...")
 
             print(c.YELLOW + '\nrestoring...' + c.END)
             # backup -> running file
@@ -119,7 +119,7 @@ class FileHandle:
                 rename(c.BACKUP_TITLE, c.COLLECTION_TITLE)
                 # retain a copy
                 copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
-                print(c.YELLOW + 'restored from ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
+                print('restored from ' + path.abspath(c.BACKUP_TITLE))
             except FileNotFoundError:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: bad backup' + c.END)
@@ -139,7 +139,7 @@ class FileHandle:
             try:
                 print(c.YELLOW + '\ndeleting...' + c.END)
                 remove(c.COLLECTION_TITLE)
-                print(c.PURPLE + path.abspath(c.COLLECTION_TITLE) + c.YELLOW + ' deleted' + c.END)
+                print(path.abspath(c.COLLECTION_TITLE) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: file doesn\'t exist' + c.END)
@@ -158,7 +158,7 @@ class FileHandle:
             try:
                 print(c.YELLOW + '\ndeleting...' + c.END)
                 rmtree(c.FOLDER)
-                print(c.PURPLE + str(c.FOLDER) + c.YELLOW + ' deleted' + c.END)
+                print(str(c.FOLDER) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
                 print(c.RED + '\nerror: folder doesn\'t exist' + c.END)
                 raise

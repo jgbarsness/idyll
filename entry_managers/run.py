@@ -28,13 +28,15 @@ def main(sys_arguement=None, title=None) -> None:
 
     # reduce calls to join
     joined_title = ' '.join(title)
-    container = Collection(None)
+    container = Collection(None, c.COLLECTION_TITLE)
+    # fill the collection with entries
+    container.scan_collection()
 
     # call command if launched using sys arguement
     if sys_arguement == '-v':
         container.strategy = view_strats.ViewStrat()
         container.call_strat(joined_title)
-    
+
     elif sys_arguement == '-ds':
         container.strategy = view_strats.DateSearch()
         container.call_strat(joined_title)
@@ -88,7 +90,7 @@ def main(sys_arguement=None, title=None) -> None:
         if FileHandle.check_dir() is not False:
             # reset defaults
             FileHandle.gen_config('idl', c.DEFAULTS)
-            print(c.YELLOW + '\nconfig updated as '
+            print('\nconfig updated as '
                   + c.PURPLE + path.abspath(c.FOLDER / 'idl.ini') + c.END)
 
     elif sys_arguement == '-t':
@@ -174,9 +176,11 @@ def help_print():
     # print out file locations
     if path.exists(c.DIR_NAME):
         if path.exists(c.COLLECTION_TITLE):
-            HEADERS.append(c.PURPLE + 'current default: ' + c.END + path.abspath(c.COLLECTION_TITLE))
+            HEADERS.append(c.PURPLE + 'current default: ' +
+                           c.END + path.abspath(c.COLLECTION_TITLE))
         if path.exists(c.BACKUP_TITLE):
-            HEADERS.append(c.PURPLE + 'backup: ' + c.END + path.abspath(c.BACKUP_TITLE))
+            HEADERS.append(c.PURPLE + 'backup: ' + c.END +
+                           path.abspath(c.BACKUP_TITLE))
 
         # walk dir
         dirs = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
@@ -185,8 +189,9 @@ def help_print():
             files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
             pairs.append(f + ': ' + ' | '.join(files))
         if len(pairs) > 0:
-            HEADERS.append(c.PURPLE + 'directories in use:\n' + c.END + '\n'.join(pairs))
-    
+            HEADERS.append(c.PURPLE + 'directories in use:\n' + c.END
+                           + '\n'.join(pairs))
+
         print('\n\n'.join(HEADERS))
 
 

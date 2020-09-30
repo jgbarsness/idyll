@@ -10,8 +10,8 @@ from re import sub
 class Collection:
     'a collection of entries'
     
-    def __init__(self, strategy: CommandStrategy):
-        self.collection = self.scan_collection()
+    def __init__(self, strategy: CommandStrategy, path_to_file):
+        self.collection = self.scan_collection(path_to_file)
         # strategies used for display. file mod left to entry write class
         self._strategy = strategy
 
@@ -35,7 +35,7 @@ class Collection:
     def scan_collection(self, fpath=c.COLLECTION_TITLE):
         'returns collection list of collection entries'
 
-        if (not path.exists(fpath)):
+        if (fpath == None or not path.exists(fpath)):
             return []
 
         chmod(fpath, S_IRWXU)

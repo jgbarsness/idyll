@@ -1,6 +1,6 @@
-from configparser import ConfigParser, ParsingError
 from os import path
 from pathlib import Path
+from constants.config_parser import ConParser
 
 # ascii coloring
 END = '\033[0m'
@@ -14,7 +14,6 @@ RED = '\033[91m'
 DIR_NAME = Path.home() / 'idl'
 
 VERSION = 'v2.2.0'
-
 
 HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'idl [arg] [title]\'\n\
@@ -78,28 +77,21 @@ USE_TEXTBOX = DEFAULTS[4]
 
 # use config values if present, else use default
 if path.exists(FOLDER / 'idl.ini'):
-    try:
-        # use pathlib to hide filepaths from user
-        config = ConfigParser()
-        config.read(FOLDER / 'idl.ini')
+    config = ConParser()
+    values = config.parse(FOLDER / 'idl.ini')
 
-        END_MARKER = config['DEFAULT']['END_MARKER']
-        DATESTAMP_UNDERLINE = config['DEFAULT']['DATESTAMP_UNDERLINE']
+    END_MARKER = values["end_marker"]
+    DATESTAMP_UNDERLINE = values["date_underline"]
 
-        jtitle_nopath = config['DEFAULT']['COLLECTION_TITLE'] + '.txt'
-        btitle_nopath = config['DEFAULT']['BACKUP_TITLE'] + '.txt'
+    jtitle_nopath = values["jtitle"]
+    btitle_nopath = values["btitle"]
 
-        COLLECTION_TITLE = FOLDER / jtitle_nopath
-        BACKUP_TITLE = FOLDER / btitle_nopath
+    COLLECTION_TITLE = FOLDER / jtitle_nopath
+    BACKUP_TITLE = FOLDER / btitle_nopath
 
-        FIRST_MARKER = config['DEFAULT']['FIRST_MARKER']
-        SECOND_MARKER = config['DEFAULT']['SECOND_MARKER']
-        USE_TEXTBOX = config.getboolean('DEFAULT', 'USE_TEXTBOX')
-
-    # indicates parsing error
-    except (ParsingError, ValueError, KeyError):
-        print(RED + "\nsomething wrong with config file format. delete file or fix to proceed\n" + END)
-        raise
+    FIRST_MARKER = values["first"]
+    SECOND_MARKER = values["second"]
+    USE_TEXTBOX = values["textbox_use"]
 
 # used to determine prompt for entries with sections
 SECOND = '\n\'enter\' key to open text box. ' + SECOND_MARKER + ' '
