@@ -1,4 +1,3 @@
-import pickle
 from os import path, listdir
 from constants import constants as c
 from pathlib import Path
@@ -22,8 +21,10 @@ def drive_service():
     'authentification'
 
     # google API imports expensive - wrap in function to eliminate unnecessary startup
+    import pickle
     from googleapiclient.discovery import build
     from google_auth_oauthlib.flow import InstalledAppFlow
+    from google.auth.transport.requests import Request
 
     credentials = None
     tkn = c.DIR_NAME / 'token.pickle'
@@ -55,7 +56,6 @@ def drive_service():
 def upload():
     'uploads to gdrive'
 
-    from google.auth.transport.requests import Request
     from googleapiclient.http import MediaFileUpload
 
     service = drive_service()

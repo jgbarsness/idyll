@@ -1,4 +1,3 @@
-from tkinter import Tk, Text, Button, mainloop
 from entry_managers.ab_entry import AEntry
 
 
@@ -6,6 +5,7 @@ class TextBox():
     'a text box for taking in input and displaying it'
 
     def __init__(self, obj_ref: AEntry = None, attribute=None):
+        from tkinter import Tk, Text, Button, mainloop
         self.text = None
         self.root = Tk()
         text_box = Text(self.root, height=15, width=50,
