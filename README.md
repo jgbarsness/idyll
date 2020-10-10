@@ -17,7 +17,7 @@ Sat 04:48PM Sep 19 2020
 this is an idyll note
 #*#*#*#*#*#*#*#*#*#*#*#
 ```
-
+ 
 each file can contain any number of notes.
 
 all of your notes are stored in your home directory in a folder called ```idl```. when you run idyll from a new location, a folder is created inside ```idl``` that references this location. for example, if your shell points to ```You/Desktop```, running ```idl [note]``` will add an entry to a ```You_Desktop``` folder in ```home/idl```. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched. this allows you to take notes without the worry of cluttering your work spaces.
