@@ -14,6 +14,7 @@ class Collection:
         self.collection = self.scan_collection(path_to_file)
         # strategies used for display. file mod left to entry write class
         self._strategy = strategy
+        self.path_used = path_to_file
 
     @property
     def strategy(self) -> CommandStrategy:
@@ -30,7 +31,7 @@ class Collection:
     def call_strat(self, title: str) -> bool:
         'calls strategy on collection'
 
-        return self._strategy.call_command(self.collection, title)
+        return self._strategy.call_command(self.collection, title, self.path_used)
 
     def scan_collection(self, fpath=c.COLLECTION_TITLE):
         'returns collection list of collection entries'

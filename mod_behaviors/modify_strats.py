@@ -7,7 +7,7 @@ import constants.constants as c
 class DeleteModStrat(CommandStrategy):
     'returns a list of collections deleted by keyword. nothing modified'
 
-    def call_command(self, collections: list, title: str) -> bool:
+    def call_command(self, collections: list, title: str, path: str) -> bool:
         'bulk or single delete entries'
 
         delete = StratHelpers.return_thing(title, collections)
@@ -39,7 +39,7 @@ class DeleteModStrat(CommandStrategy):
 class QuickDeleteStrat(CommandStrategy):
     'returns a representation of a quick-delete for the last entry made. nothing modified'
 
-    def call_command(self, collections: list, title: str) -> bool:
+    def call_command(self, collections: list, title: str, path: str) -> bool:
         # return if collection is empty
         if (len(collections) == 0):
             print('\nnothing to delete')

@@ -13,7 +13,7 @@ RED = '\033[91m'
 # name of the directory
 DIR_NAME = Path.home() / 'idl'
 
-VERSION = 'v2.2.0'
+VERSION = 'v2.3.0'
 
 HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
 alternatively, the title of entries with arg use can be one-lined like \'idl [arg] [title]\'\n\
@@ -25,6 +25,7 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
+\'-vf\': view a difference collection in the same directory. format: \'idl -vf: [collection name][opt keyword]\'\n\
 \'-ds\': view entries on a specific date. format: \'idl -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
 \'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\

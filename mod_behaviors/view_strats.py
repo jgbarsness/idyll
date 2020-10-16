@@ -11,7 +11,7 @@ from re import match
 class ViewStrat(CommandStrategy):
     'view / print strat'
 
-    def call_command(self, collections: list, title: str):
+    def call_command(self, collections: list, title: str, path: str):
         if not ViewHelpers.vs_file_check():
             return
 
@@ -24,7 +24,7 @@ class ViewStrat(CommandStrategy):
                 ViewHelpers.print_num_entries(len(StratHelpers.return_thing(
                                               title,
                                               collections)),
-                                              str(c.COLLECTION_TITLE))
+                                              path)
 
         # if no keyword is present, print out entire collection
         else:
@@ -33,7 +33,7 @@ class ViewStrat(CommandStrategy):
                 print('all entries:')
                 StratHelpers.print_entries(collections)
                 ViewHelpers.print_num_entries(len(collections),
-                                              str(c.COLLECTION_TITLE))
+                                              path)
             else:
                 # means that a file is present, but nothing parsed from it
                 print('\nempty collection and/or invalid entry format')
@@ -43,7 +43,7 @@ class ViewStrat(CommandStrategy):
 class TSearchStrat(CommandStrategy):
     'strat to search entries for tag'
 
-    def call_command(self, collections: list, title: str):
+    def call_command(self, collections: list, title: str, path: str):
         if not ViewHelpers.vs_file_check():
             return
         if (len(collections) != 0) and (len(title) != 0):
@@ -52,7 +52,7 @@ class TSearchStrat(CommandStrategy):
                    collections)) != 0:
                 ViewHelpers.print_num_entries(len(StratHelpers.return_thing('(' + title + ')',
                                               collections)),
-                                              str(c.COLLECTION_TITLE))
+                                              path)
         else:
             print('\nnothing to show\nformat: idl -t [tag]')
         return
@@ -61,16 +61,16 @@ class TSearchStrat(CommandStrategy):
 class DateSearch(CommandStrategy):
     'searches entries by date'
 
-    def call_command(self, collections: list, title: str):
+    def call_command(self, collections: list, title: str, path: str):
         if not ViewHelpers.vs_file_check():
             return
         if (len(collections) != 0) and (len(title) != 0):
-            matches = self.search_by_date(collections, title)
+            matches = self.search_by_date(collections, title, None)
             if len(matches) != 0:
                 print('entries on ' + c.BLUE + str(title) + c.END + ':')
                 StratHelpers.print_entries(matches)
                 ViewHelpers.print_num_entries(len(matches),
-                                              str(c.COLLECTION_TITLE))
+                                              path)
             else:
                 print('\nno matches on this date or bad date format')
                 return
@@ -78,7 +78,7 @@ class DateSearch(CommandStrategy):
             print('\nnothing to show\nformat: idl -ds [mm/dd/yy]')
         return
 
-    def search_by_date(self, collections: list, title: str) -> list:
+    def search_by_date(self, collections: list, title: str, path: str) -> list:
         matches = []
         try:
             # the criteria date given from title
@@ -120,4 +120,4 @@ class ViewHelpers():
     def print_num_entries(num: int, place: str) -> None:
         'prints out the count of entries to be printed'
 
-        print(str(num) + " entry(s) in " + place)
+        print(str(num) + " entry(s) in " + str(place))

@@ -37,6 +37,15 @@ def main(sys_arguement=None, title=None) -> None:
         container.strategy = view_strats.ViewStrat()
         container.call_strat(joined_title)
 
+    elif sys_arguement == '-vf':
+        add_exten = title[0] + '.txt'
+        pos_title = c.FOLDER / add_exten
+        if path.isfile(pos_title):
+            container = Collection(view_strats.ViewStrat(), pos_title)
+            container.call_strat(''.join(title[1:]))
+        else:
+            print('\ninvalid file.\nformat: idl -vf [collection name][opt keyword]')
+
     elif sys_arguement == '-ds':
         container.strategy = view_strats.DateSearch()
         container.call_strat(joined_title)
