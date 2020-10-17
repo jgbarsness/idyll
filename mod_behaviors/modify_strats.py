@@ -1,8 +1,9 @@
 from mod_behaviors.a_strategy import CommandStrategy
-from info_and_paths.file_handle import FileHandle
+from constants.file_handle import FileHandle
 import constants.info_and_paths as c
 
 'strategies used to modify collections'
+
 
 class DeleteModStrat(CommandStrategy):
     'returns a list of collections deleted by keyword. nothing modified'
@@ -13,7 +14,7 @@ class DeleteModStrat(CommandStrategy):
         delete = StratHelpers.return_thing(title, collections)
         # if nothing is returned by previous call, end
         if (len(delete) == 0):
-            print('\nnothing to delete containing ' 
+            print('\nnothing to delete containing '
                   + '\'' + c.CYAN + title + c.END + '\'')
             return False
 
@@ -29,12 +30,13 @@ class DeleteModStrat(CommandStrategy):
             for things in delete:
                 # remove them
                 collections.remove(things)
-            
+
             return True
 
         else:
             print('\nentries preserved')
             return False
+
 
 class QuickDeleteStrat(CommandStrategy):
     'returns a representation of a quick-delete for the last entry made. nothing modified'
@@ -52,6 +54,7 @@ class QuickDeleteStrat(CommandStrategy):
         else:
             print('\nnothing deleted')
             return False
+
 
 class StratHelpers():
     'helper methods'

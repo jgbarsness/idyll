@@ -7,7 +7,8 @@ from entry_managers.tag_entry import TagEntry
 from collection.collection import Collection
 from entry_managers.entrybox import TextBox
 from mod_behaviors import modify_strats, view_strats
-import constants.info_and_paths, constants.commands as c
+import constants.info_and_paths as c
+import constants.commands as cmd
 import constants.errors as e
 from os import path, listdir
 from pathlib import Path
@@ -34,11 +35,11 @@ def main(sys_arguement=None, title=None) -> None:
     container.scan_collection()
 
     # call command if launched using sys arguement
-    if sys_arguement == c.VIEW:
+    if sys_arguement == cmd.VIEW:
         container.strategy = view_strats.ViewStrat()
         container.call_strat(joined_title)
 
-    elif sys_arguement == c.VIEW_FILE:
+    elif sys_arguement == cmd.VIEW_FILE:
         add_exten = title[0] + '.txt'
         pos_title = c.FOLDER / add_exten
         if path.isfile(pos_title):
@@ -47,26 +48,26 @@ def main(sys_arguement=None, title=None) -> None:
         else:
             print(e.INVALID_FILE_VIEW)
 
-    elif sys_arguement == c.DATESEARCH:
+    elif sys_arguement == cmd.DATESEARCH:
         container.strategy = view_strats.DateSearch()
         container.call_strat(joined_title)
 
-    elif sys_arguement == c.WIPE:
+    elif sys_arguement == cmd.WIPE:
         if error_out(e.NONEXIST_ERROR):
             return
         FileHandle.wipe_collection()
 
-    elif sys_arguement == c.WIPE_ALL:
+    elif sys_arguement == cmd.WIPE_ALL:
         if error_out(e.WIPE_ALL_ERROR, c.FOLDER):
             return
         FileHandle.rm_folder()
 
-    elif sys_arguement == c.BACKUP:
+    elif sys_arguement == cmd.BACKUP:
         if error_out(e.NONEXIST_ERROR):
             return
         FileHandle.backup_collection()
 
-    elif sys_arguement == c.QUICK_DELETE:
+    elif sys_arguement == cmd.QUICK_DELETE:
         if error_out(e.NONEXIST_ERROR):
             return
         container.strategy = modify_strats.QuickDeleteStrat()
@@ -76,7 +77,7 @@ def main(sys_arguement=None, title=None) -> None:
             FileHandle.refresh_collection(container.collection)
             print(c.YELLOW + 'done' + c.END)
 
-    elif sys_arguement == c.DELETE:
+    elif sys_arguement == cmd.DELETE:
         if error_out(e.NONEXIST_ERROR):
             return
         # check for presence of entries. continue if so
@@ -90,42 +91,42 @@ def main(sys_arguement=None, title=None) -> None:
         else:
             print(e.DELETE_ERROR)
 
-    elif sys_arguement == c.LIST:
+    elif sys_arguement == cmd.LIST:
         help_print()
 
-    elif sys_arguement == c.LOAD:
+    elif sys_arguement == cmd.LOAD:
         FileHandle.load_from_backup()
 
-    elif sys_arguement == c.CONFIG:
+    elif sys_arguement == cmd.CONFIG:
         if FileHandle.check_dir() is not False:
             # reset defaults
             FileHandle.gen_config('idl', c.DEFAULTS)
             print('\nconfig updated as '
                   + c.PURPLE + path.abspath(c.FOLDER / 'idl.ini') + c.END)
 
-    elif sys_arguement == c.TAG_SEARCH:
+    elif sys_arguement == cmd.TAG_SEARCH:
         container.strategy = view_strats.TSearchStrat()
         container.call_strat(joined_title)
 
-    elif sys_arguement == c.SWITCH:
+    elif sys_arguement == cmd.SWITCH:
         if len(title) != 0:
             if FileHandle.check_dir() is not False:
                 FileHandle.switch(joined_title)
         else:
             print(e.SWITCH_ERROR)
-    elif sys_arguement == c.G_DRIVE:
+    elif sys_arguement == cmd.G_DRIVE:
         g_drive_auth.upload()
 
     # create entry commands
-    elif sys_arguement == c.NEW:
+    elif sys_arguement == cmd.NEW:
         call_entry('full', title, joined_title)
-    elif sys_arguement == c.NEW_FIRST:
+    elif sys_arguement == cmd.NEW_FIRST:
         call_entry('first', title, joined_title)
-    elif sys_arguement == c.NEW_SECOND:
+    elif sys_arguement == cmd.NEW_SECOND:
         call_entry('second', title, joined_title)
-    elif sys_arguement == c.TAG:
+    elif sys_arguement == cmd.TAG:
         call_entry('tag', title, joined_title)
-    elif sys_arguement == c.FORCE_TEXTBOX:
+    elif sys_arguement == cmd.FORCE_TEXTBOX:
         call_entry('force', title, joined_title)
     else:
         call_entry('one_line', title, joined_title)
