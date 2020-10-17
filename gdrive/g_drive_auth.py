@@ -1,5 +1,5 @@
 from os import path, listdir
-from constants import constants as c
+from constants import info_and_paths as c
 from pathlib import Path
 from datetime import datetime
 

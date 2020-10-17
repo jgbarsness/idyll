@@ -1,4 +1,4 @@
-import constants.constants as c
+import constants.info_and_paths as c
 from os import chmod
 from abc import ABC, abstractmethod
 from entry_managers import ab_entry

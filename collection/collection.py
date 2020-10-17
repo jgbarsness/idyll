@@ -1,4 +1,4 @@
-import constants.constants as c
+import constants.info_and_paths as c
 from os import chmod, path
 from stat import S_IRWXU, S_IREAD
 from constants.file_handle import FileHandle

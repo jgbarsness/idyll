@@ -7,7 +7,8 @@ from entry_managers.tag_entry import TagEntry
 from collection.collection import Collection
 from entry_managers.entrybox import TextBox
 from mod_behaviors import modify_strats, view_strats
-import constants.constants as c
+import constants.info_and_paths, constants.commands as c
+import constants.errors as e
 from os import path, listdir
 from pathlib import Path
 from constants.file_handle import FileHandle
@@ -33,40 +34,40 @@ def main(sys_arguement=None, title=None) -> None:
     container.scan_collection()
 
     # call command if launched using sys arguement
-    if sys_arguement == '-v':
+    if sys_arguement == c.VIEW:
         container.strategy = view_strats.ViewStrat()
         container.call_strat(joined_title)
 
-    elif sys_arguement == '-vf':
+    elif sys_arguement == c.VIEW_FILE:
         add_exten = title[0] + '.txt'
         pos_title = c.FOLDER / add_exten
         if path.isfile(pos_title):
             container = Collection(view_strats.ViewStrat(), pos_title)
             container.call_strat(''.join(title[1:]))
         else:
-            print('\ninvalid file.\nformat: idl -vf [collection name][opt keyword]')
+            print(e.INVALID_FILE_VIEW)
 
-    elif sys_arguement == '-ds':
+    elif sys_arguement == c.DATESEARCH:
         container.strategy = view_strats.DateSearch()
         container.call_strat(joined_title)
 
-    elif sys_arguement == '-wipe':
-        if error_out("\ndefault entry file doesn't exist"):
+    elif sys_arguement == c.WIPE:
+        if error_out(e.NONEXIST_ERROR):
             return
         FileHandle.wipe_collection()
 
-    elif sys_arguement == '-wipe-all':
-        if error_out('\nno folder to delete', c.FOLDER):
+    elif sys_arguement == c.WIPE_ALL:
+        if error_out(e.WIPE_ALL_ERROR, c.FOLDER):
             return
         FileHandle.rm_folder()
 
-    elif sys_arguement == '-b':
-        if error_out("\ndefault entry file doesn't exist"):
+    elif sys_arguement == c.BACKUP:
+        if error_out(e.NONEXIST_ERROR):
             return
         FileHandle.backup_collection()
 
-    elif sys_arguement == '-q':
-        if error_out("\ndefault entry file doesn't exist"):
+    elif sys_arguement == c.QUICK_DELETE:
+        if error_out(e.NONEXIST_ERROR):
             return
         container.strategy = modify_strats.QuickDeleteStrat()
         # if something was changed
@@ -75,8 +76,8 @@ def main(sys_arguement=None, title=None) -> None:
             FileHandle.refresh_collection(container.collection)
             print(c.YELLOW + 'done' + c.END)
 
-    elif sys_arguement == '-del':
-        if error_out("\ndefault entry file doesn't exist"):
+    elif sys_arguement == c.DELETE:
+        if error_out(e.NONEXIST_ERROR):
             return
         # check for presence of entries. continue if so
         if (len(container.collection) != 0) and (len(joined_title) != 0):
@@ -87,44 +88,44 @@ def main(sys_arguement=None, title=None) -> None:
                 print(c.YELLOW + 'done' + c.END)
         # if no keyword is supplied to search with, show syntax
         else:
-            print('\nnothing to show\nformat: idl -del [keyword]')
+            print(e.DELETE_ERROR)
 
-    elif sys_arguement == '-l':
+    elif sys_arguement == c.LIST:
         help_print()
 
-    elif sys_arguement == '-load':
+    elif sys_arguement == c.LOAD:
         FileHandle.load_from_backup()
 
-    elif sys_arguement == '-config':
+    elif sys_arguement == c.CONFIG:
         if FileHandle.check_dir() is not False:
             # reset defaults
             FileHandle.gen_config('idl', c.DEFAULTS)
             print('\nconfig updated as '
                   + c.PURPLE + path.abspath(c.FOLDER / 'idl.ini') + c.END)
 
-    elif sys_arguement == '-t':
+    elif sys_arguement == c.TAG_SEARCH:
         container.strategy = view_strats.TSearchStrat()
         container.call_strat(joined_title)
 
-    elif sys_arguement == '-s':
+    elif sys_arguement == c.SWITCH:
         if len(title) != 0:
             if FileHandle.check_dir() is not False:
                 FileHandle.switch(joined_title)
         else:
-            print("\nno name specified")
-    elif sys_arguement == '-drive':
+            print(e.SWITCH_ERROR)
+    elif sys_arguement == c.G_DRIVE:
         g_drive_auth.upload()
 
     # create entry commands
-    elif sys_arguement == '-n':
+    elif sys_arguement == c.NEW:
         call_entry('full', title, joined_title)
-    elif sys_arguement == '-n1':
+    elif sys_arguement == c.NEW_FIRST:
         call_entry('first', title, joined_title)
-    elif sys_arguement == '-n2':
+    elif sys_arguement == c.NEW_SECOND:
         call_entry('second', title, joined_title)
-    elif sys_arguement == '-a':
+    elif sys_arguement == c.TAG:
         call_entry('tag', title, joined_title)
-    elif sys_arguement == '-nt':
+    elif sys_arguement == c.FORCE_TEXTBOX:
         call_entry('force', title, joined_title)
     else:
         call_entry('one_line', title, joined_title)
@@ -165,7 +166,7 @@ def call_entry(type_of: str, title: list, joined_title: str):
             end_title = ' '.join(title[1:])
             new = TagEntry(end_title, tag)
         else:
-            print('\nno tag selected')
+            print(e.TAG_ERROR)
             return
     if type_of == 'force':
         # force a textbox entry

@@ -1,6 +1,6 @@
 from mod_behaviors.a_strategy import CommandStrategy
 from constants.file_handle import FileHandle
-import constants.constants as c
+import constants.info_and_paths as c
 from mod_behaviors.modify_strats import StratHelpers
 from datetime import datetime as dt
 from re import match

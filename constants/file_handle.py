@@ -1,4 +1,4 @@
-import constants.constants as c
+import constants.info_and_paths as c
 from os import path, remove, makedirs, rename, chmod
 from shutil import copy, rmtree
 from pathlib import Path
