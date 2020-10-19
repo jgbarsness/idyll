@@ -50,7 +50,8 @@ class TSearchStrat(CommandStrategy):
             print('searching for tag ' + '\'' + c.BLUE + title + c.END + '\':')
             if len(StratHelpers.show_keyword('(' + title + ')',
                    collections)) != 0:
-                ViewHelpers.print_num_entries(len(StratHelpers.return_thing('(' + title + ')',
+                ViewHelpers.print_num_entries(len(StratHelpers.return_thing(
+                                              '(' + title + ')',
                                               collections)),
                                               path)
         else:

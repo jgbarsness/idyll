@@ -25,5 +25,6 @@ class ConParser:
             return values
         # indicates parsing error
         except (ParsingError, ValueError, KeyError):
-            print(c.RED + "\nsomething wrong with config file format. delete file or fix to proceed\n" + c.END)
+            print(c.RED + "\nsomething wrong with config file format. delete ",
+                  "file or fix to proceed\n" + c.END)
             raise

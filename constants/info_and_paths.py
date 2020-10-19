@@ -16,7 +16,8 @@ DIR_NAME = Path.home() / 'idl'
 VERSION = 'v2.3.0'
 
 HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
-alternatively, the title of entries with arg use can be one-lined like \'idl [arg] [title]\'\n\
+alternatively, the title of entries with arg use can be one-lined like \
+\'idl [arg] [title]\'\n\
 \ncommands:\n\
 \'-l\': list out directory information\n\
 \'-n\': new entry with both first and second sections\n\
@@ -25,7 +26,8 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
-\'-vf\': view a difference collection in the same directory. format: \'idl -vf: [collection name][opt keyword]\'\n\
+\'-vf\': view a difference collection in the same directory. format: \
+\'idl -vf: [collection name][opt keyword]\'\n\
 \'-ds\': view entries on a specific date. format: \'idl -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
 \'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\
@@ -34,11 +36,13 @@ alternatively, the title of entries with arg use can be one-lined like \'idl [ar
 \'-wipe-all\': delete folder referencing this location\n\
 \'-b\': create backup\n\
 \'-load\': load entries from backup\n\
-\'-config\': generate config file in reference folder. if config exists, defaults reset.\n\
+\'-config\': generate config file in reference folder. \
+if config exists, defaults reset.\n\
            updating config may outdate collection\n\
 \'-s\': specify default collection file.\n\
       does not modify existing files. modifes / creates config file.\n\
-\'-drive\': uploads a new backup folder to google drive. currently only supports new uploads, not updates.'
+\'-drive\': uploads a new backup folder to google drive. \
+currently only supports new uploads, not updates.'
 
 SEPERATOR = ''
 
@@ -51,7 +55,8 @@ CONFIG_MESSAGE = '\n# WARNING: updating may outdate collection in pwd\n\n\
 updating will outdate collection file in pwd.\n\
 # \'datestamp_underline\' determines the series of underscores under the entry\
  date time stamp. may be changed without outdating anything.\n\
-# \'collection_title\' defines the name of the default collection file. set this to \
+# \'collection_title\' defines the name of the default collection file. \
+# set this to \
 the desired default collection file, or change to create a new one.\n\
 # \'backup_title\' defines the name of the current backup file. set this to \
 the desired default backup file, or change to create a new one.\n\

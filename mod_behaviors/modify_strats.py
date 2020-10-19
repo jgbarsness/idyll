@@ -6,7 +6,7 @@ import constants.info_and_paths as c
 
 
 class DeleteModStrat(CommandStrategy):
-    'returns a list of collections deleted by keyword. nothing modified'
+    'performs a delete operation on a collection object'
 
     def call_command(self, collections: list, title: str, path: str) -> bool:
         'bulk or single delete entries'
@@ -19,7 +19,8 @@ class DeleteModStrat(CommandStrategy):
             return False
 
         # if function can continue, print out entry
-        print('to be deleted, containing ' + '\'' + c.CYAN + title + c.END + '\':')
+        print('to be deleted, containing ' + '\''
+              + c.CYAN + title + c.END + '\':')
         for thing in delete:
             print('\n' + thing + c.SEPERATOR)
 
@@ -39,7 +40,7 @@ class DeleteModStrat(CommandStrategy):
 
 
 class QuickDeleteStrat(CommandStrategy):
-    'returns a representation of a quick-delete for the last entry made. nothing modified'
+    'performs quick delete on a collections object'
 
     def call_command(self, collections: list, title: str, path: str) -> bool:
         # return if collection is empty
@@ -83,7 +84,7 @@ class StratHelpers():
 
     @staticmethod
     def print_entries(container):
-        'used to print out things entries after search is ran'
+        'used to print out things after search is ran'
 
         for thing in container:
             print('\n' + thing + c.SEPERATOR)

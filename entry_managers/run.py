@@ -40,7 +40,9 @@ def main(sys_arguement=None, title=None) -> None:
         container.call_strat(joined_title)
 
     elif sys_arguement == cmd.VIEW_FILE:
+        # construct the file name with the passed name + txt extension
         add_exten = title[0] + '.txt'
+        # create posix path out of current folder + name
         pos_title = c.FOLDER / add_exten
         if path.isfile(pos_title):
             container = Collection(view_strats.ViewStrat(), pos_title)

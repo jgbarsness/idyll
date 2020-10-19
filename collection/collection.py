@@ -9,7 +9,7 @@ from re import sub
 
 class Collection:
     'a collection of entries'
-    
+
     def __init__(self, strategy: CommandStrategy, path_to_file):
         self.collection = self.scan_collection(path_to_file)
         # strategies used for display. file mod left to entry write class
@@ -31,12 +31,13 @@ class Collection:
     def call_strat(self, title: str) -> bool:
         'calls strategy on collection'
 
-        return self._strategy.call_command(self.collection, title, self.path_used)
+        return self._strategy.call_command(self.collection,
+                                           title, self.path_used)
 
     def scan_collection(self, fpath=c.COLLECTION_TITLE):
         'returns collection list of collection entries'
 
-        if (fpath == None or not path.exists(fpath)):
+        if (fpath is None or not path.exists(fpath)):
             return []
 
         chmod(fpath, S_IRWXU)
