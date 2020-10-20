@@ -15,8 +15,8 @@ DIR_NAME = Path.home() / 'idl'
 
 VERSION = 'v2.3.0'
 
-HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\
-alternatively, the title of entries with arg use can be one-lined like \
+HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\n\
+alternatively, the title of entries with arg use can be one-lined like:\n\
 \'idl [arg] [title]\'\n\
 \ncommands:\n\
 \'-l\': list out directory information\n\
@@ -26,7 +26,7 @@ alternatively, the title of entries with arg use can be one-lined like \
 \'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
-\'-vf\': view a difference collection in the same directory. format: \
+\'-vf\': view a difference collection in the same directory.\n       format: \
 \'idl -vf: [collection name][opt keyword]\'\n\
 \'-ds\': view entries on a specific date. format: \'idl -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
@@ -36,13 +36,11 @@ alternatively, the title of entries with arg use can be one-lined like \
 \'-wipe-all\': delete folder referencing this location\n\
 \'-b\': create backup\n\
 \'-load\': load entries from backup\n\
-\'-config\': generate config file in reference folder. \
-if config exists, defaults reset.\n\
+\'-config\': generate config file in reference folder.\n\
+           if config exists, defaults reset.\n\
            updating config may outdate collection\n\
 \'-s\': specify default collection file.\n\
-      does not modify existing files. modifes / creates config file.\n\
-\'-drive\': uploads a new backup folder to google drive. \
-currently only supports new uploads, not updates.'
+      does not modify existing files. modifes / creates config file.'
 
 SEPERATOR = ''
 

@@ -13,7 +13,7 @@ import constants.errors as e
 from os import path, listdir
 from pathlib import Path
 from constants.file_handle import FileHandle
-from gdrive import g_drive_auth
+# from gdrive import g_drive_auth
 
 '''
 idl is a command line tool used to manage text entries.
@@ -116,8 +116,12 @@ def main(sys_arguement=None, title=None) -> None:
                 FileHandle.switch(joined_title)
         else:
             print(e.SWITCH_ERROR)
-    elif sys_arguement == cmd.G_DRIVE:
-        g_drive_auth.upload()
+    
+    # TODO: implement linux drive functionality in build
+    
+    # elif sys_arguement == cmd.G_DRIVE:
+        # g_drive_auth.upload()
+    
 
     # create entry commands
     elif sys_arguement == cmd.NEW:
@@ -140,26 +144,27 @@ def call_entry(type_of: str, title: list, joined_title: str):
     if FileHandle.check_dir() is False:
         return
 
+    view_title = "\ntitle:\n"
     if type_of == 'full':
         if (len(title) != 0):
             # if title is supplied in same line
             new = FullEntry(joined_title)
         else:
             # run a full entry
-            experience = str(input('\ntitle:\n'))
+            experience = str(input(view_title))
             new = FullEntry(experience)
     if type_of == 'first':
         if (len(title) != 0):
             new = FirstEntry(joined_title)
         else:
-            experience = str(input('\ntitle:\n'))
+            experience = str(input(view_title))
             new = FirstEntry(experience)
     if type_of == 'second':
         if (len(title) != 0):
             new = SecondEntry(joined_title)
 
         else:
-            experience = str(input('\ntitle:\n'))
+            experience = str(input(view_title))
             new = SecondEntry(experience)
     if type_of == 'tag':
         # must be at least two words long for both a tag and entry
