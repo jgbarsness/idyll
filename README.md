@@ -49,4 +49,4 @@ updating config may outdate idl<br />
 does not modify existing files. modifes / creates config file.<br />
 '**-del**': delete entry<br />
 '**-q**': quick delete the last entry made<br />
-'**-drive**': macOS only. back up to google drive'
+'**-drive**': macOS only. back up to google drive
