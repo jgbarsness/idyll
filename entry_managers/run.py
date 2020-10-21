@@ -13,7 +13,7 @@ from os import path, listdir
 from pathlib import Path
 from constants.file_handle import FileHandle
 # excluded from linux version
-from gdrive import g_drive_auth
+# from gdrive import g_drive_auth
 
 '''
 idl is a command line tool used to manage text entries.
