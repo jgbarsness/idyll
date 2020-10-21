@@ -118,8 +118,8 @@ def main(sys_arguement=None, title=None) -> None:
             print(e.SWITCH_ERROR)
     
     # TODO: implement linux drive functionality in build
-    elif sys_arguement == cmd.G_DRIVE:
-        g_drive_auth.upload()
+    # elif sys_arguement == cmd.G_DRIVE:
+        # g_drive_auth.upload()
     
 
     # create entry commands
