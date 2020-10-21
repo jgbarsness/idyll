@@ -5,7 +5,6 @@ from entry_managers.first_entry import FirstEntry
 from entry_managers.second_entry import SecondEntry
 from entry_managers.tag_entry import TagEntry
 from collection.collection import Collection
-from entry_managers.entrybox import TextBox
 from mod_behaviors import modify_strats, view_strats
 import constants.info_and_paths as c
 import constants.commands as cmd

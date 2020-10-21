@@ -1,6 +1,5 @@
 from entry_managers.ab_entry import AEntry
 from constants import info_and_paths as c
-from entry_managers.entrybox import TextBox
 from entry_managers import entry_writer
 
 
@@ -14,6 +13,7 @@ class TitleEntry(AEntry):
         self.begin_entry()
 
     def begin_entry(self):
+        from entry_managers.entrybox import TextBox
         super().begin_entry()
         # indicates the user wants to not create a new file
         if self.print is False:
