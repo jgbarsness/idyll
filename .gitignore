@@ -15,5 +15,4 @@ setup.py
 google_api_python_client-1.12.1.dist-info
 credentials.json
 tests
-__main__.py
 .vscode

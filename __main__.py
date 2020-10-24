@@ -1,4 +1,4 @@
-from entry_managers import run
+import run
 import sys
 
 
