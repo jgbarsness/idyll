@@ -21,16 +21,14 @@ class FileHandle:
 
         # uses 'copy' to preserve permissions
         # in case future update relies on permission at close
-        try:
+        if not path.exists(c.BACKUP_TITLE):
             copy(c.COLLECTION_TITLE, c.BACKUP_TITLE)
             print('\nbackup created as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE)+ c.END)
             return
-        except PermissionError:
+        else:
             # verify desired behavior
             choice = input('\nbackup detected. overwrite? y/n\n')
-            if choice == 'y':
-                pass
-            else:
+            if choice != 'y':
                 print('\nno update made')
                 return
 

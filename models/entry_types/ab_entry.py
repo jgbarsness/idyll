@@ -9,7 +9,6 @@ class AEntry(ABC):
     'an abstract entry to be stored in the collection'
     
     def __init__(self, passed_title):
-        'accepts a title and an optional shortcut'
         self.recorded_datetime = str(datetime.now().strftime(c.DATETIME))
         self.title = passed_title
         self.print = True
