@@ -1,4 +1,4 @@
-from entry_managers.ab_entry import AEntry
+from models.entry_types.ab_entry import AEntry
 
 
 class TextBox():

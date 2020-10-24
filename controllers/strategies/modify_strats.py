@@ -1,5 +1,5 @@
-from mod_behaviors.a_strategy import CommandStrategy
-from constants.file_handle import FileHandle
+from controllers.strategies.a_strategy import CommandStrategy
+from controllers.file_handle import FileHandle
 import constants.info_and_paths as c
 
 'strategies used to modify collections'

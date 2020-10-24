@@ -1,9 +1,9 @@
 import constants.info_and_paths as c
 from os import chmod, path
 from stat import S_IRWXU, S_IREAD
-from constants.file_handle import FileHandle
+from controllers.file_handle import FileHandle
 from pathlib import Path
-from mod_behaviors.a_strategy import CommandStrategy
+from controllers.strategies.a_strategy import CommandStrategy
 from re import sub
 
 

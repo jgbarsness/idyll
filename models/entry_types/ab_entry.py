@@ -18,15 +18,15 @@ class AEntry(ABC):
     def begin_entry(self) -> None:
         'initializes textboxes, records input, manages call to write'
 
-        try:
+        if (path.exists(c.COLLECTION_TITLE)):
             chmod(c.COLLECTION_TITLE, S_IRWXU)
-        except FileNotFoundError:
+        else:
             # permission handling will be passed down if continued
             check = input("\nno collection file in pwd. create? y/n\n")
             if check != 'y':
                 print("\ncollection not created")
+                # indicate that the object has not been fully instantiated
                 self.print = False
-                return
 
     @abstractmethod
     def format_readability(self):
@@ -36,7 +36,7 @@ class AEntry(ABC):
             self.title = 'N/A'
 
     def printout(self):
-        'helper method to display entry title post-write'
+        'helper method to display entry details to console'
 
         print('\nnew entry in ' + c.PURPLE + path.abspath(c.COLLECTION_TITLE) + c.END +
               '\ntitled: ' + '\'' + self.title + '\'')

@@ -1,7 +1,7 @@
-from mod_behaviors.a_strategy import CommandStrategy
-from constants.file_handle import FileHandle
+from controllers.strategies.a_strategy import CommandStrategy
+from controllers.file_handle import FileHandle
 import constants.info_and_paths as c
-from mod_behaviors.modify_strats import StratHelpers
+from controllers.strategies.modify_strats import StratHelpers
 from datetime import datetime as dt
 from re import match
 
@@ -37,7 +37,6 @@ class ViewStrat(CommandStrategy):
             else:
                 # means that a file is present, but nothing parsed from it
                 print('\nempty collection and/or invalid entry format')
-        return
 
 
 class TSearchStrat(CommandStrategy):
@@ -56,7 +55,6 @@ class TSearchStrat(CommandStrategy):
                                               path)
         else:
             print('\nnothing to show\nformat: idl -t [tag]')
-        return
 
 
 class DateSearch(CommandStrategy):
@@ -66,7 +64,7 @@ class DateSearch(CommandStrategy):
         if not ViewHelpers.vs_file_check():
             return
         if (len(collections) != 0) and (len(title) != 0):
-            matches = self.search_by_date(collections, title, None)
+            matches = self.search_by_date(collections, title)
             if len(matches) != 0:
                 print('entries on ' + c.BLUE + str(title) + c.END + ':')
                 StratHelpers.print_entries(matches)
@@ -74,12 +72,10 @@ class DateSearch(CommandStrategy):
                                               path)
             else:
                 print('\nno matches on this date or bad date format')
-                return
         else:
             print('\nnothing to show\nformat: idl -ds [mm/dd/yy]')
-        return
 
-    def search_by_date(self, collections: list, title: str, path: str) -> list:
+    def search_by_date(self, collections: list, title: str) -> list:
         matches = []
         try:
             # the criteria date given from title

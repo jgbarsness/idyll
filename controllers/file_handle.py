@@ -168,7 +168,7 @@ class FileHandle:
 
     @staticmethod
     def refresh_collection(container):
-        'after deletion of entry, re-write collection to reflect changes'
+        're-write collection to reflect changes'
 
         try :
             # make collection writeable

@@ -1,6 +1,6 @@
 from os import path
 from pathlib import Path
-from constants.config_parser import ConParser
+from controllers.parsers.config_parser import ConParser
 
 # ascii coloring
 END = '\033[0m'

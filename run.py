@@ -1,17 +1,17 @@
 from sys import argv
-from entry_managers.full_entry import FullEntry
-from entry_managers.title_entry import TitleEntry
-from entry_managers.first_entry import FirstEntry
-from entry_managers.second_entry import SecondEntry
-from entry_managers.tag_entry import TagEntry
-from collection.collection import Collection
-from mod_behaviors import modify_strats, view_strats
+from models.entry_types.full_entry import FullEntry
+from models.entry_types.title_entry import TitleEntry
+from models.entry_types.first_entry import FirstEntry
+from models.entry_types.second_entry import SecondEntry
+from models.entry_types.tag_entry import TagEntry
+from models.collection.collection import Collection
+from controllers.strategies import modify_strats, view_strats
 import constants.info_and_paths as c
 import constants.commands as cmd
 import constants.errors as e
 from os import path, listdir
 from pathlib import Path
-from constants.file_handle import FileHandle
+from controllers.file_handle import FileHandle
 # excluded from linux version
 # from gdrive import g_drive_auth
 
@@ -123,21 +123,23 @@ def main(sys_arguement=None, title=None) -> None:
 
     # create entry commands
     elif sys_arguement == cmd.NEW:
-        call_entry('full', title, joined_title)
+        call_entry('full', title)
     elif sys_arguement == cmd.NEW_FIRST:
-        call_entry('first', title, joined_title)
+        call_entry('first', title)
     elif sys_arguement == cmd.NEW_SECOND:
-        call_entry('second', title, joined_title)
+        call_entry('second', title)
     elif sys_arguement == cmd.TAG:
-        call_entry('tag', title, joined_title)
+        call_entry('tag', title)
     elif sys_arguement == cmd.FORCE_TEXTBOX:
-        call_entry('force', title, joined_title)
+        call_entry('force', title)
     else:
-        call_entry('one_line', title, joined_title)
+        call_entry('one_line', title)
 
 
-def call_entry(type_of: str, title: list, joined_title: str):
+def call_entry(type_of: str, title: list):
     'factory method to create entry'
+
+    joined_title = ''.join(title)
 
     if FileHandle.check_dir() is False:
         return
@@ -188,14 +190,14 @@ def call_entry(type_of: str, title: list, joined_title: str):
 def help_print():
     'prints out program info, including current active collections'
 
-    HEADERS = []
+    headers = []
     # print out file locations
     if path.exists(c.DIR_NAME):
         if path.exists(c.COLLECTION_TITLE):
-            HEADERS.append(c.PURPLE + 'current default: ' +
+            headers.append(c.PURPLE + 'current default: ' +
                            c.END + path.abspath(c.COLLECTION_TITLE))
         if path.exists(c.BACKUP_TITLE):
-            HEADERS.append(c.PURPLE + 'backup: ' + c.END +
+            headers.append(c.PURPLE + 'backup: ' + c.END +
                            path.abspath(c.BACKUP_TITLE))
 
         # walk dir
@@ -205,10 +207,10 @@ def help_print():
             files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
             pairs.append(f + ': ' + ' | '.join(files))
         if len(pairs) > 0:
-            HEADERS.append(c.PURPLE + 'directories in use:\n' + c.END
+            headers.append(c.PURPLE + 'directories in use:\n' + c.END
                            + '\n'.join(pairs))
 
-        print('\n\n'.join(HEADERS))
+        print('\n\n'.join(headers))
 
 
 def error_out(message: str, location=c.COLLECTION_TITLE):
