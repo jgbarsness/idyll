@@ -30,9 +30,8 @@ def main(sys_arguement=None, title=None) -> None:
 
     # reduce calls to join
     joined_title = ' '.join(title)
+    # collection using parsed file path, or default
     container = Collection(None, c.COLLECTION_TITLE)
-    # fill the collection with entries
-    container.scan_collection()
 
     # call command if launched using sys arguement
     if sys_arguement == cmd.VIEW:
