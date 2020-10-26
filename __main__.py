@@ -1,10 +1,10 @@
-import run
+import app
 import sys
 
 
 if __name__ == '__main__':
     # check if a sys arguement is present
     try:
-        run.main(sys.argv[1], sys.argv[2:])
+        app.main(sys.argv[1], sys.argv[2:])
     except IndexError:
-        run.main()
+        app.main()
