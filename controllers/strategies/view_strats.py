@@ -94,9 +94,9 @@ class DateSearch(CommandStrategy):
                     matches.append(note)
             except ValueError:
                 print('\n' + c.RED +
-                      'entry parsing error. entry date format modified' +
+                      'error: entry parsing error. entry date format modified' +
                       c.END + '\n')
-                raise
+                return
         return matches
 
 

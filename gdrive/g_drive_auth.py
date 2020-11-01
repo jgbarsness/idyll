@@ -43,8 +43,8 @@ def drive_service():
                 # use hardcoded id/secret
                 flow = InstalledAppFlow.from_client_config(AUTH, SCOPES)
             except ValueError:
-                print(c.RED + 'client id has changed or been tampered with' + c.END)
-                raise
+                print(c.RED + 'error: unexpected client id' + c.END)
+                return
             credentials = flow.run_local_server(port=0)
         with open(tkn, 'wb') as token:
             # save creds

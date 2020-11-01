@@ -39,8 +39,8 @@ class FileHandle:
             print('\nbackup updated as ' + c.PURPLE + path.abspath(c.BACKUP_TITLE) + c.END)
         except FileNotFoundError:
             # user machine removed file themselves after running program
-            print(c.RED + '\nerror: bad backup' + c.END)
-            raise
+            print(c.RED + '\nerror: old backup already removed' + c.END)
+            return
 
     @staticmethod
     def check_dir(dire=c.FOLDER):
@@ -89,8 +89,8 @@ class FileHandle:
         try:
             configfile = open(c.FOLDER / 'idl.ini', 'w')
         except FileNotFoundError:
-            print(c.RED + 'no file to modify - something went wrong' + c.END)
-            raise
+            print(c.RED + 'error: no file to modify' + c.END)
+            return
         config.write(configfile)
         configfile.write(c.CONFIG_MESSAGE)
         configfile.close()
@@ -120,8 +120,8 @@ class FileHandle:
                 print('restored from ' + path.abspath(c.BACKUP_TITLE))
             except FileNotFoundError:
                 # user machine removed file themselves after running program
-                print(c.RED + '\nerror: bad backup' + c.END)
-                raise
+                print(c.RED + '\nerror: no backup found' + c.END)
+                return
 
         else:
             print('\nload from backup cancelled')
@@ -141,7 +141,7 @@ class FileHandle:
             except FileNotFoundError:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: file doesn\'t exist' + c.END)
-                raise
+                return
         else:
             print('\nfile preserved')
             return
@@ -159,7 +159,7 @@ class FileHandle:
                 print(str(c.FOLDER) + c.YELLOW + ' deleted' + c.END)
             except FileNotFoundError:
                 print(c.RED + '\nerror: folder doesn\'t exist' + c.END)
-                raise
+                return
         else:
             print('\nfolder preserved')
             return
@@ -168,13 +168,13 @@ class FileHandle:
     def refresh_collection(container):
         're-write collection to reflect changes'
 
-        try :
+        try:
             # make collection writeable
             chmod(c.COLLECTION_TITLE, S_IRWXU)
             refresh = open(c.COLLECTION_TITLE, 'w')
         except FileNotFoundError:
-            print(c.RED + 'no file to modify - something went wrong' + c.END)
-            raise
+            print(c.RED + 'error: file not found' + c.END)
+            return
 
         for entry in container:
             refresh.write(entry)

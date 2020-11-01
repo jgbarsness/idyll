@@ -44,8 +44,8 @@ class Collection:
         try:
             collection = open(fpath, 'r')
         except FileNotFoundError:
-            print(c.RED + 'no file to read - something went wrong' + c.END)
-            raise
+            print(c.RED + 'error: file not found' + c.END)
+            return
 
         bulk = []
         for lines in collection:
