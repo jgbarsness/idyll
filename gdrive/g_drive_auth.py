@@ -5,17 +5,6 @@ from datetime import datetime
 
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
           'https://www.googleapis.com/auth/drive.file']
- 
-AUTH = {
-            "installed":{
-                "client_id":"715887106534-3m2i759uhimd3dg1mhsl87c335oo3frp.apps.googleusercontent.com",
-                "project_id":"idyll-1600381664941","auth_uri":"https://accounts.google.com/o/oauth2/auth",
-                "token_uri":"https://oauth2.googleapis.com/token",
-                "auth_provider_x509_cert_url":"https://www.googleapis.com/oauth2/v1/certs",
-                "client_secret":"L7o8D9RH9Lb_UnMl-m3KJsGd"
-                ,"redirect_uris":["urn:ietf:wg:oauth:2.0:oob","http://localhost"]
-            }
-        }
 
 def drive_service():
     'authentification'
@@ -40,8 +29,8 @@ def drive_service():
         else:
             # authenticate using id
             try:
-                # use hardcoded id/secret
-                flow = InstalledAppFlow.from_client_config(AUTH, SCOPES)
+                # if contributing, contact joseph for access to credentials file
+                flow = InstalledAppFlow.from_client_secrets_file("cred.json", SCOPES)
             except ValueError:
                 print(c.RED + 'error: unexpected client id' + c.END)
                 return

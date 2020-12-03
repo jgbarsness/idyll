@@ -16,3 +16,4 @@ google_api_python_client-1.12.1.dist-info
 credentials.json
 tests
 .vscode
+cred.json
