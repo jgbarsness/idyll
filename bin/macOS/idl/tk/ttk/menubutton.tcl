@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Bindings for Menubuttons.
 #
 # Menubuttons have three interaction modes:
@@ -57,7 +59,7 @@ if {[tk windowingsystem] eq "x11"} {
     bind TMenubutton <ButtonPress-1>  \
 	{ %W state pressed ; ttk::menubutton::Popdown %W }
     bind TMenubutton <ButtonRelease-1>  \
-	{ if {[winfo exists %W]} { %W state !pressed } }
+	{ %W state !pressed }
 }
 
 # PostPosition --

@@ -3,6 +3,8 @@
 # This file defines the default bindings for Tk scale widgets and provides
 # procedures that help in implementing the bindings.
 #
+# RCS: @(#) $Id$
+#
 # Copyright (c) 1994 The Regents of the University of California.
 # Copyright (c) 1994-1995 Sun Microsystems, Inc.
 #
@@ -60,7 +62,7 @@ bind Scale <ButtonRelease-2> {
     tk::ScaleEndDrag %W
     tk::ScaleActivate %W %x %y
 }
-if {[tk windowingsystem] eq "win32"} {
+if {$tcl_platform(platform) eq "windows"} {
     # On Windows do the same with button 3, as that is the right mouse button
     bind Scale <3>		[bind Scale <2>]
     bind Scale <B3-Motion>	[bind Scale <B2-Motion>]
@@ -71,34 +73,34 @@ if {[tk windowingsystem] eq "win32"} {
 bind Scale <Control-1> {
     tk::ScaleControlPress %W %x %y
 }
-bind Scale <<PrevLine>> {
+bind Scale <Up> {
     tk::ScaleIncrement %W up little noRepeat
 }
-bind Scale <<NextLine>> {
+bind Scale <Down> {
     tk::ScaleIncrement %W down little noRepeat
 }
-bind Scale <<PrevChar>> {
+bind Scale <Left> {
     tk::ScaleIncrement %W up little noRepeat
 }
-bind Scale <<NextChar>> {
+bind Scale <Right> {
     tk::ScaleIncrement %W down little noRepeat
 }
-bind Scale <<PrevPara>> {
+bind Scale <Control-Up> {
     tk::ScaleIncrement %W up big noRepeat
 }
-bind Scale <<NextPara>> {
+bind Scale <Control-Down> {
     tk::ScaleIncrement %W down big noRepeat
 }
-bind Scale <<PrevWord>> {
+bind Scale <Control-Left> {
     tk::ScaleIncrement %W up big noRepeat
 }
-bind Scale <<NextWord>> {
+bind Scale <Control-Right> {
     tk::ScaleIncrement %W down big noRepeat
 }
-bind Scale <<LineStart>> {
+bind Scale <Home> {
     %W set [%W cget -from]
 }
-bind Scale <<LineEnd>> {
+bind Scale <End> {
     %W set [%W cget -to]
 }
 
@@ -223,13 +225,7 @@ proc ::tk::ScaleIncrement {w dir big repeat} {
 	set inc [$w cget -resolution]
     }
     if {([$w cget -from] > [$w cget -to]) ^ ($dir eq "up")} {
-        if {$inc > 0} {
-            set inc [expr {-$inc}]
-        }
-    } else {
-        if {$inc < 0} {
-            set inc [expr {-$inc}]
-        }
+	set inc [expr {-$inc}]
     }
     $w set [expr {[$w get] + $inc}]
 

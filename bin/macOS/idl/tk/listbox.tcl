@@ -3,6 +3,8 @@
 # This file defines the default bindings for Tk listbox widgets
 # and provides procedures that help in implementing those bindings.
 #
+# RCS: @(#) $Id$
+#
 # Copyright (c) 1994 The Regents of the University of California.
 # Copyright (c) 1994-1995 Sun Microsystems, Inc.
 # Copyright (c) 1998 by Scriptics Corporation.
@@ -69,28 +71,28 @@ bind Listbox <B1-Enter> {
     tk::CancelRepeat
 }
 
-bind Listbox <<PrevLine>> {
+bind Listbox <Up> {
     tk::ListboxUpDown %W -1
 }
-bind Listbox <<SelectPrevLine>> {
+bind Listbox <Shift-Up> {
     tk::ListboxExtendUpDown %W -1
 }
-bind Listbox <<NextLine>> {
+bind Listbox <Down> {
     tk::ListboxUpDown %W 1
 }
-bind Listbox <<SelectNextLine>> {
+bind Listbox <Shift-Down> {
     tk::ListboxExtendUpDown %W 1
 }
-bind Listbox <<PrevChar>> {
+bind Listbox <Left> {
     %W xview scroll -1 units
 }
-bind Listbox <<PrevWord>> {
+bind Listbox <Control-Left> {
     %W xview scroll -1 pages
 }
-bind Listbox <<NextChar>> {
+bind Listbox <Right> {
     %W xview scroll 1 units
 }
-bind Listbox <<NextWord>> {
+bind Listbox <Control-Right> {
     %W xview scroll 1 pages
 }
 bind Listbox <Prior> {
@@ -107,10 +109,10 @@ bind Listbox <Control-Prior> {
 bind Listbox <Control-Next> {
     %W xview scroll 1 pages
 }
-bind Listbox <<LineStart>> {
+bind Listbox <Home> {
     %W xview moveto 0
 }
-bind Listbox <<LineEnd>> {
+bind Listbox <End> {
     %W xview moveto 1
 }
 bind Listbox <Control-Home> {
@@ -118,9 +120,9 @@ bind Listbox <Control-Home> {
     %W see 0
     %W selection clear 0 end
     %W selection set 0
-    tk::FireListboxSelectEvent %W
+    event generate %W <<ListboxSelect>>
 }
-bind Listbox <Control-Shift-Home> {
+bind Listbox <Shift-Control-Home> {
     tk::ListboxDataExtend %W 0
 }
 bind Listbox <Control-End> {
@@ -128,9 +130,9 @@ bind Listbox <Control-End> {
     %W see end
     %W selection clear 0 end
     %W selection set end
-    tk::FireListboxSelectEvent %W
+    event generate %W <<ListboxSelect>>
 }
-bind Listbox <Control-Shift-End> {
+bind Listbox <Shift-Control-End> {
     tk::ListboxDataExtend %W [%W index end]
 }
 bind Listbox <<Copy>> {
@@ -140,9 +142,6 @@ bind Listbox <<Copy>> {
     }
 }
 bind Listbox <space> {
-    tk::ListboxBeginSelect %W [%W index active]
-}
-bind Listbox <<Invoke>> {
     tk::ListboxBeginSelect %W [%W index active]
 }
 bind Listbox <Select> {
@@ -157,13 +156,13 @@ bind Listbox <Shift-Select> {
 bind Listbox <Escape> {
     tk::ListboxCancel %W
 }
-bind Listbox <<SelectAll>> {
+bind Listbox <Control-slash> {
     tk::ListboxSelectAll %W
 }
-bind Listbox <<SelectNone>> {
+bind Listbox <Control-backslash> {
     if {[%W cget -selectmode] ne "browse"} {
 	%W selection clear 0 end
-        tk::FireListboxSelectEvent %W
+	event generate %W <<ListboxSelect>>
     }
 }
 
@@ -197,34 +196,21 @@ if {[tk windowingsystem] eq "aqua"} {
     bind Listbox <MouseWheel> {
         %W yview scroll [expr {- (%D / 120) * 4}] units
     }
-    bind Listbox <Shift-MouseWheel> {
-        %W xview scroll [expr {- (%D / 120) * 4}] units
-    }
 }
 
 if {"x11" eq [tk windowingsystem]} {
     # Support for mousewheels on Linux/Unix commonly comes through mapping
     # the wheel to the extended buttons.  If you have a mousewheel, find
     # Linux configuration info at:
-    #	http://linuxreviews.org/howtos/xfree/mouse/
+    #	http://www.inria.fr/koala/colas/mouse-wheel-scroll/
     bind Listbox <4> {
 	if {!$tk_strictMotif} {
 	    %W yview scroll -5 units
 	}
     }
-    bind Listbox <Shift-4> {
-	if {!$tk_strictMotif} {
-	    %W xview scroll -5 units
-	}
-    }
     bind Listbox <5> {
 	if {!$tk_strictMotif} {
 	    %W yview scroll 5 units
-	}
-    }
-    bind Listbox <Shift-5> {
-	if {!$tk_strictMotif} {
-	    %W xview scroll 5 units
 	}
     }
 }
@@ -256,7 +242,7 @@ proc ::tk::ListboxBeginSelect {w el {focus 1}} {
 	set Priv(listboxSelection) {}
 	set Priv(listboxPrev) $el
     }
-    tk::FireListboxSelectEvent $w
+    event generate $w <<ListboxSelect>>
     # check existence as ListboxSelect may destroy us
     if {$focus && [winfo exists $w] && [$w cget -state] eq "normal"} {
 	focus $w
@@ -284,7 +270,7 @@ proc ::tk::ListboxMotion {w el} {
 	    $w selection clear 0 end
 	    $w selection set $el
 	    set Priv(listboxPrev) $el
-	    tk::FireListboxSelectEvent $w
+	    event generate $w <<ListboxSelect>>
 	}
 	extended {
 	    set i $Priv(listboxPrev)
@@ -315,7 +301,7 @@ proc ::tk::ListboxMotion {w el} {
 		incr i -1
 	    }
 	    set Priv(listboxPrev) $el
-	    tk::FireListboxSelectEvent $w
+	    event generate $w <<ListboxSelect>>
 	}
     }
 }
@@ -366,7 +352,7 @@ proc ::tk::ListboxBeginToggle {w el} {
 	} else {
 	    $w selection set $el
 	}
-	tk::FireListboxSelectEvent $w
+	event generate $w <<ListboxSelect>>
     }
 }
 
@@ -418,7 +404,7 @@ proc ::tk::ListboxUpDown {w amount} {
 	browse {
 	    $w selection clear 0 end
 	    $w selection set active
-	    tk::FireListboxSelectEvent $w
+	    event generate $w <<ListboxSelect>>
 	}
 	extended {
 	    $w selection clear 0 end
@@ -426,7 +412,7 @@ proc ::tk::ListboxUpDown {w amount} {
 	    $w selection anchor active
 	    set Priv(listboxPrev) [$w index active]
 	    set Priv(listboxSelection) {}
-	    tk::FireListboxSelectEvent $w
+	    event generate $w <<ListboxSelect>>
 	}
     }
 }
@@ -514,7 +500,7 @@ proc ::tk::ListboxCancel w {
 	}
 	incr first
     }
-    tk::FireListboxSelectEvent $w
+    event generate $w <<ListboxSelect>>
 }
 
 # ::tk::ListboxSelectAll
@@ -534,19 +520,5 @@ proc ::tk::ListboxSelectAll w {
     } else {
 	$w selection set 0 end
     }
-    tk::FireListboxSelectEvent $w
-}
-
-# ::tk::FireListboxSelectEvent
-#
-# Fire the <<ListboxSelect>> event if the listbox is not in disabled
-# state.
-#
-# Arguments:
-# w -		The listbox widget.
-
-proc ::tk::FireListboxSelectEvent w {
-    if {[$w cget -state] eq "normal"} {
-        event generate $w <<ListboxSelect>>
-    }
+    event generate $w <<ListboxSelect>>
 }

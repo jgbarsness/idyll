@@ -6,6 +6,8 @@ from datetime import datetime
 SCOPES = ['https://www.googleapis.com/auth/drive.metadata.readonly',
           'https://www.googleapis.com/auth/drive.file']
 
+CRED = "gdrive/cred.json"
+
 def drive_service():
     'authentification'
 
@@ -30,7 +32,7 @@ def drive_service():
             # authenticate using id
             try:
                 # if contributing, contact joseph for access to credentials file
-                flow = InstalledAppFlow.from_client_secrets_file("cred.json", SCOPES)
+                flow = InstalledAppFlow.from_client_secrets_file(CRED, SCOPES)
             except ValueError:
                 print(c.RED + 'error: unexpected client id' + c.END)
                 return

@@ -2,6 +2,8 @@
 #
 # Support procs to use Tk in safe interpreters.
 #
+# RCS: @(#) $Id$
+#
 # Copyright (c) 1997 Sun Microsystems, Inc.
 #
 # See the file "license.terms" for information on usage and redistribution
@@ -85,12 +87,14 @@ proc ::safe::loadTk {} {}
 
     if {![::tcl::OptProcArgGiven "-use"]} {
 	# create a decorated toplevel
-	lassign [tkTopLevel $slave $display] w use
+	::tcl::Lassign [tkTopLevel $slave $display] w use
 
 	# set our delete hook (slave arg is added by interpDelete)
 	# to clean up both window related code and tkInit(slave)
 	set state(cleanupHook) [list tkDelete {} $w]
+
     } else {
+
 	# set our delete hook (slave arg is added by interpDelete)
 	# to clean up tkInit(slave)
 	set state(cleanupHook) [list disallowTk]
@@ -114,8 +118,8 @@ proc ::safe::loadTk {} {}
 	}
 	if {$nDisplay ne $display} {
 	    if {$displayGiven} {
-		return -code error -errorcode {TK DISPLAY SAFE} \
-		    "conflicting -display $display and -use $use -> $nDisplay"
+		error "conflicting -display $display and -use\
+			$use -> $nDisplay"
 	    } else {
 		set display $nDisplay
 	    }
@@ -139,7 +143,7 @@ proc ::safe::TkInit {interpPath} {
     } else {
 	Log $interpPath "TkInit called for interp with clearance:\
 		preventing Tk init" ERROR
-	return -code error -errorcode {TK SAFE PERMISSION} "not allowed"
+	error "not allowed"
     }
 }
 
@@ -219,8 +223,8 @@ proc ::safe::tkTopLevel {slave display} {
     incr tkSafeId
     set w ".safe$tkSafeId"
     if {[catch {toplevel $w -screen $display -class SafeTk} msg]} {
-	return -code error -errorcode {TK TOPLEVEL SAFE} \
-	    "Unable to create toplevel for safe slave \"$slave\" ($msg)"
+	return -code error "Unable to create toplevel for\
+		safe slave \"$slave\" ($msg)"
     }
     Log $slave "New toplevel $w" NOTICE
 

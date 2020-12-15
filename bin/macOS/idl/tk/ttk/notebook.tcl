@@ -1,4 +1,6 @@
 #
+# $Id$
+#
 # Bindings for TNotebook widget
 #
 
@@ -108,7 +110,7 @@ proc ttk::notebook::enableTraversal {nb} {
 	bind $top <Control-Key-Next>         {+ttk::notebook::TLCycleTab %W  1}
 	bind $top <Control-Key-Prior>        {+ttk::notebook::TLCycleTab %W -1}
 	bind $top <Control-Key-Tab> 	     {+ttk::notebook::TLCycleTab %W  1}
-	bind $top <Control-Shift-Key-Tab>    {+ttk::notebook::TLCycleTab %W -1}
+	bind $top <Shift-Control-Key-Tab>    {+ttk::notebook::TLCycleTab %W -1}
 	catch {
 	bind $top <Control-Key-ISO_Left_Tab> {+ttk::notebook::TLCycleTab %W -1}
 	}
@@ -170,7 +172,7 @@ proc ttk::notebook::EnclosingNotebook {w} {
 }
 
 # TLCycleTab --
-#	toplevel binding procedure for Control-Tab / Control-Shift-Tab
+#	toplevel binding procedure for Control-Tab / Shift-Control-Tab
 #	Select the next/previous tab in the nearest ancestor notebook. 
 #
 proc ttk::notebook::TLCycleTab {w dir} {
