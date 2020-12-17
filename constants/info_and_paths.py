@@ -40,8 +40,7 @@ alternatively, the title of entries with arg use can be one-lined like:\n\
            if config exists, defaults reset.\n\
            updating config may outdate collection\n\
 \'-s\': specify default collection file.\n\
-      does not modify existing files. modifes / creates config file.\n\
-\'-drive\': macOS only. back up to google drive'
+      does not modify existing files. modifes / creates config file.'
 
 SEPERATOR = ''
 

@@ -12,8 +12,7 @@ import constants.errors as e
 from os import path, listdir
 from pathlib import Path
 from controllers.file_handle import FileHandle
-# excluded from linux version
-from gdrive import g_drive_auth
+# from gdrive import g_drive_auth
 
 '''
 idl is a command line tool used to manage text entries.
@@ -116,9 +115,9 @@ def main(sys_arguement=None, title=None) -> None:
         else:
             print(e.SWITCH_ERROR)
     
-    # TODO: implement linux drive functionality in build
-    elif sys_arguement == cmd.G_DRIVE:
-        g_drive_auth.upload()
+    # TODO: implement drive functionality in build
+    # elif sys_arguement == cmd.G_DRIVE:
+        # g_drive_auth.upload()
     
 
     # create entry commands
