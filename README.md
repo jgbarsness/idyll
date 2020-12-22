@@ -52,4 +52,4 @@ does not modify existing files. modifes / creates config file.<br />
 
 #### build with pyinstaller:
 1.) pyinstaller [options] `__main__.py` <br />
-2.) (optional) copy ```google_api_python_client-1.12.1.dist-info``` folder to ```[project]/bin/[os]/[idl]``` directory to allow for google drive support (note: broken. check issue #3 for more information)
+2.) (optional) copy ```google_api_python_client-1.12.1.dist-info``` folder to ```[project]/bin/[os]/[idl]``` directory to allow for google drive support (note: not implemented in current builds / source. check issue #3 for more information)
