@@ -92,7 +92,7 @@ def main(sys_arguement=None, title=None) -> None:
             print(e.DELETE_ERROR)
 
     elif sys_arguement == cmd.LIST:
-        help_print()
+        directory_print()
 
     elif sys_arguement == cmd.LOAD:
         FileHandle.load_from_backup()
@@ -186,8 +186,8 @@ def call_entry(type_of: str, title: list):
         new.printout()
 
 
-def help_print():
-    'prints out program info, including current active collections'
+def directory_print():
+    'prints out current active collections'
 
     headers = []
     # print out file locations
@@ -202,12 +202,21 @@ def help_print():
         # walk dir
         dirs = [f for f in listdir(c.DIR_NAME) if path.isdir(c.DIR_NAME / f)]
         pairs = []
+        inactive = []
         for f in dirs:
+            # search for note files
             files = [c for c in listdir(c.DIR_NAME / f) if c.endswith('.txt')]
-            pairs.append(f + ': ' + ' | '.join(files))
+            if len(files) > 0:
+                pairs.append(f + ': ' + ' | '.join(files))
+            # if none are found coupled with a folder, mark the folder as inactive
+            else:
+                inactive.append(f)
         if len(pairs) > 0:
             headers.append(c.PURPLE + 'directories in use:\n' + c.END
                            + '\n'.join(pairs))
+        if len(inactive) > 0:
+            headers.append(c.PURPLE + 'inactive directories:\n' + c.END
+                           + '\n'.join(inactive))
 
         print('\n\n'.join(headers))
 

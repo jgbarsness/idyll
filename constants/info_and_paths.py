@@ -26,7 +26,7 @@ alternatively, the title of entries with arg use can be one-lined like:\n\
 \'-nt\': new title entry using a textbox\n\
 \'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
-\'-vf\': view a difference collection in the same directory.\n       format: \
+\'-vf\': view a different collection in the same directory.\n       format: \
 \'idl -vf: [collection name][opt keyword]\'\n\
 \'-ds\': view entries on a specific date. format: \'idl -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
