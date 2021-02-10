@@ -35,7 +35,7 @@ class Collection:
                                            title, self.path_used)
 
     def scan_collection(self, fpath=c.COLLECTION_TITLE):
-        'returns collection list of collection entries'
+        'returns list of collection entries'
 
         if (fpath is None or not path.exists(fpath)):
             return []
