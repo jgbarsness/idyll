@@ -47,7 +47,7 @@ class FileHandle:
         'checks for presence of a directory, and creates if not found'
 
         if not path.exists(dire):
-            verify = input("\nno folder referencing this directory. create? y/n\n")
+            verify = input("\nno directory folder. create? y/n\n")
             if verify != "y":
                 print("\nno directory created")
                 return False
@@ -62,7 +62,7 @@ class FileHandle:
         name = new + '.txt'
         path = c.FOLDER / name
         if FileHandle.file_verify(path) == False:
-            verify = input("\nno collection by that name in this folder. set as default collection? y/n\n")
+            verify = input("\nno collection by that name in this directory. set as default collection? y/n\n")
             if verify != 'y':
                 print("\nnothing modified")
                 return

@@ -21,9 +21,9 @@ class AEntry(ABC):
             chmod(c.COLLECTION_TITLE, S_IRWXU)
         else:
             # permission handling will be passed down if continued
-            check = input("\nno collection file in pwd. create? y/n\n")
+            check = input("\nno collection file in directory. create? y/n\n")
             if check != 'y':
-                print("\ncollection not created")
+                print("\ncollection file not created")
                 # indicate that the object has not been fully instantiated
                 self.print = False
 
