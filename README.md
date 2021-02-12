@@ -1,6 +1,6 @@
 ## idyll <br />
 is a command line tool that allows you to take notes across directories without cluttering your work spaces.<br />
-to install from current folder location:<br />
+to install, download source and run:<br />
 ```sudo ln -s [your path to bin/[OS]/idl] /usr/local/bin```
 #### using:
 
