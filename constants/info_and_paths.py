@@ -13,7 +13,7 @@ RED = '\033[91m'
 # name of the directory
 DIR_NAME = Path.home() / 'idl'
 
-VERSION = 'v2.3.0'
+VERSION = 'v2.4.0'
 
 HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\n\
 alternatively, the title of entries with arg use can be one-lined like:\n\
