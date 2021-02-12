@@ -1,5 +1,5 @@
 import constants.info_and_paths as c
-from os import path, remove, makedirs, rename, chmod
+from os import path, remove, makedirs, rename, chmod, listdir
 from shutil import copy, rmtree
 from pathlib import Path
 from configparser import ConfigParser
@@ -142,26 +142,36 @@ class FileHandle:
                 # user machine removed file themselves after running program
                 print(c.RED + '\nerror: file doesn\'t exist' + c.END)
                 return
+
+            if not FileHandle.validate_subdirectory():
+                selection = input('\nlast collection file in directory has been deleted. delete directory, including config file? y/n\n')
+                if selection == 'y':
+                    FileHandle.rm_folder()
+                else:
+                    print('\ndirectory retained')
+                    return
+            
         else:
             print('\nfile preserved')
             return
+
+    @staticmethod 
+    def validate_subdirectory():
+        'checks to see if the current subdirectory has an active text file(s) in it'
+
+        files = [c for c in listdir(c.FOLDER) if c.endswith('.txt')]
+        return len(files) > 0
 
     @staticmethod
     def rm_folder():
         'deletes entire directory folder'
 
-        selection = selection = input('\ndelete all collections referencing this directory? y/n \n')
-
-        if selection == 'y':
-            try:
-                print(c.YELLOW + '\ndeleting...' + c.END)
-                rmtree(c.FOLDER)
-                print(str(c.FOLDER) + c.YELLOW + ' deleted' + c.END)
-            except FileNotFoundError:
-                print(c.RED + '\nerror: folder doesn\'t exist' + c.END)
-                return
-        else:
-            print('\nfolder preserved')
+        try:
+            print(c.YELLOW + '\ndeleting...' + c.END)
+            rmtree(c.FOLDER)
+            print(str(c.FOLDER) + c.YELLOW + ' deleted' + c.END)
+        except FileNotFoundError:
+            print(c.RED + '\nerror: folder doesn\'t exist' + c.END)
             return
 
     @staticmethod

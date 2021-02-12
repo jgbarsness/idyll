@@ -60,7 +60,11 @@ def main(sys_arguement=None, title=None) -> None:
     elif sys_arguement == cmd.WIPE_ALL:
         if error_out(e.WIPE_ALL_ERROR, c.FOLDER):
             return
-        FileHandle.rm_folder()
+        selection = selection = input('\ndelete all collections referencing this directory? y/n \n')
+        if selection == 'y':
+            FileHandle.rm_folder()
+        else:
+            print('\nfolder preserved')
 
     elif sys_arguement == cmd.BACKUP:
         if error_out(e.NONEXIST_ERROR):
