@@ -1,4 +1,4 @@
-## idyll <br />
+## peck 🐤 <br />
 is a command line tool that allows you to take notes across directories without cluttering your work spaces.<br />
 to install, download source and run:<br />
 ```sudo ln -s [your path to bin/[OS]/pck] /usr/local/bin```
@@ -14,17 +14,17 @@ notes are formatted as follows:<br />
 ```
 Sat 04:48PM Sep 19 2020
 -----------------------
-this is an idyll note
+this is an peck note
 #*#*#*#*#*#*#*#*#*#*#*#
 ``` 
  
 each file can contain any number of notes.
 
-all of your notes are stored in your home directory in a folder called ```pck```. when you run idyll from a new location, a folder is created inside ```pck``` that references this location. for example, if your shell points to ```You/Desktop```, running ```pck [note]``` will add an entry to a ```You_Desktop``` folder in ```home/pck```. idyll recognizes the directory from where you are taking notes, but leaves the location itself untouched. this allows you to take notes without the worry of cluttering your work spaces.
+all of your notes are stored in your home directory in a folder called ```pck```. when you run peck from a new location, a folder is created inside ```pck``` that references this location. for example, if your shell points to ```You/Desktop```, running ```pck [note]``` will add an entry to a ```You_Desktop``` folder in ```home/pck```. peck recognizes the directory from where you are taking notes, but leaves the location itself untouched. this allows you to take notes without the worry of cluttering your work spaces.
 
 to create a new collection file, run a command. default is ```pck.txt```, or you can run ```pck -s [new_name]``` to set a new default name. ```pck -s [name]``` can also be used to create a new collection file on next note. running ```pck -l``` will print a header with useful information on files in your ```pck``` folder.
 
-config attributes allow various changes to how idyll formats your notes. this file is generated with ```pck -config```, or when ```pck -s [new file]``` is run. for example, if you want the date header to be underlined differently, this attribute can be modified. if you want a different string to mark the end of an entry, this can be modified. it should be noted that changing things integral to how the program functions, such as an entry end marker, will outdate the directory you are working in. specifications on what is safe to update in an existing directory are included in the config file itself (pck.ini).
+config attributes allow various changes to how peck formats your notes. this file is generated with ```pck -config```, or when ```pck -s [new file]``` is run. for example, if you want the date header to be underlined differently, this attribute can be modified. if you want a different string to mark the end of an entry, this can be modified. it should be noted that changing things integral to how the program functions, such as an entry end marker, will outdate the directory you are working in. specifications on what is safe to update in an existing directory are included in the config file itself (pck.ini).
 
 suggestions for use: to-do list, dream journal, version note manager, recipe experimentation database, anything that you want to keep track of paired with the time you remembered to record it
 
