@@ -54,7 +54,7 @@ class TSearchStrat(CommandStrategy):
                                               collections)),
                                               path)
         else:
-            print('\nnothing to show\nformat: idl -t [tag]')
+            print('\nnothing to show\nformat: pck -t [tag]')
 
 
 class DateSearch(CommandStrategy):
@@ -73,7 +73,7 @@ class DateSearch(CommandStrategy):
             else:
                 print('\nno matches on this date or bad date format')
         else:
-            print('\nnothing to show\nformat: idl -ds [mm/dd/yy]')
+            print('\nnothing to show\nformat: pck -ds [mm/dd/yy]')
 
     def search_by_date(self, collections: list, title: str) -> list:
         matches = []

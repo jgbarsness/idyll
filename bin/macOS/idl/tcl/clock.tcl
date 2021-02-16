@@ -556,7 +556,7 @@ proc ::tcl::clock::Initialize {} {
 	cat	-1000 \
 	ahst	-1000 \
 	nt	-1100 \
-	idlw	-1200 \
+	pckw	-1200 \
 	cet	+0100 \
 	cest	+0200 \
 	met	+0100 \
@@ -590,7 +590,7 @@ proc ::tcl::clock::Initialize {} {
 	nzt	+1200 \
 	nzst	+1200 \
 	nzdt	+1300 \
-	idle	+1200 \
+	pcke	+1200 \
 	a	+0100 \
 	b	+0200 \
 	c	+0300 \
@@ -755,8 +755,8 @@ proc ::tcl::clock::ParseClockFormatFormat {procName format locale} {
 
 proc ::tcl::clock::ParseClockFormatFormat2 {format locale procName} {
 
-    set didLocaleEra 0
-    set didLocaleNumerals 0
+    set dpckocaleEra 0
+    set dpckocaleNumerals 0
     set preFormatCode \
 	[string map [list @GREGORIAN_CHANGE_DATE@ \
 				       [mc GREGORIAN_CHANGE_DATE]] \
@@ -841,7 +841,7 @@ proc ::tcl::clock::ParseClockFormatFormat2 {format locale procName} {
 		    E {			# Format group in a locale-dependent
 					# alternative era
 			set state percentE
-			if {!$didLocaleEra} {
+			if {!$dpckocaleEra} {
 			    append preFormatCode \
 				[string map \
 				     [list @LOCALE_ERAS@ \
@@ -850,13 +850,13 @@ proc ::tcl::clock::ParseClockFormatFormat2 {format locale procName} {
 					 set date [GetLocaleEra \
 						       $date[set date {}] \
 						       @LOCALE_ERAS@]}] \n
-			    set didLocaleEra 1
+			    set dpckocaleEra 1
 			}
-			if {!$didLocaleNumerals} {
+			if {!$dpckocaleNumerals} {
 			    append preFormatCode \
 				[list set localeNumerals \
 				     [mc LOCALE_NUMERALS]] \n
-			    set didLocaleNumerals 1
+			    set dpckocaleNumerals 1
 			}
 		    }
 		    g {			# Two-digit year relative to ISO8601
@@ -932,11 +932,11 @@ proc ::tcl::clock::ParseClockFormatFormat2 {format locale procName} {
 		    O {			# A format group in the locale's
 					# alternative numerals
 			set state percentO
-			if {!$didLocaleNumerals} {
+			if {!$dpckocaleNumerals} {
 			    append preFormatCode \
 				[list set localeNumerals \
 				     [mc LOCALE_NUMERALS]] \n
-			    set didLocaleNumerals 1
+			    set dpckocaleNumerals 1
 			}
 		    }
 		    p {			# Localized 'AM' or 'PM' indicator

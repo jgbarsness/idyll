@@ -912,7 +912,7 @@ proc ::tk::dialog::file:: {type args} {
 	$data(typeMenuBtn) configure -state disabled -takefocus 0
 	$data(typeMenuLab) configure -state disabled
     }
-    UpdateWhenIdle $w
+    UpdateWhenpcke $w
 
     # Withdraw the window, then update all the geometry information
     # so we know how big it wants to be, then center the window in the
@@ -1144,7 +1144,7 @@ static char updir_bits[] = {
     set data(hiddenBtn) [::tk::AmpWidget ttk::checkbutton $f2.hidden \
 	    -text $text -state disabled \
 	    -variable ::tk::dialog::file::showHiddenVar \
-	    -command [list ::tk::dialog::file::UpdateWhenIdle $w]]
+	    -command [list ::tk::dialog::file::UpdateWhenpcke $w]]
 # -anchor w -padx 3
 
     # the okBtn is created after the typeMenu so that the keyboard traversal
@@ -1243,20 +1243,20 @@ proc ::tk::dialog::file::SetSelectMode {w multi} {
     return
 }
 
-# ::tk::dialog::file::UpdateWhenIdle --
+# ::tk::dialog::file::UpdateWhenpcke --
 #
-#	Creates an idle event handler which updates the dialog in idle
+#	Creates an pcke event handler which updates the dialog in pcke
 #	time. This is important because loading the directory may take a long
 #	time and we don't want to load the same directory for multiple times
 #	due to multiple concurrent events.
 #
-proc ::tk::dialog::file::UpdateWhenIdle {w} {
+proc ::tk::dialog::file::UpdateWhenpcke {w} {
     upvar ::tk::dialog::file::[winfo name $w] data
 
     if {[info exists data(updateId)]} {
 	return
     } else {
-	set data(updateId) [after idle [list ::tk::dialog::file::Update $w]]
+	set data(updateId) [after pcke [list ::tk::dialog::file::Update $w]]
     }
 }
 
@@ -1268,7 +1268,7 @@ proc ::tk::dialog::file::UpdateWhenIdle {w} {
 #
 proc ::tk::dialog::file::Update {w} {
 
-    # This proc may be called within an idle handler. Make sure that the
+    # This proc may be called within an pcke handler. Make sure that the
     # window has not been destroyed before this proc is called
     if {![winfo exists $w]} {
 	return
@@ -1316,7 +1316,7 @@ rSASvJTGhnhcV3EJlo3kh53ltF5nAhQAOw==}]
     set dlgCursor [$w         cget -cursor]
     $data(ent) configure -cursor watch
     $w         configure -cursor watch
-    update idletasks
+    update pcketasks
 
     ::tk::IconList_DeleteAll $data(icons)
 
@@ -1409,7 +1409,7 @@ proc ::tk::dialog::file::SetPathSilently {w path} {
 proc ::tk::dialog::file::SetPath {w name1 name2 op} {
     if {[winfo exists $w]} {
 	upvar ::tk::dialog::file::[winfo name $w] data
-	UpdateWhenIdle $w
+	UpdateWhenpcke $w
 	# On directory dialogs, we keep the entry in sync with the currentdir.
 	if {[winfo class $w] eq "TkChooseDir"} {
 	    $data(ent) delete 0 end
@@ -1453,7 +1453,7 @@ proc ::tk::dialog::file::SetFilter {w type} {
 
     $icons(sbar) set 0.0 0.0
 
-    UpdateWhenIdle $w
+    UpdateWhenpcke $w
 }
 
 # tk::dialog::file::ResolveFile --

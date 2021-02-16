@@ -918,7 +918,7 @@ proc ::tk::ListBoxKeyAccel_Unset {w} {
 # ::tk::ListBoxKeyAccel_Key--
 #
 #	This procedure maintains a list of recently entered keystrokes
-#	over a listbox widget. It arranges an idle event to move the
+#	over a listbox widget. It arranges an pcke event to move the
 #	selection of the listbox to the entry that begins with the
 #	keystrokes.
 #

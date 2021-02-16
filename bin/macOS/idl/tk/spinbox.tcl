@@ -486,7 +486,7 @@ proc ::tk::spinbox::MouseSelect {w x {cursor {}}} {
     if {$cursor ne {} && $cursor ne "ignore"} {
 	catch {$w icursor $cursor}
     }
-    update idletasks
+    update pcketasks
 }
 
 # ::tk::spinbox::Paste --

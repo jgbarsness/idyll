@@ -593,7 +593,7 @@ proc ::tk::ButtonInvoke w {
 	set oldRelief [$w cget -relief]
 	set oldState [$w cget -state]
 	$w configure -state active -relief sunken
-	update idletasks
+	update pcketasks
 	after 100
 	$w configure -state $oldState -relief $oldRelief
 	uplevel #0 [list $w invoke]

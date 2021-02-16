@@ -1362,8 +1362,8 @@ bininstall: altbininstall
 	(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(VERSION).pc python3.pc)
 	-rm -f $(DESTDIR)$(LIBPC)/python3-embed.pc
 	(cd $(DESTDIR)$(LIBPC); $(LN) -s python-$(VERSION)-embed.pc python3-embed.pc)
-	-rm -f $(DESTDIR)$(BINDIR)/idle3
-	(cd $(DESTDIR)$(BINDIR); $(LN) -s idle$(VERSION) idle3)
+	-rm -f $(DESTDIR)$(BINDIR)/pcke3
+	(cd $(DESTDIR)$(BINDIR); $(LN) -s pcke$(VERSION) pcke3)
 	-rm -f $(DESTDIR)$(BINDIR)/pydoc3
 	(cd $(DESTDIR)$(BINDIR); $(LN) -s pydoc$(VERSION) pydoc3)
 	-rm -f $(DESTDIR)$(BINDIR)/2to3
@@ -1466,7 +1466,7 @@ LIBSUBDIRS=	tkinter tkinter/test tkinter/test/test_tkinter \
 		lib2to3/tests/data lib2to3/tests/data/fixers \
 		lib2to3/tests/data/fixers/myfixes \
 		ctypes ctypes/test ctypes/macholib \
-		idlelib idlelib/Icons idlelib/idle_test \
+		pckelib pckelib/Icons pckelib/pcke_test \
 		distutils distutils/command distutils/tests $(XMLLIBSUBDIRS) \
 		test/test_peg_generator \
 		test/test_tools test/test_warnings test/test_warnings/data \
