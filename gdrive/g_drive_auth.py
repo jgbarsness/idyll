@@ -54,24 +54,24 @@ def upload():
     # search for instance of backup folder
     is_instance = False
     instance_id = None
-    found = service.files().list(q="name='idyll_backups'" and "mimeType = 'application/vnd.google-apps.folder'" and "trashed = false",
+    found = service.files().list(q="name='peck_backups'" and "mimeType = 'application/vnd.google-apps.folder'" and "trashed = false",
                                  spaces='drive',
                                  fields='files(id, name)'
                                  ).execute()
     for file in found.get('files', []):
-        if file.get('name') == 'idyll_backups':
+        if file.get('name') == 'peck_backups':
             is_instance = True
             instance_id = file.get('id')
             print('found existing backup: ' + instance_id + '\n')
 
     if not is_instance:
         p_folder_metadata = {
-            'name': 'idyll_backups',
+            'name': 'peck_backups',
             'mimeType': 'application/vnd.google-apps.folder'
         }
         p_file = service.files().create(body=p_folder_metadata, fields='id').execute()
         instance_id = p_file.get('id')
-        print('parent folder created as \'idyll_backups\': ' + instance_id + '\n')
+        print('parent folder created as \'peck_backups\': ' + instance_id + '\n')
 
     date_folder_meta = {
         'name': str(datetime.now()),

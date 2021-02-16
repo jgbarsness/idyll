@@ -15,7 +15,7 @@ from controllers.file_handle import FileHandle
 # from gdrive import g_drive_auth
 
 '''
-idl is a command line tool used to manage text entries.
+pck is a command line tool used to manage text entries.
 joseph barsness 2020
 '''
 
@@ -104,9 +104,9 @@ def main(sys_arguement=None, title=None) -> None:
     elif sys_arguement == cmd.CONFIG:
         if FileHandle.check_dir() is not False:
             # reset defaults
-            FileHandle.gen_config('idl', c.DEFAULTS)
+            FileHandle.gen_config('pck', c.DEFAULTS)
             print('\nconfig updated as '
-                  + c.PURPLE + path.abspath(c.FOLDER / 'idl.ini') + c.END)
+                  + c.PURPLE + path.abspath(c.FOLDER / 'pck.ini') + c.END)
 
     elif sys_arguement == cmd.TAG_SEARCH:
         container.strategy = view_strats.TSearchStrat()

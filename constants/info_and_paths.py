@@ -11,26 +11,26 @@ BLUE = '\033[34m'
 RED = '\033[91m'
 
 # name of the directory
-DIR_NAME = Path.home() / 'idl'
+DIR_NAME = Path.home() / 'pck'
 
 VERSION = 'v2.4.0'
 
-HELP = 'usage:\nfull: \'idl [arg]\'\nquick entry: \'idl [entry]\'\n\n\
+HELP = 'usage:\nfull: \'pck [arg]\'\nquick entry: \'pck [entry]\'\n\n\
 alternatively, the title of entries with arg use can be one-lined like:\n\
-\'idl [arg] [title]\'\n\
+\'pck [arg] [title]\'\n\
 \ncommands:\n\
 \'-l\': list out directory information\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
 \'-nt\': new title entry using a textbox\n\
-\'-a\': new tagged entry. format: \'idl -a [tag] [title]\'\n\n\
+\'-a\': new tagged entry. format: \'pck -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
 \'-vf\': view a different collection in the same directory.\n       format: \
-\'idl -vf: [collection name][opt keyword]\'\n\
-\'-ds\': view entries on a specific date. format: \'idl -ds [mm/dd/yy]\'\n\
+\'pck -vf: [collection name][opt keyword]\'\n\
+\'-ds\': view entries on a specific date. format: \'pck -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
-\'-del\': delete entry(s). format: \'idl -del [keyword]\'\n\
+\'-del\': delete entry(s). format: \'pck -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
 \'-wipe\': delete default collection\n\
 \'-wipe-all\': delete folder referencing this location\n\
@@ -69,20 +69,20 @@ DEFAULTS = ['#*#*#*#*#*#*#*#*#*#*#*#', '-----------------------',
 
 # representation of the folder to use for the program instance
 # works only with posix file path convention - notice the split at '/'
-FOLDER = Path.home() / 'idl' / '_'.join(str(Path.cwd()).split('/')[-3:])
+FOLDER = Path.home() / 'pck' / '_'.join(str(Path.cwd()).split('/')[-3:])
 
 END_MARKER = DEFAULTS[0]
 DATESTAMP_UNDERLINE = DEFAULTS[1]
-COLLECTION_TITLE = FOLDER / 'idl.txt'
-BACKUP_TITLE = FOLDER / 'b_idl.txt'
+COLLECTION_TITLE = FOLDER / 'pck.txt'
+BACKUP_TITLE = FOLDER / 'b_pck.txt'
 FIRST_MARKER = DEFAULTS[2]
 SECOND_MARKER = DEFAULTS[3]
 USE_TEXTBOX = DEFAULTS[4]
 
 # use config values if present, else use default
-if path.exists(FOLDER / 'idl.ini'):
+if path.exists(FOLDER / 'pck.ini'):
     config = ConParser()
-    values = config.parse(FOLDER / 'idl.ini')
+    values = config.parse(FOLDER / 'pck.ini')
 
     END_MARKER = values["end_marker"]
     DATESTAMP_UNDERLINE = values["date_underline"]

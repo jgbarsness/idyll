@@ -74,7 +74,7 @@ class FileHandle:
         print(new + ".txt" + " is the new default collection")
 
     @staticmethod
-    def gen_config(active='idl', deff: list=c.DEFAULTS):
+    def gen_config(active='pck', deff: list=c.DEFAULTS):
         'generate config file in pwd'
 
         config = ConfigParser()
@@ -87,7 +87,7 @@ class FileHandle:
                              'USE_TEXTBOX': deff[4]}
 
         try:
-            configfile = open(c.FOLDER / 'idl.ini', 'w')
+            configfile = open(c.FOLDER / 'pck.ini', 'w')
         except FileNotFoundError:
             print(c.RED + 'error: no file to modify' + c.END)
             return
