@@ -397,7 +397,7 @@ proc ::tk::EntryMouseSelect {w x} {
     if {$Priv(mouseMoved)} {
         $w icursor $cur
     }
-    update pcketasks
+    update idletasks
 }
 
 # ::tk::EntryPaste --

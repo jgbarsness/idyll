@@ -640,7 +640,7 @@ proc ::tk::TextSelectTo {w x y {extend 0}} {
 	$w mark set insert $cur
 	$w tag add sel $first $last
 	$w tag remove sel $last end
-	update pcketasks
+	update idletasks
     }
 }
 
@@ -786,7 +786,7 @@ proc ::tk::TextKeySelect {w new} {
     }
     $w mark set insert $new
     $w see insert
-    update pcketasks
+    update idletasks
 }
 
 # ::tk::TextResetAnchor --

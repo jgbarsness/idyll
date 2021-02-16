@@ -36,7 +36,7 @@ proc ttk::notebook::ActivateTab {w tab} {
     if {[focus] eq $w} { return }
     if {$newtab eq $oldtab} { focus $w ; return }
 
-    update pcketasks ;# needed so focus logic sees correct mapped states
+    update idletasks ;# needed so focus logic sees correct mapped states
     if {[set f [ttk::focusFirst $newtab]] ne ""} {
 	ttk::traverseTo $f
     } else {

@@ -397,7 +397,7 @@ proc ttk::combobox::Post {cb} {
 
     set popdown [PopdownWindow $cb]
     ConfigureListbox $cb
-    update pcketasks	;# needed for geometry propagation.
+    update idletasks	;# needed for geometry propagation.
     PlacePopdown $cb $popdown
     # See <<NOTE-WM-TRANSIENT>>
     switch -- [tk windowingsystem] {

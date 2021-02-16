@@ -151,7 +151,7 @@ proc ::tk_dialog {w title text bitmap default args} {
     # display and de-iconify it.
 
     wm withdraw $w
-    update pcketasks
+    update idletasks
     set x [expr {[winfo screenwidth $w]/2 - [winfo reqwidth $w]/2 \
 	    - [winfo vrootx [winfo parent $w]]}]
     set y [expr {[winfo screenheight $w]/2 - [winfo reqheight $w]/2 \

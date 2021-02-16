@@ -281,7 +281,7 @@ proc ::tk::MbPost {w {x {}} {y {}}} {
     # that the current entry is on top of the mouse.  Otherwise post
     # the menu just below the menubutton, as for a pull-down.
 
-    update pcketasks
+    update idletasks
     if {[catch {
 	switch [$w cget -direction] {
     	    above {

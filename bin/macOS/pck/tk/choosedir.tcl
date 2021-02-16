@@ -87,7 +87,7 @@ proc ::tk::dialog::file::chooseDir:: {args} {
 
     set data(filter) "*"
     set data(previousEntryText) ""
-    ::tk::dialog::file::UpdateWhenpcke $w
+    ::tk::dialog::file::UpdateWhenIdle $w
 
     # Withdraw the window, then update all the geometry information
     # so we know how big it wants to be, then center the window in the

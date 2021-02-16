@@ -33,7 +33,7 @@ proc ::tk::dialog::error::Return {} {
     variable button
 
     .bgerrorDialog.ok configure -state active -relief sunken
-    update pcketasks
+    update idletasks
     after 100
     set button 0
 }

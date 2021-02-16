@@ -418,11 +418,11 @@ proc ::tk::ScrollButton2Down {w x y} {
     ScrollToPos $w [$w fraction $x $y]
     set Priv(relief) [$w cget -activerelief]
 
-    # Need the "update pcketasks" below so that the widget calls us
+    # Need the "update idletasks" below so that the widget calls us
     # back to reset the actual scrollbar position before we start the
     # slider drag.
 
-    update pcketasks
+    update idletasks
     $w configure -activerelief sunken
     $w activate slider
     ScrollStartDrag $w $x $y

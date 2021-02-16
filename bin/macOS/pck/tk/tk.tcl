@@ -87,7 +87,7 @@ catch {tk useinputmethods 1}
 #
 proc ::tk::PlaceWindow {w {place ""} {anchor ""}} {
     wm withdraw $w
-    update pcketasks
+    update idletasks
     set checkBounds 1
     if {$place eq ""} {
 	set x [expr {([winfo screenwidth $w]-[winfo reqwidth $w])/2}]
