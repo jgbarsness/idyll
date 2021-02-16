@@ -1,7 +1,7 @@
 ## peck 🐤 <br />
 is a command line tool that allows you to take notes across directories without cluttering your work spaces.<br />
 to install, download source and run:<br />
-```sudo ln -s [your path to bin/[OS]/pck] /usr/local/bin```
+```sudo ln -s [your path to bin/[OS]/[pck]/pck] /usr/local/bin```
 #### using:
 
 ```pck [command] [keyword (if appropriate)]```<br />
