@@ -2,6 +2,6 @@ language: python
 python:
   - "3.8"
 install:
-  - pip --install
+  - pip install pytest
 script:
   - python tests/tests.py
