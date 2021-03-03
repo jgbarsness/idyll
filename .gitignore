@@ -13,6 +13,5 @@ source_code/docs/setup.py
 *.spec
 setup.py
 credentials.json
-tests
 .vscode
 cred.json
