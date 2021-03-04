@@ -1,10 +1,10 @@
 import unittest
-from models.entry_types.full_entry import FullEntry
-from models.entry_types.peck.title_entry import TitleEntry
-from models.entry_types.first_entry import FirstEntry
-from models.entry_types.second_entry import SecondEntry
-from models.entry_types.tag_entry import TagEntry
-from models.collection.collection import Collection
+from peck.full_entry import FullEntry
+from peck.title_entry import TitleEntry
+from peck.first_entry import FirstEntry
+from peck.second_entry import SecondEntry
+from peck.tag_entry import TagEntry
+from peck.collection import Collection
 
 class TestRoutes(unittest.TestCase):
 
