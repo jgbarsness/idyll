@@ -87,7 +87,7 @@ def main(sys_arguement=None, title=None) -> None:
             return
         # check for presence of entries. continue if so
         if (len(container.collection) != 0) and (len(joined_title) != 0):
-            container.strategy = modify_strats.DeleteModStrat()
+            container.strategy = peck.modify_strats.DeleteModStrat()
             if container.call_strat(joined_title):
                 print('\n' + c.YELLOW + 'rewriting...' + c.END)
                 FileHandle.refresh_collection(container.collection)
@@ -110,7 +110,7 @@ def main(sys_arguement=None, title=None) -> None:
                   + c.PURPLE + path.abspath(c.FOLDER / 'pck.ini') + c.END)
 
     elif sys_arguement == cmd.TAG_SEARCH:
-        container.strategy = view_strats.TSearchStrat()
+        container.strategy = peck.view_strats.TSearchStrat()
         container.call_strat(joined_title)
 
     elif sys_arguement == cmd.SWITCH:

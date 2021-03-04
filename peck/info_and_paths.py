@@ -13,7 +13,7 @@ RED = '\033[91m'
 # name of the directory
 DIR_NAME = Path.home() / 'pck'
 
-VERSION = 'v2.4.0'
+VERSION = 'v2.4.1'
 
 HELP = 'usage:\nfull: \'peck [arg]\'\nquick entry: \'peck [entry]\'\n\n\
 alternatively, the title of entries with arg use can be one-lined like:\n\
