@@ -1,6 +1,6 @@
-from peck import driver
+import peck
 import sys
 
 
 if __name__ == '__main__':
-    driver()
+    peck.driver()

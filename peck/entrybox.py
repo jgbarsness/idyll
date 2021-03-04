@@ -1,4 +1,4 @@
-from models.entry_types.ab_entry import AEntry
+from peck.ab_entry import AEntry
 
 
 class TextBox():

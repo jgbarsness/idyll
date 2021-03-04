@@ -1,9 +1,9 @@
-import constants.info_and_paths as c
+import peck.info_and_paths as c
 from os import chmod, path
 from stat import S_IRWXU, S_IREAD
-from controllers.file_handle import FileHandle
+from peck.file_handle import FileHandle
 from pathlib import Path
-from controllers.strategies.a_strategy import CommandStrategy
+from peck.a_strategy import CommandStrategy
 from re import sub
 
 

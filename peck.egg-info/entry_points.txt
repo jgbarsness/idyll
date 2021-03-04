@@ -1,0 +1,4 @@
+
+        [console_scripts]
+        peck=peck.peck:driver
+    

@@ -1,16 +1,16 @@
-from models.entry_types.ab_entry import AEntry
-from constants import info_and_paths as c
-from controllers.entry_managers import entry_writer
+from peck.ab_entry import AEntry
+import peck.info_and_paths as c
+import peck.entry_writer
 
 
 class TagEntry(AEntry):
     'represents an entry with a tag'
 
     def __init__(self, passed_title, tag):
-        from models.entry_types.entrybox import TextBox
+        from peck.entrybox import TextBox
         super().__init__(passed_title)
         self.tag = tag
-        self.writer = entry_writer.TagWrite()
+        self.writer = peck.entry_writer.TagWrite()
         self.begin_entry()
 
     def begin_entry(self):

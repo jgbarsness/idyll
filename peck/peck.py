@@ -1,21 +1,22 @@
-from sys import argv
-from models.entry_types.full_entry import FullEntry
-from models.entry_types.title_entry import TitleEntry
-from models.entry_types.first_entry import FirstEntry
-from models.entry_types.second_entry import SecondEntry
-from models.entry_types.tag_entry import TagEntry
-from models.collection.collection import Collection
-from controllers.strategies import modify_strats, view_strats
-import constants.info_and_paths as c
-import constants.commands as cmd
-import constants.errors as e
+from sys import argv, path
+from peck.file_handle import FileHandle
+from peck.title_entry import TitleEntry
+from peck.first_entry import FirstEntry
+from peck.second_entry import SecondEntry
+from peck.tag_entry import TagEntry
+from peck.full_entry import FullEntry
+from peck.collection import Collection
+import peck.modify_strats
+import peck.view_strats
+import peck.info_and_paths as c
+import peck.commands as cmd
+import peck.errors as e
 from os import path, listdir
 from pathlib import Path
-from controllers.file_handle import FileHandle
 # from gdrive import g_drive_auth
 
 '''
-pck is a command line tool used to manage text entries.
+peck is a command line tool used to manage text entries.
 joseph barsness 2020
 '''
 
@@ -34,7 +35,7 @@ def main(sys_arguement=None, title=None) -> None:
 
     # call command if launched using sys arguement
     if sys_arguement == cmd.VIEW:
-        container.strategy = view_strats.ViewStrat()
+        container.strategy = peck.view_strats.ViewStrat()
         container.call_strat(joined_title)
 
     elif sys_arguement == cmd.VIEW_FILE:
@@ -43,13 +44,13 @@ def main(sys_arguement=None, title=None) -> None:
         # create posix path out of current folder + name
         pos_title = c.FOLDER / add_exten
         if path.isfile(pos_title):
-            container = Collection(view_strats.ViewStrat(), pos_title)
+            container = Collection(peck.view_strats.ViewStrat(), pos_title)
             container.call_strat(''.join(title[1:]))
         else:
             print(e.INVALID_FILE_VIEW)
 
     elif sys_arguement == cmd.DATESEARCH:
-        container.strategy = view_strats.DateSearch()
+        container.strategy = peck.view_strats.DateSearch()
         container.call_strat(joined_title)
 
     elif sys_arguement == cmd.WIPE:
@@ -74,7 +75,7 @@ def main(sys_arguement=None, title=None) -> None:
     elif sys_arguement == cmd.QUICK_DELETE:
         if error_out(e.NONEXIST_ERROR):
             return
-        container.strategy = modify_strats.QuickDeleteStrat()
+        container.strategy = peck.modify_strats.QuickDeleteStrat()
         # if something was changed
         if container.call_strat(None):
             print('\n' + c.YELLOW + 'rewriting...' + c.END)

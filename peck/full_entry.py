@@ -1,6 +1,6 @@
-from models.entry_types.ab_entry import AEntry
-from constants import info_and_paths as c
-from controllers.entry_managers import entry_writer
+from peck.ab_entry import AEntry
+import peck.info_and_paths as c
+import peck.entry_writer
 
 
 class FullEntry(AEntry):
@@ -10,11 +10,11 @@ class FullEntry(AEntry):
         super().__init__(passed_title)
         self.first = None
         self.second = None
-        self.writer = entry_writer.FullWrite()
+        self.writer = peck.entry_writer.FullWrite()
         self.begin_entry()
 
     def begin_entry(self):
-        from models.entry_types.entrybox import TextBox
+        from peck.entrybox import TextBox
         super().begin_entry()
         # indicates the user wants to not create a new file
         if self.print is False:

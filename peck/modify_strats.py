@@ -1,6 +1,6 @@
-from controllers.strategies.a_strategy import CommandStrategy
-from controllers.file_handle import FileHandle
-import constants.info_and_paths as c
+from peck.a_strategy import CommandStrategy
+from peck.file_handle import FileHandle
+import peck.info_and_paths as c
 
 'strategies used to modify collections'
 

@@ -1,7 +1,7 @@
 from configparser import ConfigParser, ParsingError
 from os import path
 from pathlib import Path
-from constants import info_and_paths as c
+import peck.info_and_paths as c
 
 
 class ConParser:

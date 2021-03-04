@@ -15,3 +15,6 @@ setup.py
 credentials.json
 .vscode
 cred.json
+build
+dist
+pck.egg-info
