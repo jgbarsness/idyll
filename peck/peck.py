@@ -232,3 +232,11 @@ def error_out(message: str, location=c.COLLECTION_TITLE):
         print(message)
         return True
     return False
+
+
+def driver():
+    # check if a sys arguement is present
+    try:
+        main(argv[1], argv[2:])
+    except IndexError:
+        main()
