@@ -1,7 +1,7 @@
-from controllers.strategies.a_strategy import CommandStrategy
-from controllers.file_handle import FileHandle
-import constants.info_and_paths as c
-from controllers.strategies.modify_strats import StratHelpers
+from peck.a_strategy import CommandStrategy
+from peck.file_handle import FileHandle
+import peck.info_and_paths as c
+from peck.modify_strats import StratHelpers
 from datetime import datetime as dt
 from re import match
 
@@ -54,7 +54,7 @@ class TSearchStrat(CommandStrategy):
                                               collections)),
                                               path)
         else:
-            print('\nnothing to show\nformat: pck -t [tag]')
+            print('\nnothing to show\nformat: peck -t [tag]')
 
 
 class DateSearch(CommandStrategy):
@@ -73,7 +73,7 @@ class DateSearch(CommandStrategy):
             else:
                 print('\nno matches on this date or bad date format')
         else:
-            print('\nnothing to show\nformat: pck -ds [mm/dd/yy]')
+            print('\nnothing to show\nformat: peck -ds [mm/dd/yy]')
 
     def search_by_date(self, collections: list, title: str) -> list:
         matches = []

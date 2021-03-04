@@ -1,6 +1,6 @@
 from os import path
 from pathlib import Path
-from controllers.parsers.config_parser import ConParser
+from peck.config_parser import ConParser
 
 # ascii coloring
 END = '\033[0m'
@@ -15,22 +15,22 @@ DIR_NAME = Path.home() / 'pck'
 
 VERSION = 'v2.4.0'
 
-HELP = 'usage:\nfull: \'pck [arg]\'\nquick entry: \'pck [entry]\'\n\n\
+HELP = 'usage:\nfull: \'peck [arg]\'\nquick entry: \'peck [entry]\'\n\n\
 alternatively, the title of entries with arg use can be one-lined like:\n\
-\'pck [arg] [title]\'\n\
+\'peck [arg] [title]\'\n\
 \ncommands:\n\
 \'-l\': list out directory information\n\
 \'-n\': new entry with both first and second sections\n\
 \'-n1\': new entry with a first section\n\
 \'-n2\': new entry with a second section\n\
 \'-nt\': new title entry using a textbox\n\
-\'-a\': new tagged entry. format: \'pck -a [tag] [title]\'\n\n\
+\'-a\': new tagged entry. format: \'peck -a [tag] [title]\'\n\n\
 \'-v\': view entries. follow with keyword to search\n\
 \'-vf\': view a different collection in the same directory.\n       format: \
-\'pck -vf: [collection name][opt keyword]\'\n\
-\'-ds\': view entries on a specific date. format: \'pck -ds [mm/dd/yy]\'\n\
+\'peck -vf: [collection name][opt keyword]\'\n\
+\'-ds\': view entries on a specific date. format: \'peck -ds [mm/dd/yy]\'\n\
 \'-t\': search for entries with a tag\n\
-\'-del\': delete entry(s). format: \'pck -del [keyword]\'\n\
+\'-del\': delete entry(s). format: \'peck -del [keyword]\'\n\
 \'-q\': quick delete the last entry made\n\
 \'-wipe\': delete default collection\n\
 \'-wipe-all\': delete folder referencing this location\n\

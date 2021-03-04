@@ -1,7 +1,7 @@
-import constants.info_and_paths as c
+import peck.info_and_paths as c
 from os import chmod
 from abc import ABC, abstractmethod
-from models.entry_types import ab_entry
+import peck.ab_entry
 from stat import S_IREAD
 
 
@@ -9,7 +9,7 @@ class EntryWriter(ABC):
     'writes entries to file'
 
     @abstractmethod
-    def write(self, obj: ab_entry.AEntry):
+    def write(self, obj: peck.ab_entry.AEntry):
         pass
 
 

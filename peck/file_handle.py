@@ -1,4 +1,4 @@
-import constants.info_and_paths as c
+import peck.info_and_paths as c
 from os import path, remove, makedirs, rename, chmod, listdir
 from shutil import copy, rmtree
 from pathlib import Path

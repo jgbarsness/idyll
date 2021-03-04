@@ -1,7 +1,7 @@
 from os import path, chmod
 from stat import S_IRWXU
 from datetime import datetime
-import constants.info_and_paths as c
+import peck.info_and_paths as c
 from abc import ABC, abstractmethod
 
 
