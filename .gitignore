@@ -11,7 +11,6 @@ source_code/.viscid
 *__pycache__
 source_code/docs/setup.py
 *.spec
-setup.py
 credentials.json
 .vscode
 cred.json
